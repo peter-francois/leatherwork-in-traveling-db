@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -34,5 +34,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements/dev.txt
     - name: Run Tests
+      run: pytest -v
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Deploy to PythonAnywhere
       run: |
-        pytest -v
+        # Git pull
+        curl -s -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/consoles/" -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" -d "executable=bash&arguments=-c 'cd leatherwork-in-traveling-db && git pull && source ~/.virtualenvs/leatherwork/bin/activate && pip install -r requirements/base.txt && python manage.py migrate && python manage.py collectstatic --noinput'"
+        # Reload
+        curl -s -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/webapps/${{ secrets.PYTHONANYWHERE_USERNAME }}.pythonanywhere.com/reload/" -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
