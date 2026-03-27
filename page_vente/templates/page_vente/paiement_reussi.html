@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% block meta-description %}{% trans "Votre paiement a été confirmé ! Consultez les détails de votre commande et suivez son statut en toute sécurité." %}{% endblock %}
+{% block title %}{% trans "Paiement confirmé | Leather Work In Traveling DB" %}{% endblock %}
+{% block head %}
+    <meta name="robots" content="noindex, follow">
+{% endblock %}
+{% block header %}  
+    <h1 id="title_payment_success">{% trans "Paiement Réussi !" %}</h1>
+{% endblock %}
+{% block content %}
+<section id="payment-success">
+    <p id="payment-success-description">{% trans "Merci pour votre commande. Votre paiement a été traité avec succès." %}</p>
+    
+    <div id="payment-success-details">
+        <p id="payment-success-order-id"><strong id="payment-success-order-id">{% trans "Numéro de commande :" %}</strong> {{ order_id }}</p>
+        <p><strong>Date :</strong> {{ payment_date }}</p>
+        <p><strong id="payment-success-amount">{% trans "Montant total :" %}</strong> {{ total_amount | floatformat:2 }} €</p>
+    </div>
+    
+    <div id="payment-success-div">
+        <a href="{% url 'boutique:index' %}" id="payment-success-button">{% trans "Retour à l'accueil" %}</a>
+    </div>
+</section>
+{% endblock %}
