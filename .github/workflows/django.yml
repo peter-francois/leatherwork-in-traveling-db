@@ -1,0 +1,38 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  SQLITE_URL: ${{ secrets.SQLITE_URL }}
+  DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
+  DEBUG: ${{ secrets.DEBUG }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ['3.10', '3.13']
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements/dev.txt
+    - name: Run Tests
+      run: |
+        pytest -v

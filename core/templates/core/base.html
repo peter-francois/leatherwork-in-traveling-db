@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% get_current_language as current_language %}
+<html lang="{{ current_language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="description" content="{% block meta-description %}{% trans 'Sacs, accessoires et décorations en cuir et macramé conçus avec passion. Des créations uniques pour sublimer votre quotidien. Commandez en ligne, expédition rapide.' %}{% endblock %}">
+    <meta name="author" content="Leather Work In Traveling DB">
+    {% block head %}
+    {% endblock %}
+    <meta property="og:title" content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
+    <meta property="og:description" content="{% trans 'Découvrez des produits authentiques en maroquinerie et macramé faits main.' %}">
+    <meta property="og:image" content="{% static 'core/images/logo2.png' %}">
+    <meta property="og:url" content="https://leatherworkintravelingdb.com">
+    <meta name="twitter:title" content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
+    <meta name="twitter:description" content="{% trans 'Découvrez des produits authentiques en maroquinerie et macramé faits main.' %}">
+    <meta name="twitter:image" content="{% static 'core/images/logo2.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/icons/favicon-16x16.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/icons/favicon-32x32.png' %}">
+    <title>{% block title %}{% trans "Créations en maroquinerie et macramé - Leather Work In Traveling DB" %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/style.css'%}">
+    {% block extra_css %}{% endblock %}
+    <link rel="preload" href="{% static 'core/fonts/UncialAntiqua-Regular.woff2' %}" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="{% static 'core/fonts/PlayfairDisplay-Medium.woff2' %}" as="font" type="font/woff2" crossorigin="anonymous">
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+</head>
+<body>
+    <header class="text-center">
+        {% include 'core/navbar.html' %}
+        <div class="title_and_logo align-items-center grid-container">
+            <img class="logo" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414122/cwmtpsig7dz8czn6ka6p.png" alt="Logo Leather Work In Traveling DB" >
+            {% block header %}
+            {% endblock %}
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <div id="contact-form">
+        <button type="button" id="close-btn">&times;</button>
+        <h2 class="center" id="contact_title">{% trans "Besoin de renseignements ou de prendre contact pour un produit sur mesure ?" %}</h2>
+        <p class="contact-p" id="contact_description1 ">{% trans "Je suis à votre disposition pour toute information complémentaire, que ce soit sur le procédé de fabrication ou les matières premières utilisées." %}</p>
+        <p class="contact-p" id="contact_description2">{% trans "Vous souhaitez un produit"%} <strong>100 % {% trans "sur mesure" %}</strong> {% trans "ou personnaliser un produit existant ?" %}</p>
+        <p class="contact-p" id="contact_description3">{% trans "Contactez-moi dès maintenant pour en discuter et obtenir un devis personnalisé." %}</p>
+        <p class="contact-p" id="contact_description4">{% trans "Je suis joignable soit par télephone:" %}</p>
+        <a id="contact_phone" href="tel:{{ CLIENT_PHONE_NUMBER }}">{{ CLIENT_PHONE_NUMBER }}</a>
+        <br>
+        <p class="contact-p" id="contact_description5">{% trans "soit par email:" %}</p>
+        <a id="contact_email" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com">{{ CLIENT_EMAIL }}</a>
+        <br>
+        <p class="contact-p" id="contact_description6">{% trans "À très bientôt" %}</p>
+    </div>
+
+    <footer class="font-size-19">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 id="footer_about">{% trans "À propos" %}</h3>
+                <ul>
+                    <!--<li><a id="footer_history" href="/a_propos">Notre histoire</a></li>-->
+                    <li><a id="footer_contact">Contact</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3 id="footer_legal">{% trans "Informations légales" %}</h3>
+                <ul>
+                    <li><a id="footer_mention" href="{% url 'legal:legal_mentions' %}">{% trans "Mentions légales" %}</a></li>
+                    <li><a id="footer_cgv" href="{% url 'legal:terms' %}">{% trans "Conditions Générales de Vente (CGV)" %}</a></li>
+                    <li><a id="footer_policy" href="{% url 'legal:privacy_policy' %}">{% trans "Politique de Confidentialité" %}</a></li>
+                    <li><a id="footer_cookie" href="{% url 'legal:cookies' %}">{% trans "Gestion des Cookies" %}</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3 id="footer_social">{% trans "Suivez-nous" %}</h3>
+                <ul>
+                    <li class="footer-link" ><a href="https://www.facebook.com/{{ CLIENT_FACEBOOK }}/" target="_blank"><span class="footer-link-text">Facebook</span><img class="footer-social-icon"  alt="Icon facebook" src="{% static 'core/icons/facebook.svg' %}"></a></li>
+                    <li class="footer-link" ><a href="https://www.instagram.com/{{ CLIENT_INSTAGRAM }}/" target="_blank"><span class="footer-link-text">Instagram</span><img class="footer-social-icon"  alt="icon instagram" src="{% static 'core/icons/instagram.svg' %}"></a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3 id="footer_payment">{% trans "Paiements sécurisés" %}</h3>
+                <p id="footer_payment_description">{% trans "Transactions sécurisées avec" %} <strong>Stripe</strong>.</p>
+                <img id="stripe_logo" src="{% static 'core/images/Stripe_wordmark-slate.png' %}" alt="Paiement sécurisé via Stripe">
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p id="footer_copyright">© 2025 Leather work in traveling DB. {% trans "Tous droits réservés." %}</p>
+        </div>
+    </footer>
+    <script type="text/javascript" src="{% static 'core/script.js'%}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+<div id="overlay" class="hidden"></div>
+</html>
