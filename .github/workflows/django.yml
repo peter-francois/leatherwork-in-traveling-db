@@ -36,14 +36,15 @@ jobs:
     - name: Run Tests
       run: pytest -v
   deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      needs: test
+      runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-    steps:
-    - name: Deploy to PythonAnywhere
-      run: |
-        # Git pull
-        curl -s -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/consoles/" -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" -d "executable=bash&arguments=-c 'cd leatherwork-in-traveling-db && git pull && source ~/.virtualenvs/leatherwork/bin/activate && pip install -r requirements/base.txt && python manage.py migrate && python manage.py collectstatic --noinput'"
-        # Reload
-        curl -s -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/webapps/${{ secrets.PYTHONANYWHERE_USERNAME }}.pythonanywhere.com/reload/" -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
+      steps:
+      - name: Deploy to PythonAnywhere
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ssh.pythonanywhere.com
+          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
+          script: ~/leatherwork-in-traveling-db/scripts/deploy.sh
