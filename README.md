@@ -134,6 +134,45 @@ legal/tests.py         ← cgv, cookies, legal mentions
 
 ---
 
+## CI/CD
+
+The project uses GitHub Actions for continuous integration and deployment.
+
+### Flow
+```
+Push on main
+     ↓
+CI — tests on Python 3.10 and 3.13
+     ↓ (only if all tests pass)
+CD — automatic deployment to PythonAnywhere
+```
+
+### CI — What it does
+
+- Runs on every push and pull request to `main`
+- Tests on Python 3.10 (production) and 3.13 (local dev)
+- Uses a minimal environment
+
+### CD — What it does
+
+Connects to PythonAnywhere via SSH and runs `scripts/deploy.sh`:
+
+1. `git pull` — fetch latest code
+2. `pip install` — update dependencies
+3. `python manage.py migrate` — apply migrations
+4. `python manage.py collectstatic` — compile static files
+5. App reload
+
+### Required GitHub Secrets
+
+| Secret | Description |
+|---|---|
+| `SECRET_KEY` | Django secret key (dedicated CI key, not production) |
+| `PYTHONANYWHERE_USERNAME` | PythonAnywhere username |
+| `PYTHONANYWHERE_SSH_KEY` | Private SSH key for deployment |
+
+---
+
 ## Project Structure
 
 ```
@@ -143,6 +182,7 @@ leatherwork-in-traveling-db/
 ├── catalogue/             # Product listing
 ├── panier/                # Cart and checkout
 ├── legal/                 # Legal pages
+├── scripts/               # Deploy script
 ├── page_vente/            # Landing page
 ├── leatherwork/           # Django project config
 │   ├── settings.py
