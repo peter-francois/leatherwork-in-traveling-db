@@ -106,7 +106,7 @@ def hybride(request):
     return render(request, 'page_vente/hybride.html', context)
 
 def creation_sur_mesure(request):
-    return render(request, 'page_vente/creation_sur_mesure.html')
+    return render(request, 'core/custom_creation.html')
 
 def panier(request):
     session_key = request.session.session_key
