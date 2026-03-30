@@ -5,7 +5,7 @@ let currentLanguage = localStorage.getItem("language") || "fr";
 async function getDocumentContent(documentType, lang) {
   try {
     const response = await fetch(
-      `/api/get_document_content/${documentType}/${lang}/`,
+      `/api/legal/get_document_content/${documentType}/${lang}/`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
