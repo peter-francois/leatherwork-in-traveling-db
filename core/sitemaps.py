@@ -10,7 +10,7 @@ class StaticSitemap(Sitemap):
         self.language = language
         self.static_urls = {
             'index': 'core:index',
-            'creation-sur-mesure': 'boutique:creation-sur-mesure',
+            'custom-creation': 'core:custom_creation',
             # 'a_propos': 'boutique:a_propos',
         }
 
