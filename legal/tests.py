@@ -1,7 +1,9 @@
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from .models import LegalDocument
 from .choices import DocumentType
 from .services import get_legal_document_content
+from .validators import version_validator
 from django.utils import timezone
 from datetime import timedelta
 from unittest.mock import patch
@@ -46,3 +48,33 @@ class GetLegalDocumentContentTest(TestCase):
         with self.assertRaises(LegalDocument.DoesNotExist):
             get_legal_document_content(DocumentType.COOKIES, 'fr')
 
+
+class VersionValidatorTest(TestCase):
+    """Tests for the version_validator"""
+
+    def test_valid_format(self):
+        """Should not raise for valid YYYY-MM-DD format"""
+        try:
+            version_validator('2024-01-01')
+        except ValidationError:
+            self.fail('version_validator raised ValidationError for valid format')
+
+    def test_invalid_format_letters(self):
+        """Should raise ValidationError for non-numeric format"""
+        with self.assertRaises(ValidationError):
+            version_validator('abcd-ef-gh')
+
+    def test_invalid_format_missing_dashes(self):
+        """Should raise ValidationError when dashes are missing"""
+        with self.assertRaises(ValidationError):
+            version_validator('20240101')
+
+    def test_invalid_format_wrong_order(self):
+        """Should raise ValidationError for DD-MM-YYYY format"""
+        with self.assertRaises(ValidationError):
+            version_validator('01-01-2024')
+
+    def test_invalid_format_empty(self):
+        """Should raise ValidationError for empty string"""
+        with self.assertRaises(ValidationError):
+            version_validator('')
