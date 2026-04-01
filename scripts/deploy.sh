@@ -6,3 +6,6 @@ source ~/.virtualenvs/leatherwork/bin/activate
 pip install -r requirements/base.txt
 python manage.py migrate
 python manage.py collectstatic --noinput
+
+# Reload web app
+touch /var/www/www_leatherworkintravelingdb_com_wsgi.py
