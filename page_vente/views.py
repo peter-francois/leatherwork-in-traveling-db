@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.utils.timezone import now
-from .utils.sessions import get_session_expiration
+from core.services import get_session_expiration
 import stripe
 import json
 import logging
