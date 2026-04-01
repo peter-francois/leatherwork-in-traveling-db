@@ -1,0 +1,18 @@
+name: CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      timeout-minutes: 10
+      steps:
+      - name: Deploy to PythonAnywhere
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ssh.pythonanywhere.com
+          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
+          script: ~/leatherwork-in-traveling-db/scripts/deploy.sh
