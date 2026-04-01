@@ -11,7 +11,6 @@ app_name = 'boutique'
 urlpatterns = [
     path(_('produits/macrames/'), views.macrames, name="macrames"),
     path(_('produits/maroquinerie/'), views.maroquinerie, name="maroquinerie"),
-    path(_('creation-sur-mesure/'), views.creation_sur_mesure, name="creation-sur-mesure"),
     path(_('produits/hybride/'), views.hybride, name="hybride"),
     path(_('produits/'), views.produits, name="produits"),
     path(_('panier/'), views.panier, name="panier"),

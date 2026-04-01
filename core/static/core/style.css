@@ -940,22 +940,19 @@ footer {
 .footer-section ul li a {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 10px;
   min-height: 50px;
 }
 .footer-link {
-  width: 150px;
-  justify-self: center;
+  justify-content: space-between;
 }
 .footer-social-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 .footer-link-text {
-  min-width: 90px;
   text-align: center;
-  display: inline-block;
 }
 
 .footer-section ul {
@@ -1596,17 +1593,11 @@ footer {
   .footer-section h4 {
     margin-bottom: 5px;
   }
-  .footer-link {
-    width: 110px;
-  }
   .footer-section ul li {
     margin-bottom: 4px;
     font-size: 0.85em;
   }
-  .footer-social-icon {
-    width: 35px;
-    height: 35px;
-  }
+
   .footer-link-text {
     min-width: 80px;
   }

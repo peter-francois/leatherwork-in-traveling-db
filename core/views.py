@@ -16,6 +16,9 @@ def contact(request):
 def about(request):
     return render(request, 'core/about.html')
 
+def custom_creation(request):
+    return render(request, 'core/custom_creation.html')
+
 def sitemap_lang(request, lang):
     sitemaps = {
         'static': StaticSitemap(lang),
