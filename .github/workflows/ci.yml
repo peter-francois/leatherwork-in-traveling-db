@@ -1,11 +1,11 @@
-name: Django CI/CD
+name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop" ]
   pull_request:
     branches: [ "main" ]
-    
+
 env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
   SQLITE_URL: ${{ secrets.SQLITE_URL }}
@@ -35,16 +35,3 @@ jobs:
         pip install -r requirements/dev.txt
     - name: Run Tests
       run: pytest -v
-  deploy:
-      needs: test
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-      steps:
-      - name: Deploy to PythonAnywhere
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ssh.pythonanywhere.com
-          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
-          key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
-          script: ~/leatherwork-in-traveling-db/scripts/deploy.sh
