@@ -3,22 +3,17 @@ from django.http import HttpResponse, JsonResponse
 from .models import *
 from .forms import ProductFilterForm
 from django.core.paginator import Paginator
-from django.views.decorators.http import require_POST, require_GET
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 from core.services import get_session_expiration
 import stripe
 import json
 import logging
 from django.conf import settings
-# pour résoudre le problème de CSRF token
-from django.views.decorators.csrf import ensure_csrf_cookie
 from datetime import timedelta
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.utils import translation
-from django.contrib.sitemaps.views import sitemap as django_sitemap
-from urllib.parse import urlencode
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -651,22 +646,6 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
     except Exception as e:
         logger.error(f"Erreur lors de l'envoi de l'email : {e}")
 
-def cgv_view(request):
-    latest_cgv = CGV.objects.latest('created_at')
-    return render(request, 'page_vente/cgv.html', {'cgv': latest_cgv})
-
-def cookies_view(request):
-    latest_cookies = CookiesPolicy.objects.latest('created_at')
-    return render(request, 'page_vente/cookies.html', {'cookies': latest_cookies})
-
-def legal_mentions_view(request):
-    latest_legal_mentions = LegalMention.objects.latest('created_at')
-    return render(request, 'page_vente/mentions-legales.html', {'legal_mentions': latest_legal_mentions})
-
-def privacy_policy_view(request):
-    latest_privacy_policy = PrivacyPolicy.objects.latest('created_at')
-    return render(request, 'page_vente/politique-confidentialite.html', {'privacy_policy': latest_privacy_policy})
-
 def get_number_of_products_in_cart(request):
     session_key = request.session.session_key
 
@@ -692,36 +671,3 @@ def get_number_of_products_in_cart(request):
     except ObjectDoesNotExist:
         # Si une erreur se produit avec l'accès aux objets, retourner une réponse vide
         return JsonResponse({'success': False, 'number_of_products': 0})
-
-def get_document_content(request, document_type, lang):
-    try:
-        if document_type == 'CGV':
-            latest_cgv = CGV.objects.latest('created_at')
-            content = latest_cgv.content_fr if lang == 'fr' else latest_cgv.content_en
-            cookies_url = reverse('boutique:cookies')
-            privacy_policy_url = reverse('boutique:privacy_policy')
-            content = content.replace("cookies_url", cookies_url)
-            content = content.replace("privacy_policy_url", privacy_policy_url)
-        elif document_type == 'Cookies':
-            latest_cookies = CookiesPolicy.objects.latest('created_at')
-            content = latest_cookies.content_fr if lang == 'fr' else latest_cookies.content_en
-        elif document_type == 'LegalMentions':
-            latest_legal_mentions = LegalMention.objects.latest('created_at')
-            content = latest_legal_mentions.content_fr if lang == 'fr' else latest_legal_mentions.content_en
-            cookies_url = reverse('boutique:cookies')
-            cgv_url = reverse('boutique:cgv')
-            privacy_policy_url = reverse('boutique:privacy_policy')
-            content = content.replace("cookies_url", cookies_url)
-            content = content.replace("cgv_url", cgv_url)
-            content = content.replace("privacy_policy_url", privacy_policy_url)
-
-        elif document_type == 'PrivacyPolicy':
-            latest_privacy_policy = PrivacyPolicy.objects.latest('created_at')
-            content = latest_privacy_policy.content_fr if lang == 'fr' else latest_privacy_policy.content_en
-        else:
-            return JsonResponse({'error': 'Invalid document type'}, status=400)
-
-        return HttpResponse(content, content_type="text/html")
-
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)

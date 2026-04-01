@@ -98,34 +98,4 @@ class AllProductsAdmin(admin.ModelAdmin):
         forms.update_type(self)
     
 
-class ForceNewVersionAdmin(admin.ModelAdmin):
-    def save_model(self, request, obj, form, change):
-        if change:
-            obj.pk = None  # Force la création d’un nouvel enregistrement
-        super().save_model(request, obj, form, change)
-    
-    def has_delete_permission(self, request, obj=None):
-        return False  # Empêche la suppression
-        
-@admin.register(CGV)
-class CGVAdmin(ForceNewVersionAdmin):
-    list_display = ('version', 'created_at')
-    ordering = ('-created_at',)
-
-@admin.register(CookiesPolicy)
-class CookiesPolicyAdmin(ForceNewVersionAdmin):
-    list_display = ('version', 'created_at')
-    ordering = ('-created_at',)
-
-@admin.register(LegalMention)
-class LegalMentionAdmin(ForceNewVersionAdmin):
-    list_display = ('version', 'created_at')
-    ordering = ('-created_at',)
-
-@admin.register(PrivacyPolicy)
-class PrivacyPolicyAdmin(ForceNewVersionAdmin):
-    list_display = ('version', 'created_at')
-    ordering = ('-created_at',)
-
-    
 admin.site.register(AllProducts, AllProductsAdmin)
