@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
+from legal.choices import DocumentType
 from .models import *
 from .forms import ProductFilterForm
 from django.core.paginator import Paginator
@@ -105,7 +106,7 @@ def creation_sur_mesure(request):
 
 def panier(request):
     session_key = request.session.session_key
-    latest_cgv = CGV.objects.latest('created_at')
+    latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
     cart = Cart.objects.filter(session_id=session_key, paid=False).first()
     items = CartItem.objects.filter(cart=cart)
     total = sum((item.product.prix - item.product.discount) * item.quantity for item in items)
@@ -342,7 +343,7 @@ def checkout(request):
         return JsonResponse({'error': 'Vous devez accepter les conditions générales de vente'}, status=400)
 
     # Récupérer la dernière version des CGV
-    latest_cgv = CGV.objects.latest('created_at')
+    latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
 
     # Enregistrer l'acceptation des CGV
     if not cart.cgv_accepted:
