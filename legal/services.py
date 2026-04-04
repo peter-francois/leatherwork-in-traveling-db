@@ -10,7 +10,6 @@ def get_legal_document_content(document_type: str, lang: str) -> str:
 
     content = latest.content_fr if lang == 'fr' else latest.content_en
     with translation.override(lang):
-        print('here')
         if document_type in (DocumentType.TERMS, DocumentType.LEGAL_MENTIONS):
             content = content.replace("cookies_url", reverse('legal:cookies'))
             content = content.replace("privacy_policy_url", reverse('legal:privacy_policy'))
