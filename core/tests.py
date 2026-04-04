@@ -1,6 +1,8 @@
-from django.test import TestCase, Client
+from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse
-from .services import generate_sitemap_index
+from .services import generate_sitemap_index, get_session_expiration
+from django.utils import timezone
+from django.contrib.sessions.backends.db import SessionStore
 
 
 class IndexViewTest(TestCase):
@@ -77,3 +79,56 @@ class GenerateSitemapIndexTest(TestCase):
         result = generate_sitemap_index('https://example.com/', [])
         self.assertIn('<sitemapindex', result)
         self.assertNotIn('<sitemap>', result)
+
+class GetSessionExpirationTest(TestCase):
+    """Tests for the get_session_expiration service"""
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_returns_none_when_no_session_key(self):
+        """Should return None when request has no session key"""
+        request = self.factory.get('/')
+        request.session = SessionStore()
+        # SessionStore have no saved session
+        result = get_session_expiration(request)
+        self.assertIsNone(result)
+
+    def test_returns_expiration_date_when_session_exists(self):
+        """Should return the session expiration date"""
+        # Create a session in db
+        session = SessionStore()
+        session.create()
+
+        request = self.factory.get('/')
+        request.session = session
+
+        result = get_session_expiration(request)
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, timezone.datetime)
+
+    def test_expiration_date_is_in_future(self):
+        """Should return a future expiration date for active session"""
+        session = SessionStore()
+        session.create()
+
+        request = self.factory.get('/')
+        request.session = session
+
+        result = get_session_expiration(request)
+
+        self.assertIsNotNone(result)
+        # Confirm to pytest that result is not None
+        assert result is not None
+        self.assertGreater(result, timezone.now())
+
+    def test_returns_none_when_session_does_not_exist_in_db(self):
+        """Should return None when session key exists but not in DB"""
+        session = SessionStore()
+        session._session_key = 'fake_session_key_not_in_db' # type: ignore # Force private attribute to simulate a non-existent session key
+
+        request = self.factory.get('/')
+        request.session = session
+
+        result = get_session_expiration(request)
+        self.assertIsNone(result)

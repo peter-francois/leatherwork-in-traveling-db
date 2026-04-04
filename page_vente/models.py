@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from cloudinary.models import CloudinaryField
 from django.core.validators import RegexValidator
+from legal.models import LegalDocument
 
 class AllProducts(models.Model):
 
@@ -54,7 +55,7 @@ class AllProducts(models.Model):
 class Cart(models.Model):
     session_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
     uuid = models.UUIDField(default=uuid.uuid4,unique=True, editable=False)
-    cgv_accepted = models.ForeignKey('CGV', on_delete=models.PROTECT, null=True, blank=True)
+    cgv_accepted  = models.ForeignKey('legal.LegalDocument', on_delete=models.PROTECT, null=True, limit_choices_to={'document_type': 'terms'})
     cgv_accepted_at = models.DateTimeField(null=True, blank=True)
     cgv_expires_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,55 +71,3 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(AllProducts, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-
-class CGV(models.Model):
-    version_validator = RegexValidator(regex=r'^\d{4}-\d{2}-\d{2}$', message="Format de version incorrect, utilisez YYYY-MM-DD.")
-    version = models.CharField(max_length=20, unique=True, help_text="Ex : 2024-06-01", validators=[version_validator])
-    content_fr = models.TextField(default='', help_text="Texte complet des CGV en français")
-    content_en = models.TextField(default='', help_text="Texte complet des CGV en anglais")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"CGV {self.version}"
-
-    class Meta:
-        ordering = ['-created_at']
-
-class CookiesPolicy(models.Model):
-    version_validator = RegexValidator(regex=r'^\d{4}-\d{2}-\d{2}$', message="Format de version incorrect, utilisez YYYY-MM-DD.")
-    version = models.CharField(max_length=20, unique=True, help_text="Ex : 2024-06-01", validators=[version_validator])
-    content_fr = models.TextField(default='', help_text="Texte complet des cookies en français")
-    content_en = models.TextField(default='', help_text="Texte complet des cookies en anglais")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Cookies Policy {self.version}"
-
-    class Meta:
-        ordering = ['-created_at']
-
-class LegalMention(models.Model):
-    version_validator = RegexValidator(regex=r'^\d{4}-\d{2}-\d{2}$', message="Format de version incorrect, utilisez YYYY-MM-DD.")
-    version = models.CharField(max_length=20, unique=True, help_text="Ex : 2024-06-01", validators=[version_validator])
-    content_fr = models.TextField(default='', help_text="Texte complet des mentions légales en français")
-    content_en = models.TextField(default='', help_text="Texte complet des mentions légales en anglais")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Legal Mentions {self.version}"
-
-    class Meta:
-        ordering = ['-created_at']
-
-class PrivacyPolicy(models.Model):
-    version_validator = RegexValidator(regex=r'^\d{4}-\d{2}-\d{2}$', message="Format de version incorrect, utilisez YYYY-MM-DD.")
-    version = models.CharField(max_length=20, unique=True, help_text="Ex : 2024-06-01", validators=[version_validator])
-    content_fr = models.TextField(default='', help_text="Texte complet de la politique de confidentialité en français")
-    content_en = models.TextField(default='', help_text="Texte complet de la politique de confidentialité en anglais")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Privacy Policy {self.version}"
-
-    class Meta:
-        ordering = ['-created_at']
