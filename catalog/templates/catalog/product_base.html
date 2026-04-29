@@ -35,7 +35,6 @@
                     <a class="pagination-button next-button" href="{{ request.path }}?page={{ products.next_page_number }}">{% trans "Suivant" %}</a>
                     <a class="pagination-button last-button" href="{{ request.path }}?page={{ products.paginator.num_pages }}">{% trans "Dernier" %} &raquo;</a>
                 {% endif %}
-
                 <span class="current-page">
                     Page {{ products.number }} <span id="of">{% trans "of" %}</span> {{ products.paginator.num_pages }}
                 </span>
@@ -44,11 +43,11 @@
                 <div class="filter">
                     <form class="filter-form grid-container" method="GET">
                         {{ form.as_p }}
-                        <button class="align-items-center font-size-17" id="filter_button" type="submit" ><span id="filter_button_text">{% trans "Filtrer" %}</span><img id="filter-icon" src="{% static 'page_vente/icons/filter-solid.svg' %}" alt="icon filter"></button>
+                        <button class="align-items-center font-size-17" id="filter_button" type="submit"><span id="filter_button_text">{% trans "Filtrer" %}</span><img id="filter-icon" src="{% static 'catalog/icons/filter-solid.svg' %}" alt="icon filter"></button>
                     </form>
                     {% if filter_used %}
                         {% if number_of_products_in_filter > 0 %}
-                            <p class="number-of-products-in-filter text-center">{{ number_of_products_in_filter }} {%   if number_of_products_in_filter > 1 %}{% trans 'articles trouvés après application du filtre.' %}{% else %}{% trans 'article trouvé après application du filtre.' %}{% endif %}</p>
+                            <p class="number-of-products-in-filter text-center">{{ number_of_products_in_filter }} {% if number_of_products_in_filter > 1 %}{% trans 'articles trouvés après application du filtre.' %}{% else %}{% trans 'article trouvé après application du filtre.' %}{% endif %}</p>
                         {% endif %}
                         <button type="button" id="clean_filter" class="align-items-center page-button font-size-17 clean-button">{% trans "Effacer le filtre" %}</button>
                     {% endif %}
@@ -57,38 +56,38 @@
                 <div id="liste-produits" class="grid-container tous_les_produits">
                     {% if products %}
                     {% for produit in products %}
-                        <div class="grid-container produit{% if produit.en_attente_dans_panier or produit.sur_commande %} unavailable{% endif %}" data-product-id="{{ produit.id }}">
-                            <h2 class="product-name">{{ produit.nom }}</h2>
+                        <div class="grid-container produit{% if produit.pending_in_cart or produit.on_demand %} unavailable{% endif %}" data-product-id="{{ produit.id }}">
+                            <h2 class="product-name">{{ produit.name }}</h2>
                                 {% if produit.image1 or produit.image2 or produit.image3 or produit.image4 or produit.image5 or produit.image6 %}
                                     {% if produit.image1 %}
-                                        <img src="{{ produit.image1.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image1.url }}" alt="{{ produit.name }}">
                                     {% elif produit.image2 %}
-                                        <img src="{{ produit.image2.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image2.url }}" alt="{{ produit.name }}">
                                     {% elif produit.image3 %}
-                                        <img src="{{ produit.image3.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image3.url }}" alt="{{ produit.name }}">
                                     {% elif produit.image4 %}
-                                        <img src="{{ produit.image4.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image4.url }}" alt="{{ produit.name }}">
                                     {% elif produit.image5 %}
-                                        <img src="{{ produit.image5.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image5.url }}" alt="{{ produit.name }}">
                                     {% elif produit.image6 %}
-                                        <img src="{{ produit.image6.url }}" alt="{{ produit.nom }}">
+                                        <img src="{{ produit.image6.url }}" alt="{{ produit.name }}">
                                     {% endif %}
                                     <p class="click-hint">👆 {% trans 'Cliquez' %}</p>
                                 {% else %}
                                     <p>{% trans "Aucune image disponible" %}</p>
                                 {% endif %}
-                            {% if not produit.en_attente_dans_panier and not produit.sur_commande %}
-                            {% if produit.discount != 0.0 %} 
-                                <p class="promo-widget">Promo</p>
-                                <p class= "text-center new-price">Nouveau prix: {{ produit.nouveau_prix | floatformat:2 }}€</p> 
-                                <p class="old-price">{% trans "Prix: " %} {{ produit.prix | floatformat:2 }}€</p>
+                            {% if not produit.pending_in_cart and not produit.on_demand %}
+                                {% if produit.discount != 0.0 %}
+                                    <p class="promo-widget">Promo</p>
+                                    <p class="text-center new-price">Nouveau prix: {{ produit.final_price | floatformat:2 }}€</p>
+                                    <p class="old-price">{% trans "Prix: " %} {{ produit.price | floatformat:2 }}€</p>
+                                {% else %}
+                                    <p>{% trans "Prix: " %} {{ produit.price | floatformat:2 }}€</p>
+                                {% endif %}
+                                <button class="align-items-center page-button add_to_cart_button" data-product-id="{{ produit.id }}">{% trans "Ajouter au panier" %}</button>
                             {% else %}
-                                <p>{% trans "Prix: " %} {{ produit.prix | floatformat:2 }}€</p>
-                            {% endif %}
-                            <button class="align-items-center page-button add_to_cart_button" data-product-id="{{ produit.id }}">{% trans "Ajouter au panier" %}</button>
-                            {%else %}
-                            <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>
-                            <a class="align-items-center page-button on-order-button text-center" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20fabrication%20de%20l'article%20{{produit.nom}}">{% trans 'Contactez-nous, disponible sur commande' %}</a>
+                                <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>
+                                <a class="align-items-center page-button on-order-button text-center" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20fabrication%20de%20l'article%20{{ produit.name }}">{% trans 'Contactez-nous, disponible sur commande' %}</a>
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -97,7 +96,6 @@
                     {% endif %}
                 </div>
             </div>
-            <!--Pagination Links-->
             <!--Pagination Links-->
             <div class="pagination text-center font-size-17">
                 {% if products.has_previous %}
@@ -112,7 +110,6 @@
                     <a class="pagination-button next-button" href="{{ request.path }}?page={{ products.next_page_number }}">{% trans "Suivant" %}</a>
                     <a class="pagination-button last-button" href="{{ request.path }}?page={{ products.paginator.num_pages }}">{% trans "Dernier" %} &raquo;</a>
                 {% endif %}
-
                 <span class="current-page">
                     Page {{ products.number }} <span id="of">{% trans "of" %}</span> {{ products.paginator.num_pages }}
                 </span>
@@ -122,8 +119,8 @@
         {% endblock %}
     </section>
     <section class="hidden">
-        <ul id="liste-articles"></ul>    
+        <ul id="liste-articles"></ul>
     </section>
-    {% include 'core/modal.html' %}
+    {% include 'catalog/modal.html' %}
 </main>
 {% endblock %}
