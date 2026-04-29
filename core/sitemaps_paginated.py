@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils import translation
 from django.core.paginator import Paginator
 from page_vente.models import AllProducts
+from catalog.constants import PRODUCTS_PER_PAGE
 
 class PaginatedCategorySitemap(Sitemap):
     changefreq = "weekly"
@@ -20,7 +21,7 @@ class PaginatedCategorySitemap(Sitemap):
     def items(self):
         items = []
         for view_name, queryset in self.categories:
-            paginator = Paginator(queryset, 24)
+            paginator = Paginator(queryset, PRODUCTS_PER_PAGE)
             for page_number in range(1, paginator.num_pages + 1):
                 items.append((view_name, page_number))
         return items
