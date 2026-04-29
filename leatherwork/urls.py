@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from page_vente import views
 from core import views as core_views
 from core.sitemaps import StaticSitemap
 from django.views.i18n import JavaScriptCatalog
@@ -40,6 +39,7 @@ urlpatterns = i18n_patterns(
     path('', include('page_vente.urls')),
     path('', include('core.urls')),
     path('', include('legal.urls')),
+    path('', include('catalog.urls')),
     path('i18n/', include('django.conf.urls.i18n')),  # Activation du changement de langue
 )
 

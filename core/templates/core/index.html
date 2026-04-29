@@ -20,7 +20,7 @@
 {% endblock %}
 {% block content%}
     <section class="category grid-container">
-        <a class="linker product-card " href="{% url 'boutique:maroquinerie' %}">
+        <a class="linker product-card " href="{% url 'catalog:leather_list' %}">
             <h2 class="product-title text-center"><img  class="index-icon" src="{% static 'core/icons/wallet-solid.svg' %}" alt="icon porte_feuille"><span id="maroquinerie_title">{% trans "Espace Maroquinerie" %}</span></h2>
             <div class="grid-container align-items-center half-grid-width" >
                 
@@ -34,7 +34,7 @@
             </div>
             <p class="product-description text-center"><strong>{% trans '➤ Découvrez toute la collection de créations en cuir' %}</strong></p>
         </a>
-        <a class="linker product-card " href="{% url 'boutique:macrames' %}">
+        <a class="linker product-card " href="{% url 'catalog:macrame_list' %}">
             <h2 class="product-title text-center" ><img  class="index-icon" src="{% static 'core/icons/feather-pointed-solid.svg' %}" alt="icon macrames"><span id="macrames_title">{% trans "Espace Macramé" %}</span></h2>
             <div class="grid-container align-items-center half-grid-width" >
                 <div class="product-title-and-description align-items-center text-center">
@@ -61,7 +61,7 @@
             </div>
             <p class="product-description text-center"><strong>{% trans '➤ Créez votre pièce unique avec une commande personnalisée' %}</strong></p>
             </a>
-        <a class="linker product-card full-grid-width" href="{% url 'boutique:hybride' %}">
+        <a class="linker product-card full-grid-width" href="{% url 'catalog:hybrid_list' %}">
             <h2 class="product-title text-center" ><img  class="index-icon" src="{% static 'core/icons/yin-yang-solid.svg' %}" alt="icon hybride"><span id="hybride_title">{% trans 'Fusion cuir, macramé et pierres décoratives' %}</span></h2>
             <div class="grid-container align-items-center grid-width_2" >
                 <img class="index-img image-full-span display-laptop" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745415828/pccr5pkhxx4lnl5fbpi9.jpg" alt="Bracelet hybride">

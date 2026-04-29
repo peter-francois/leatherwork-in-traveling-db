@@ -61,6 +61,7 @@ LOCAL_APPS = [
     'page_vente',
     'core',
     'legal',
+    'catalog'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
