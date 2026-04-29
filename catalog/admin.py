@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.contrib import messages
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 from django.utils.html import format_html
 from .models import Product
@@ -19,7 +18,7 @@ class ProductForm(forms.ModelForm):
             image_file = cleaned_data.get(field)
             if image_file:
                 if hasattr(image_file, 'size') and image_file.size > 10 * 1024 * 1024:
-                    raise ValidationError({field: _('Le fichier est trop volumineux. La taille maximale est de 10 Mo.')})
+                    raise ValidationError({field: 'Le fichier est trop volumineux. La taille maximale est de 10 Mo.'})
         return cleaned_data
 
 
@@ -37,7 +36,7 @@ def _make_thumbnail(i):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    actions = ['rendre_disponible', 'rendre_indisponible', 'retirer_du_panier']
+    actions = ['make_available', 'make_unavailable', 'remove_from_cart']
     list_display = ('name', 'category', 'available', 'pending_in_cart', 'on_demand', 'product_type', 'description', 'price')
     search_fields = ['name', 'category', 'product_type']
     list_filter = ['category', 'available']
@@ -57,13 +56,15 @@ class ProductAdmin(admin.ModelAdmin):
         }),
     )
 
-    def rendre_disponible(self, request, queryset):
+    def make_available(self, request, queryset):
         queryset.update(available=True)
+    make_available.short_description = 'Rendre disponible'
 
-    def rendre_indisponible(self, request, queryset):
+    def make_unavailable(self, request, queryset):
         queryset.update(available=False)
+    make_unavailable.short_description = 'Rendre indisponible'
 
-    def retirer_du_panier(self, request, queryset):
+    def remove_from_cart(self, request, queryset):
         try:
             from cart.models import CartItem
             articles_id = list(queryset.values_list('id', flat=True))
@@ -71,10 +72,10 @@ class ProductAdmin(admin.ModelAdmin):
                 deleted_count, _ = CartItem.objects.filter(product__in=articles_id).delete()
                 queryset.update(pending_in_cart=False)
             if deleted_count > 0:
-                messages.success(request, f"{deleted_count} article(s) retiré(s) du panier.")
+                messages.success(request, _("{count} article(s) retiré(s) du panier.").format(count=deleted_count))
         except Exception:
             messages.warning(request, "Fonctionnalité panier pas encore disponible.")
-
+    remove_from_cart.short_description = 'Retirer du panier'
 
 for i in range(1, 7):
     setattr(ProductAdmin, f'image{i}_thumbnail', _make_thumbnail(i))
