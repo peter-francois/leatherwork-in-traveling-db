@@ -5,6 +5,7 @@ on:
     branches: ["develop"]
   pull_request:
     branches: ["main"]
+    types: [opened, synchronize]
 
 env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
