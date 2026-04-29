@@ -711,7 +711,7 @@ section select {
   padding-left: 10px;
 }
 #filter_button:hover #filter-icon {
-  content: url(../page_vente/icons/filter-solid-hover.svg);
+  content: url(../catalog/icons/filter-solid-hover.svg);
 }
 .pagination-button {
   display: inline-block;
