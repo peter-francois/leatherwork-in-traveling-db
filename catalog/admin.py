@@ -1,3 +1,83 @@
 from django.contrib import admin
+from django.contrib import messages
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.db import transaction
+from django.utils.html import format_html
+from .models import Product
 
-# Register your models here.
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        for field in [f'image{i}' for i in range(1, 7)]:
+            image_file = cleaned_data.get(field)
+            if image_file:
+                if hasattr(image_file, 'size') and image_file.size > 10 * 1024 * 1024:
+                    raise ValidationError({field: _('Le fichier est trop volumineux. La taille maximale est de 10 Mo.')})
+        return cleaned_data
+
+
+def image_thumbnail(image_field):
+    if image_field:
+        return format_html('<img src="{}" width="100" height="100" style="object-fit: cover;" />', image_field.url)
+    return "Aucune image"
+
+
+def _make_thumbnail(i):
+    def thumbnail(self, obj):
+        return image_thumbnail(getattr(obj, f'image{i}'))
+    thumbnail.short_description = f'Miniature {i}'
+    return thumbnail
+
+
+class ProductAdmin(admin.ModelAdmin):
+    actions = ['rendre_disponible', 'rendre_indisponible', 'retirer_du_panier']
+    list_display = ('name', 'category', 'available', 'pending_in_cart', 'on_demand', 'product_type', 'description', 'price')
+    search_fields = ['name', 'category', 'product_type']
+    list_filter = ['category', 'available']
+    form = ProductForm
+    list_per_page = 20
+    readonly_fields = tuple(f'image{i}_thumbnail' for i in range(1, 7))
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'category', 'product_type', 'description', 'price', 'discount', 'available', 'pending_in_cart', 'on_demand')
+        }),
+        ('Images', {
+            'fields': tuple(
+                field
+                for i in range(1, 7)
+                for field in (f'image{i}', f'image{i}_thumbnail')
+            )
+        }),
+    )
+
+    def rendre_disponible(self, request, queryset):
+        queryset.update(available=True)
+
+    def rendre_indisponible(self, request, queryset):
+        queryset.update(available=False)
+
+    def retirer_du_panier(self, request, queryset):
+        try:
+            from cart.models import CartItem
+            articles_id = list(queryset.values_list('id', flat=True))
+            with transaction.atomic():
+                deleted_count, _ = CartItem.objects.filter(product__in=articles_id).delete()
+                queryset.update(pending_in_cart=False)
+            if deleted_count > 0:
+                messages.success(request, f"{deleted_count} article(s) retiré(s) du panier.")
+        except Exception:
+            messages.warning(request, "Fonctionnalité panier pas encore disponible.")
+
+
+for i in range(1, 7):
+    setattr(ProductAdmin, f'image{i}_thumbnail', _make_thumbnail(i))
+
+
+admin.site.register(Product, ProductAdmin)
