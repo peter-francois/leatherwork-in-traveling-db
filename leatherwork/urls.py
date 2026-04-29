@@ -40,6 +40,7 @@ urlpatterns = i18n_patterns(
     path('', include('page_vente.urls')),
     path('', include('core.urls')),
     path('', include('legal.urls')),
+    path('', include('catalog.urls')),
     path('i18n/', include('django.conf.urls.i18n')),  # Activation du changement de langue
 )
 

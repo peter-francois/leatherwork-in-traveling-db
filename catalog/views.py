@@ -24,14 +24,14 @@ def product_list(request, category=None):
     })
 
 
-def produits(request):
+def product(request):
     return product_list(request)
 
-def maroquinerie(request):
+def leather(request):
     return product_list(request, category=Category.MAROQUINERIE)
 
-def macrames(request):
+def macrame(request):
     return product_list(request, category=Category.MACRAME)
 
-def hybride(request):
+def hybrid(request):
     return product_list(request, category=Category.HYBRIDE)
