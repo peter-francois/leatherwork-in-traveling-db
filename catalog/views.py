@@ -3,19 +3,19 @@ from .models import Product
 from .choices import Category
 from .utils import use_filter, pagination
 
-def product_list(request, category=None):
+def product_list(request, category=None, template='catalog/product_list.html'):
     products = Product.objects.filter(available=True)
-    
+
     if category:
         products = products.filter(category=category)
 
-    products = sorted(products, key=lambda p: (p.pending_in_cart, -p.id))
+    products = products.order_by('pending_in_cart', '-id')
     products, form, number_of_products_in_filter, filter_used = use_filter(
         request, products, is_all_products=category is None
     )
     page_obj = pagination(request, products)
 
-    return render(request, 'catalog/product_list.html', {
+    return render(request, template, {
         'products': page_obj,
         'form': form,
         'category': category,
@@ -23,15 +23,14 @@ def product_list(request, category=None):
         'filter_used': filter_used,
     })
 
-
 def product(request):
     return product_list(request)
 
-def leather(request):
-    return product_list(request, category=Category.MAROQUINERIE)
+def leatherwork(request):
+    return product_list(request, category=Category.MAROQUINERIE, template='catalog/leatherwork.html')
 
 def macrame(request):
-    return product_list(request, category=Category.MACRAME)
+    return product_list(request, category=Category.MACRAME, template='catalog/macrame.html')
 
 def hybrid(request):
-    return product_list(request, category=Category.HYBRIDE)
+    return product_list(request, category=Category.HYBRIDE, template='catalog/hybrid.html')

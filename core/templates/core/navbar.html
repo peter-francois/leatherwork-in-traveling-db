@@ -11,14 +11,14 @@
             <ul class="menu-content2">
                 <li><a href="{% url 'core:index' %}">{% trans "ACCUEIL" %}</a></li>
                 <li id="shop">
-                    <a href="{% url 'boutique:produits' %}">
+                    <a href="{% url 'catalog:product_list' %}">
                         <span>{% trans "BOUTIQUE" %}</span>
                         <img id="arrow-down" src="{% static 'core/icons/arrow-down-solid.svg' %}" alt="icon arrow down">
                     </a>
                     <ul class="menu-content-produit">
-                        <li><a href="{% url 'boutique:maroquinerie' %}">{% trans "MAROQUINERIE" %}</a></li>
-                        <li><a href="{% url 'boutique:macrames' %}">{% trans "MACRAMÉ" %}</a></li>
-                        <li><a href="{% url 'boutique:hybride' %}">{% trans "HYBRIDE" %}</a></li>
+                        <li><a href="{% url 'catalog:leather_list' %}">{% trans "MAROQUINERIE" %}</a></li>
+                        <li><a href="{% url 'catalog:macrame_list' %}">{% trans "MACRAMÉ" %}</a></li>
+                        <li><a href="{% url 'catalog:hybrid_list' %}">{% trans "HYBRIDE" %}</a></li>
                     </ul>
                 </li>
                 <li id="custom-creation"><a href="{% url 'core:custom_creation' %}">{% trans "CRÉATION SUR MESURE" %}</a></li>
