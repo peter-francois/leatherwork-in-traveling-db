@@ -2,7 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils import translation
 from django.core.paginator import Paginator
-from page_vente.models import AllProducts
+from catalog.models import Product
 from catalog.constants import PRODUCTS_PER_PAGE
 
 class PaginatedCategorySitemap(Sitemap):
@@ -12,10 +12,10 @@ class PaginatedCategorySitemap(Sitemap):
     def __init__(self, language='fr'):
         self.language = language
         self.categories = [
-            ('boutique:produits', AllProducts.objects.order_by('-id')),
-            ('boutique:maroquinerie', AllProducts.objects.filter(categorie='Maroquinerie').order_by('-id')),
-            ('boutique:macrames', AllProducts.objects.filter(categorie='Macrame').order_by('-id')),
-            ('boutique:hybride', AllProducts.objects.filter(categorie='Hybride').order_by('-id')),
+            ('boutique:produits', Product.objects.order_by('-id')),
+            ('boutique:maroquinerie', Product.objects.filter(categorie='Maroquinerie').order_by('-id')),
+            ('boutique:macrames', Product.objects.filter(categorie='Macrame').order_by('-id')),
+            ('boutique:hybride', Product.objects.filter(categorie='Hybride').order_by('-id')),
         ]
 
     def items(self):
