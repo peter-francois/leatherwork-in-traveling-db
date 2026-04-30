@@ -13,9 +13,9 @@ class PaginatedCategorySitemap(Sitemap):
         self.language = language
         self.categories = [
             ('boutique:produits', Product.objects.order_by('-id')),
-            ('boutique:maroquinerie', Product.objects.filter(categorie='Maroquinerie').order_by('-id')),
-            ('boutique:macrames', Product.objects.filter(categorie='Macrame').order_by('-id')),
-            ('boutique:hybride', Product.objects.filter(categorie='Hybride').order_by('-id')),
+            ('boutique:maroquinerie', Product.objects.filter(category='Maroquinerie').order_by('-id')),
+            ('boutique:macrames', Product.objects.filter(category='Macrame').order_by('-id')),
+            ('boutique:hybride', Product.objects.filter(category='Hybride').order_by('-id')),
         ]
 
     def items(self):
