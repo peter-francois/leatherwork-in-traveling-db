@@ -14,7 +14,7 @@ class Cart(models.Model):
     paid = models.BooleanField(default=False)
     paid_at = models.DateTimeField(null=True, blank=True)
     def get_total(self):
-        return sum((item.product.prix - item.product.discount) * item.quantity for item in self.cartitem_set.all())
+        return sum((item.product.price - item.product.discount) * item.quantity for item in self.cartitem_set.all())
     def __str__(self):
         return f"Cart {self.uuid}"
 
