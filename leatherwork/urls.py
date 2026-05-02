@@ -36,10 +36,10 @@ sitemaps = {
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', include('page_vente.urls')),
     path('', include('core.urls')),
     path('', include('legal.urls')),
     path('', include('catalog.urls')),
+    path('', include('cart.urls')),
     path('i18n/', include('django.conf.urls.i18n')),  # Activation du changement de langue
 )
 
@@ -48,8 +48,8 @@ urlpatterns += [
     path('sitemap-fr.xml', core_views.sitemap_lang, {'lang': 'fr'}, name='sitemap-fr'),
     path('sitemap-en.xml', core_views.sitemap_lang, {'lang': 'en'}, name='sitemap-en'),
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
-    path('api/', include('page_vente.api_urls')),
     path('api/legal/', include('legal.api.urls')),
+    path('api/cart/', include('cart.api.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
