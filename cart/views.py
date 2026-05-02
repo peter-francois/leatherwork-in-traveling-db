@@ -7,12 +7,6 @@ import uuid
 from core.services import get_session_expiration
 import stripe
 import logging
-from django.urls import reverse
-from datetime import timedelta
-from django.utils.timezone import now
-from django.http import JsonResponse
-from django.conf import settings
-import json
 
 logger = logging.getLogger(__name__)
 

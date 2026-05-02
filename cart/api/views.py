@@ -9,8 +9,11 @@ from datetime import timedelta
 from django.urls import reverse
 from django.conf import settings
 from legal.choices import DocumentType
-from ..models import *
+from catalog.models import Product
+from legal.models import LegalDocument
+from ..models import Cart, CartItem
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -113,7 +116,7 @@ def remove_from_cart(request, product_id):
         cart_item.product.pending_in_cart = False
         cart_item.product.save()
         cart_item.delete()
-        return JsonResponse({'success': True, 'message': 'Article retiré du panier', 'article': {"id": cart_item.product.id, "prix": cart_item.product.price}})
+        return JsonResponse({'success': True, 'message': 'Article retiré du panier', 'article': {"id": cart_item.product.id, "price": cart_item.product.price}})
     else:
         return JsonResponse({'success': False, 'message': 'Article non trouvé dans le panier'})
     
@@ -231,9 +234,6 @@ def stripe_webhook(request):
         add_insurance= metadata.get('add_insurance')
         add_shipping= metadata.get('add_shipping')
         total_verified= metadata.get('total_verified')
-
-
-
 
         # Vous pouvez maintenant utiliser ces informations pour envoyer un email de confirmation
         send_email_to_owner(customer_email, customer_name, shipping_address, list_products, cart_uuid, total_articles, cgv_version, add_insurance, total_verified, order_id, add_shipping)
