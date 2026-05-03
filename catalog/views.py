@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Product
 from .choices import Category
-from .utils import use_filter, pagination
+from .services import use_filter, pagination
 
 def product_list(request, category=None, template='catalog/product_list.html'):
     products = Product.objects.filter(available=True)
