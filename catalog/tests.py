@@ -2,7 +2,7 @@ from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from .models import Product
 from .choices import Category, ProductType
-from .utils import use_filter, pagination
+from .services import use_filter, pagination
 from .constants import PRODUCTS_PER_PAGE
 
 

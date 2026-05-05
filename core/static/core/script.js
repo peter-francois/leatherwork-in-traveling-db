@@ -499,9 +499,10 @@ let images = []; // Tableau pour stocker les images
 
 // Fonction pour afficher les images d'un article avec le nom de l'article
 function displayProductImages(articleId) {
-  fetch(`/api/get_product_images/${articleId}/`)
+  fetch(`/api/catalog/get_product_images/${articleId}/`)
     .then((response) => {
       if (!response.ok) {
+        print(response)
         throw new Error("Network response was not ok");
       }
       return response.json();

@@ -50,6 +50,7 @@ urlpatterns += [
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
     path('api/legal/', include('legal.api.urls')),
     path('api/cart/', include('cart.api.urls')),
+    path('api/catalog/', include('catalog.api.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
