@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Fonction pour afficher les articles du panier
 function displayCart() {
-  fetch("/api/cart_detail/")
+  fetch("/api/cart/cart_detail/")
     .then((response) => response.json())
     .then((data) => {
       let listeArticles = document.getElementById("liste-articles");
@@ -229,13 +229,13 @@ function displayCart() {
           p.style.margin = "0px";
           let span = document.createElement("span");
           let span2 = document.createElement("span");
-          span.textContent = formatNumber(article.prix);
+          span.textContent = formatNumber(article.price);
           span2.textContent = `€ (x${article.quantity})`;
-          h3.textContent = `${article.nom}`;
+          h3.textContent = `${article.name}`;
           p.appendChild(span);
           p.appendChild(span2);
           img.onclick = () => displayProductImages(article.id);
-          img.alt = `${article.nom}`;
+          img.alt = `${article.name}`;
 
           let button = document.createElement("button");
           button.textContent = translations_front.delete_button;
@@ -244,31 +244,31 @@ function displayCart() {
           li.appendChild(h3);
           if (article.image1) {
             img.src = article.image1;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
             li.appendChild(clickHint);
           } else if (article.image2) {
             img.src = article.image2;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
           } else if (article.image3) {
             img.src = article.image3;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
             li.appendChild(clickHint);
           } else if (article.image4) {
             img.src = article.image4;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
             li.appendChild(clickHint);
           } else if (article.image5) {
             img.src = article.image5;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
             li.appendChild(clickHint);
           } else if (article.image6) {
             img.src = article.image6;
-            img.alt = `${article.nom}`;
+            img.alt = `${article.name}`;
             li.appendChild(img);
             li.appendChild(clickHint);
           } else {
@@ -284,7 +284,7 @@ function displayCart() {
             li.append(promoWidget);
             let new_price = document.createElement("p");
             new_price.style.margin = "0px";
-            new_price.textContent = `Nouveau prix: ${formatNumber(article.prix - article.discount)}€`;
+            new_price.textContent = `Nouveau prix: ${formatNumber(article.price - article.discount)}€`;
             li.appendChild(new_price);
             p.style.textDecoration = "line-through";
             p.style.textDecorationThickness = "3px";
@@ -315,7 +315,7 @@ function initCart() {
 }
 // Ajouter un produit au panier
 function addToCart(articleId) {
-  fetch(`/api/add_to_cart/${articleId}/`, {
+  fetch(`/api/cart/add_to_cart/${articleId}/`, {
     method: "POST",
     headers: {
       "X-CSRFToken": getCSRFTokenFromMeta(),
@@ -356,7 +356,7 @@ function updateProductList(articleId) {
 
 // Fonction pour obtenir le nombre d'articles dans le panier
 async function getNumberOfProductsInCart() {
-  const response = await fetch(`/api/get_number_of_products_in_cart/`, {
+  const response = await fetch(`/api/cart/get_number_of_products/`, {
     method: "GET",
     headers: {
       "X-CSRFToken": getCSRFTokenFromMeta(),
@@ -417,7 +417,7 @@ function updateCartVisibility() {
 }
 // Fonction pour vider le panier
 function clearCart() {
-  fetch("/api/vider_panier/", {
+  fetch("/api/cart/empty_cart/", {
     method: "POST",
     headers: {
       "X-CSRFToken": getCSRFTokenFromMeta(),
@@ -452,7 +452,7 @@ function cleanFilter() {
 
 // Fonction pour supprimer un article du panier
 function remove_from_cart(articleId) {
-  fetch(`/api/remove_from_cart/${articleId}/`, {
+  fetch(`/api/cart/remove_from_cart/${articleId}/`, {
     method: "POST",
     headers: {
       "X-CSRFToken": getCSRFTokenFromMeta(),
@@ -469,7 +469,7 @@ function remove_from_cart(articleId) {
         let orderTotal = parseFloat(
           document.getElementById("order-total").textContent.replace(",", "."),
         );
-        const priceArticle = parseFloat(data.article.prix.toFixed(2));
+        const priceArticle = parseFloat(data.article.price.toFixed(2));
         orderTotal -= priceArticle;
         // Formater selon la langue
         const formattedTotal =
@@ -499,9 +499,10 @@ let images = []; // Tableau pour stocker les images
 
 // Fonction pour afficher les images d'un article avec le nom de l'article
 function displayProductImages(articleId) {
-  fetch(`/api/get_product_images/${articleId}/`)
+  fetch(`/api/catalog/get_product_images/${articleId}/`)
     .then((response) => {
       if (!response.ok) {
+        print(response)
         throw new Error("Network response was not ok");
       }
       return response.json();
@@ -754,7 +755,7 @@ function handleCheckout() {
     return;
   }
   // Redirige vers Stripe avec le montant total
-  window.location.href = `/api/checkout/?front_total=${orderTotal}&cart_uuid=${cart_uuid}&insurance=${addInsurance ? 1 : 0}&shipping=${addShipping ? 1 : 0}&acceptCGV=${acceptCGV ? 1 : 0}`;
+  window.location.href = `/api/cart/checkout/?front_total=${orderTotal}&cart_uuid=${cart_uuid}&insurance=${addInsurance ? 1 : 0}&shipping=${addShipping ? 1 : 0}&acceptCGV=${acceptCGV ? 1 : 0}`;
 }
 // débug
 

@@ -61,7 +61,8 @@ LOCAL_APPS = [
     'page_vente',
     'core',
     'legal',
-    'catalog'
+    'catalog',
+    'cart'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -184,8 +185,8 @@ STORAGES = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'page_vente/static'), 
     os.path.join(BASE_DIR, 'core/static'),
+    os.path.join(BASE_DIR, 'catalog/static'),
 ]
 
 # Default primary key field type
