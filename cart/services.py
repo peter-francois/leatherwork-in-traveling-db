@@ -6,6 +6,7 @@ from django.conf import settings
 from cart.models import Cart
 import stripe
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__name__)
 
 def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_total, success_url, cancel_url):
