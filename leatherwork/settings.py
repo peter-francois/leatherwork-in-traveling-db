@@ -185,8 +185,8 @@ STORAGES = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'page_vente/static'), 
     os.path.join(BASE_DIR, 'core/static'),
+    os.path.join(BASE_DIR, 'catalog/static'),
 ]
 
 # Default primary key field type
