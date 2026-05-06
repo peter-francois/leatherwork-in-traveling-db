@@ -47,7 +47,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('legal', '0001_initial'),
-        ('page_vente', '0043_allproducts_discount'),  # adapte le numéro
     ]
 
     operations = [

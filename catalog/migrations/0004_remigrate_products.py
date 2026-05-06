@@ -31,7 +31,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('catalog', '0003_alter_product_options_remove_product_categorie_and_more'),
-        ('page_vente', '0048_alter_cart_cgv_accepted'),
     ]
 
     operations = [

@@ -34,7 +34,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cart', '0001_initial'),
-        ('page_vente', '0048_alter_cart_cgv_accepted'),
     ]
 
     operations = [

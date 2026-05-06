@@ -58,7 +58,6 @@ THIRD_PARTY_APPS = [
 
 # Local apps
 LOCAL_APPS = [
-    'page_vente',
     'core',
     'legal',
     'catalog',
