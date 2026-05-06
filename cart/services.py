@@ -9,38 +9,42 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__name__)
 
-def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_total, success_url, cancel_url):
+class AmountMismatchError(Exception):
+    pass
 
+
+class StripeSessionError(Exception):
+    pass
+
+
+def _build_product_list(cart):
+    """Build product list for Stripe metadata"""
+    products = []
+    for item in cart.cartitem_set.all():
+        image_url = next(
+            (getattr(item.product, f'image{i}').url
+             for i in range(1, 5)
+             if getattr(item.product, f'image{i}')
+             ),
+            'default-image-url'
+        )
+        products.append({
+            'name': item.product.name,
+            'image_url': image_url,
+        })
+    return products
+
+def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_total, success_url, cancel_url) -> str:
     total_articles = float(Cart.get_total(cart))
-
-    # Calcul du total en centimes
     total_centimes = get_total_centimes(total_articles, add_insurance, add_shipping)
-
-    # Convertir le montant du front-end en centimes pour la comparaison
     front_total_centimes = int(round(front_total * 100))
 
-    # Comparaison en centimes
     if front_total_centimes != total_centimes:
-        return JsonResponse({'error': 'Problème de cohérence des montants', 'total': total_centimes / 100, 'front_total': front_total}, status=400)
+        raise AmountMismatchError(f"Front: {front_total_centimes}, Back: {total_centimes}")
 
-    # Créer la session de paiement Stripe
-    list_products = []
-    for item in cart.cartitem_set.all():
+    list_products = _build_product_list(cart)
+    item_count = cart.cartitem_set.count()
 
-        image_url = None
-        if item.product.image1.url:
-            image_url = item.product.image1.url
-        elif item.product.image2.url:
-            image_url = item.product.image2.url
-        elif item.product.image3.url:
-            image_url = item.product.image3.url
-        elif item.product.image4.url:
-            image_url = item.product.image4.url
-
-        list_products.append({
-            'name': item.product.name,
-            'image_url': image_url if image_url else 'default-image-url',
-        })
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -48,7 +52,7 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
                 'price_data': {
                     'currency': 'eur',
                     'product_data': {
-                        'name': f"Commande de {cart.cartitem_set.count()} article{'s' if cart.cartitem_set.count() > 1 else ''}",
+                        'name': f"Commande de {item_count} article{'s' if item_count > 1 else ''}",
                     },
                     'unit_amount': total_centimes,
                 },
@@ -58,17 +62,17 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
             success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=cancel_url,
             metadata={
-                            'cart_uuid': str(cart.uuid),
-                            'acceptCGV': str(accept_cgv),
-                            'cgv_version': str(cart.cgv_accepted.version),
-                            'add_insurance': str(add_insurance),
-                            'add_shipping': str(add_shipping),
-                            'total_articles': float(total_articles),
-                            'total_verified': int(total_centimes),
-                            'list_products': json.dumps(list_products),
-                        },
+                'cart_uuid': str(cart.uuid),
+                'acceptCGV': str(accept_cgv),
+                'cgv_version': str(cart.cgv_accepted.version),
+                'add_insurance': str(add_insurance),
+                'add_shipping': str(add_shipping),
+                'total_articles': str(total_articles),
+                'total_verified': str(total_centimes),
+                'list_products': json.dumps(list_products),
+            },
             shipping_address_collection={
-                'allowed_countries': ['FR','DE','AT','BE','ES','IT','LU','NL','PT'],
+                'allowed_countries': ['FR', 'DE', 'AT', 'BE', 'ES', 'IT', 'LU', 'NL', 'PT'],
             },
             custom_text={
                 "shipping_address": {
@@ -77,15 +81,16 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
             },
         )
         return checkout_session.url
-    
-    except stripe.error.StripeError as e:
-        logger.error(f"Erreur Stripe : {e}")
-        return JsonResponse({'error': 'Erreur de paiement, veuillez réessayer.'}, status=500)
-    
-    except Exception as e:
-        logger.exception("Erreur inattendue lors de la création de la session Stripe.")
-        return JsonResponse({'error': 'Une erreur est survenue.'}, status=500)
 
+    except stripe.error.StripeError as e:
+        logger.error(f"Stripe error: {e}")
+        raise StripeSessionError("Stripe payment error")
+
+    except Exception as e:
+        logger.exception("Unexpected error creating Stripe session")
+        raise StripeSessionError("Unexpected error")
+    
+    
 def get_total_centimes(total_articles, add_insurance, add_shipping):
 
     # Calculer le total en centimes
