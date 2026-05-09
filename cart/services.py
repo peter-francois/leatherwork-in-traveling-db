@@ -225,7 +225,7 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
     total_articles_euros = round(float(total_articles) / 100, 2)
     shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if add_insurance == 'True' or float(total_articles) >= 50 else 'Non'
+    insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= 50 else 'Non'
     home_delivery = 'Oui' if add_shipping == 'True' else 'Non'
     list_products = _parse_list_products(list_products)
     if list_products is None:
