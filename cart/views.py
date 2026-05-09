@@ -59,13 +59,11 @@ def success_view(request):
 
         # Vérifier que le total correspond bien
         total_verified_centimes = session.amount_total
-        total_cart = get_total_centimes(total_articles, add_insurance, add_shipping)
-
-        if total_verified_centimes != total_cart:
-            logger.error(f"Montant invalide. Total vérifié: {total_verified_centimes}, Total du panier: {total_cart}")
-            return redirect('/')
+        if total_verified_centimes is None:
+            raise ValueError("Total verified is missing")
 
         total_verified = round(total_verified_centimes / 100, 2)
+
         return render(request, 'cart/success.html', {
             'order_id': cart.id,
             'total_amount': total_verified,

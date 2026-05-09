@@ -1,16 +1,14 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services import create_stripe_session, send_email_to_owner
+from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, register_cgv_acceptance, send_email_to_owner, verify_total
 from core.services import get_session_expiration
 import stripe
 from django.utils.timezone import now
 from datetime import timedelta
 from django.urls import reverse
 from django.conf import settings
-from legal.choices import DocumentType
 from catalog.models import Product
-from legal.models import LegalDocument
 from ..models import Cart, CartItem
 import logging
 import uuid
@@ -147,39 +145,41 @@ def get_number_of_products(request):
         return JsonResponse({'success': False, 'number_of_products': 0})
 
 def checkout(request):
+    front_total = float(request.GET.get('front_total'))
+    add_insurance = request.GET.get('insurance') == '1'
+    add_shipping = request.GET.get('shipping') == '1'
+    accept_cgv = request.GET.get('acceptCGV') == '1'
+    success_url = request.build_absolute_uri(reverse('cart:success'))
+    cancel_url = request.build_absolute_uri(reverse('cart:cancel'))
     cart_uuid = request.GET.get('cart_uuid')
+
+    if not cart_uuid:
+        return JsonResponse({'error': 'Cart UUID manquant'}, status=400)
+    
     cart = Cart.objects.filter(uuid=cart_uuid, paid=False).first()
     if not cart:
         return JsonResponse({'error': 'Panier invalide ou expiré.'}, status=400)
     
-    add_insurance = request.GET.get('insurance') == '1'
-    add_shipping = request.GET.get('shipping') == '1'
-    accept_cgv = request.GET.get('acceptCGV') == '1'
     if not accept_cgv:
         logger.error("L'utilisateur n'a pas accepté les conditions générales de vente.")
         return JsonResponse({'error': 'Vous devez accepter les conditions générales de vente'}, status=400)
     
-    latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
+    register_cgv_acceptance(cart)
 
-    # Enregistrer l'acceptation des CGV
-    if not cart.cgv_accepted:
-        cart.cgv_accepted = latest_cgv
-        cart.cgv_accepted_at = now()
-        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=5*365)
-        cart.save()
-        
-    front_total = float(request.GET.get('front_total'))
-    success_url = request.build_absolute_uri(reverse('cart:success'))
-    cancel_url = request.build_absolute_uri(reverse('cart:cancel'))
+    total_articles = float(Cart.get_total(cart))
+    total_centimes = verify_total(total_articles, add_insurance, add_shipping, front_total)
+    metadata = build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles)
 
-    result = create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_total, success_url, cancel_url)
+    try:
+        url = create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes)
     
-    if isinstance(result, JsonResponse):
-        if settings.DEBUG:
-            return result
-        return JsonResponse({'error': 'Une erreur est survenue.'}, status=400)
+    except AmountMismatchError:
+        return JsonResponse({'error': 'Montant incohérent'}, status=400)
     
-    return redirect(result)
+    except StripeSessionError:
+        return JsonResponse({'error': 'Erreur de paiement'}, status=500)
+    
+    return redirect(url)
 
     
 @csrf_exempt  # Désactive la protection CSRF pour recevoir les requêtes Stripe

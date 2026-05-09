@@ -5,6 +5,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from cart.models import Cart
 import stripe
+from django.utils.timezone import now
+from datetime import timedelta
+from legal.choices import DocumentType
+from legal.models import LegalDocument
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__name__)
@@ -34,15 +38,7 @@ def _build_product_list(cart):
         })
     return products
 
-def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_total, success_url, cancel_url) -> str:
-    total_articles = float(Cart.get_total(cart))
-    total_centimes = get_total_centimes(total_articles, add_insurance, add_shipping)
-    front_total_centimes = int(round(front_total * 100))
-
-    if front_total_centimes != total_centimes:
-        raise AmountMismatchError(f"Front: {front_total_centimes}, Back: {total_centimes}")
-
-    list_products = _build_product_list(cart)
+def create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes) -> str:
     item_count = cart.cartitem_set.count()
 
     try:
@@ -61,16 +57,7 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
             mode='payment',
             success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=cancel_url,
-            metadata={
-                'cart_uuid': str(cart.uuid),
-                'acceptCGV': str(accept_cgv),
-                'cgv_version': str(cart.cgv_accepted.version),
-                'add_insurance': str(add_insurance),
-                'add_shipping': str(add_shipping),
-                'total_articles': str(total_articles),
-                'total_verified': str(total_centimes),
-                'list_products': json.dumps(list_products),
-            },
+            metadata = metadata,
             shipping_address_collection={
                 'allowed_countries': ['FR', 'DE', 'AT', 'BE', 'ES', 'IT', 'LU', 'NL', 'PT'],
             },
@@ -80,9 +67,13 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
                 }
             },
         )
-        return checkout_session.url
+        session_url = checkout_session.url
+        if session_url is None:
+            raise ValueError("Stripe checkout session URL is missing")
 
-    except stripe.error.StripeError as e:
+        return session_url
+
+    except stripe.StripeError as e:
         logger.error(f"Stripe error: {e}")
         raise StripeSessionError("Stripe payment error")
 
@@ -90,7 +81,17 @@ def create_stripe_session(cart, add_insurance, add_shipping, accept_cgv, front_t
         logger.exception("Unexpected error creating Stripe session")
         raise StripeSessionError("Unexpected error")
     
-    
+def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles):
+    return {
+        "cart_uuid": str(cart.uuid),
+        "add_insurance": str(add_insurance),
+        "add_shipping": str(add_shipping),
+        'total_articles': str(total_articles),
+        "total_verified": str(total_centimes),
+        "cgv_version": str(cart.cgv_accepted.version),
+        "list_products": json.dumps(_build_product_list(cart)),
+    }
+
 def get_total_centimes(total_articles, add_insurance, add_shipping):
 
     # Calculer le total en centimes
@@ -118,10 +119,30 @@ def get_total_centimes(total_articles, add_insurance, add_shipping):
 
     # Vérification du total
     if total_centimes <= 0:
-        return JsonResponse({'error': 'Montant invalide.'}, status=400)
+        raise ValueError("Invalid total amount")
 
     return total_centimes  # Total en centimes
 
+def verify_total(total_articles, add_insurance, add_shipping, front_total) -> int:
+    
+    total_centimes = get_total_centimes(total_articles, add_insurance, add_shipping)
+    front_total_centimes = int(round(front_total * 100))
+    
+    if front_total_centimes != total_centimes:
+        raise AmountMismatchError(f"Front: {front_total_centimes}, Back: {total_centimes}")
+    
+    return total_centimes
+
+def register_cgv_acceptance(cart) -> None:
+    if not cart.cgv_accepted:
+        latest_cgv = LegalDocument.objects.filter(
+            document_type=DocumentType.TERMS
+        ).latest('created_at')
+        cart.cgv_accepted = latest_cgv
+        cart.cgv_accepted_at = now()
+        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=5*365)
+        cart.save()
+        
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products, cart_uuid, total_articles, cgv_version, add_insurance, total_verified, order_id, add_shipping):
     # Vérification et conversion de list_products
     if isinstance(list_products, str):
