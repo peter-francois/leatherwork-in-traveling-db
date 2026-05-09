@@ -1,14 +1,20 @@
-from django.http import JsonResponse
 import json
 import logging
 from django.core.mail import send_mail
 from django.conf import settings
-from cart.models import Cart
 import stripe
 from django.utils.timezone import now
 from datetime import timedelta
 from legal.choices import DocumentType
 from legal.models import LegalDocument
+from .constants import (
+    ALLOWED_COUNTRIES, CGV_EXPIRATION_DAYS, STANDARD_SHIPPING_COST, EXPRESS_SHIPPING_COST,
+    INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
+    INSURANCE_MANDATORY_MIN,INSURANCE_THRESHOLD_1,
+    INSURANCE_THRESHOLD_2,INSURANCE_THRESHOLD_3,INSURANCE_COST_50_TO_125,
+    INSURANCE_COST_125_TO_250,INSURANCE_COST_250_TO_375,
+    INSURANCE_COST_ABOVE_375,
+)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__name__)
@@ -59,7 +65,7 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
             cancel_url=cancel_url,
             metadata = metadata,
             shipping_address_collection={
-                'allowed_countries': ['FR', 'DE', 'AT', 'BE', 'ES', 'IT', 'LU', 'NL', 'PT'],
+                'allowed_countries': list(ALLOWED_COUNTRIES),
             },
             custom_text={
                 "shipping_address": {
@@ -78,7 +84,7 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
         raise StripeSessionError("Stripe payment error")
 
     except Exception as e:
-        logger.exception("Unexpected error creating Stripe session")
+        logger.exception(f"Unexpected error creating Stripe session: {e}")
         raise StripeSessionError("Unexpected error")
     
 def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles):
@@ -92,36 +98,28 @@ def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_arti
         "list_products": json.dumps(_build_product_list(cart)),
     }
 
-def get_total_centimes(total_articles, add_insurance, add_shipping):
-
-    # Calculer le total en centimes
+def get_total_centimes(total_articles, add_insurance, add_shipping) -> int:
     total_centimes = int(round(total_articles * 100))
 
-    # Ajouter l'assurance en centimes si nécessaire
-    if total_centimes > 5000:
-        if total_centimes > 37500:
-            total_centimes += 800
-        elif total_centimes > 25000:
-            total_centimes += 650
-        elif total_centimes > 12500:
-            total_centimes += 500
+    if total_centimes > INSURANCE_MANDATORY_MIN:
+        if total_centimes > INSURANCE_THRESHOLD_3:
+            total_centimes += INSURANCE_COST_ABOVE_375
+        elif total_centimes > INSURANCE_THRESHOLD_2:
+            total_centimes += INSURANCE_COST_250_TO_375
+        elif total_centimes > INSURANCE_THRESHOLD_1:
+            total_centimes += INSURANCE_COST_125_TO_250
         else:
-            total_centimes += 350
-    elif 2500 < total_centimes <= 5000:
+            total_centimes += INSURANCE_COST_50_TO_125
+    elif INSURANCE_OPTIONAL_MIN < total_centimes <= INSURANCE_OPTIONAL_MAX:
         if add_insurance:
-            total_centimes += 200
+            total_centimes += INSURANCE_OPTIONAL_COST
 
-    # Ajouter les frais de port en centimes
-    if add_shipping:
-        total_centimes += 1000
-    else:
-        total_centimes += 500
+    total_centimes += EXPRESS_SHIPPING_COST if add_shipping else STANDARD_SHIPPING_COST
 
-    # Vérification du total
     if total_centimes <= 0:
         raise ValueError("Invalid total amount")
 
-    return total_centimes  # Total en centimes
+    return total_centimes
 
 def verify_total(total_articles, add_insurance, add_shipping, front_total) -> int:
     
@@ -140,7 +138,7 @@ def register_cgv_acceptance(cart) -> None:
         ).latest('created_at')
         cart.cgv_accepted = latest_cgv
         cart.cgv_accepted_at = now()
-        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=5*365)
+        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=CGV_EXPIRATION_DAYS)
         cart.save()
         
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products, cart_uuid, total_articles, cgv_version, add_insurance, total_verified, order_id, add_shipping):
