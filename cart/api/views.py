@@ -2,10 +2,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from cart.email_services import send_email_to_owner
-from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, process_successful_payment, register_cgv_acceptance, verify_total
+from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from core.services import get_session_expiration
 import stripe
-from django.utils.timezone import now
 from datetime import timedelta
 from django.urls import reverse
 from django.conf import settings
@@ -211,22 +210,12 @@ def stripe_webhook(request):
         cart = get_object_or_404(Cart, uuid=cart_uuid)
         process_successful_payment(cart)
 
-        logger.info(f"✅ Paiement reçu pour le panier {cart_uuid}")
+        logger.info(f"Payment received for cart {cart_uuid}")
 
-        # Récupérer les informations du client
-        order_id = cart.id
-        customer_email = session.get('customer_details', {}).get('email', 'Email inconnu')
-        customer_name = session.get('customer_details', {}).get('name', 'Nom inconnu')
-        shipping_address = session.get('collected_information', {}).get('shipping_details', {}).get('address', {})
-        list_products = metadata.get('list_products')
-        cart_uuid= metadata.get('cart_uuid')
-        total_articles = metadata.get('total_articles')
-        cgv_version= metadata.get('cgv_version')
-        add_insurance= metadata.get('add_insurance')
-        add_shipping= metadata.get('add_shipping')
-        total_verified= metadata.get('total_verified')
+        data = extract_session_data(session, metadata)
+        if data['list_products'] is None:
+            logger.error("Invalid list_products")
+            return JsonResponse({'status': 'error - invalid products'}, status=400)
 
-        # Vous pouvez maintenant utiliser ces informations pour envoyer un email de confirmation
-        send_email_to_owner(customer_email, customer_name, shipping_address, list_products, cart_uuid, total_articles, cgv_version, add_insurance, total_verified, order_id, add_shipping)
-
+        send_email_to_owner(order_id=cart.id, **data)
     return JsonResponse({'status': 'success'}, status=200)

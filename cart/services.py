@@ -177,3 +177,47 @@ def process_successful_payment(cart) -> None:
             item.product.pending_in_cart = False
             item.product.save()
 
+def extract_session_data(session, metadata) -> dict:
+    """Extract and prepare data from Stripe session"""
+    shipping_address = session.get('collected_information', {}).get('shipping_details', {}).get('address', {})
+    _format_shipping_address(shipping_address)
+    
+    list_products = _parse_list_products(metadata.get('list_products'))
+    
+    return {
+        'customer_email': session.get('customer_details', {}).get('email', 'Unknown'),
+        'customer_name': session.get('customer_details', {}).get('name', 'Unknown'),
+        'shipping_address': shipping_address,
+        'list_products': list_products,
+        'cart_uuid': metadata.get('cart_uuid'),
+        'total_articles': metadata.get('total_articles'),
+        'cgv_version': metadata.get('cgv_version'),
+        'add_insurance': metadata.get('add_insurance'),
+        'add_shipping': metadata.get('add_shipping'),
+        'total_verified': metadata.get('total_verified'),
+    }
+
+def _parse_list_products(list_products: str | list) -> list | None:
+    """Parse and validate list_products from string or list"""
+    if isinstance(list_products, str):
+        try:
+            list_products = json.loads(list_products)
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to deserialize list_products: {e}")
+            return None
+
+    if not isinstance(list_products, list):
+        logger.error("list_products is not a list")
+        return None
+
+    return list_products
+
+
+def _format_shipping_address(shipping_address: dict) -> dict:
+    """Format shipping address for email"""
+    line2 = shipping_address.get('line2')
+    if line2 and line2.lower() != "none":
+        shipping_address['formatted'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
+    else:
+        shipping_address['formatted'] = shipping_address.get('line1', 'Unknown')
+    return shipping_address

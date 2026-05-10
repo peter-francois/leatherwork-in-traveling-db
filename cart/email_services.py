@@ -1,37 +1,10 @@
-import json
 import logging
 from django.core.mail import send_mail
 from django.conf import settings
-from cart.constants import EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST
+from cart.constants import EXPRESS_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
 from cart.services import convert_centimes_to_euros
 
 logger = logging.getLogger(__name__)
-
-def _parse_list_products(list_products: str | list) -> list | None:
-    """Parse and validate list_products from string or list"""
-    if isinstance(list_products, str):
-        try:
-            list_products = json.loads(list_products)
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to deserialize list_products: {e}")
-            return None
-
-    if not isinstance(list_products, list):
-        logger.error("list_products is not a list")
-        return None
-
-    return list_products
-
-
-def _format_shipping_address(shipping_address: dict) -> dict:
-    """Format shipping address for email"""
-    line2 = shipping_address.get('line2')
-    if line2 and line2.lower() != "none":
-        shipping_address['formatted'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
-    else:
-        shipping_address['formatted'] = shipping_address.get('line1', 'Unknown')
-    return shipping_address
-
 
 def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv_version,
                           shipping_address, insurance, home_delivery, shipping_cost,
@@ -86,17 +59,16 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
                          cart_uuid, total_articles, cgv_version, add_insurance,
                          total_verified, order_id, add_shipping):
+    if list_products is None:
+        logger.error("list_products is None, email not sent")
+        return
+    
     total_verified_euros = convert_centimes_to_euros(total_verified)
     total_articles_euros = convert_centimes_to_euros(total_articles)
     shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= 50 else 'Non'
+    insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= INSURANCE_MANDATORY_MIN else 'Non'
     home_delivery = 'Oui' if add_shipping == 'True' else 'Non'
-    list_products = _parse_list_products(list_products)
-    if list_products is None:
-        return
-
-    shipping_address = _format_shipping_address(shipping_address)
 
     message = _build_email_message(
         customer_name, customer_email, order_id, cart_uuid, cgv_version,
