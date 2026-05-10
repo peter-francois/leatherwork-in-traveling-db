@@ -1,10 +1,41 @@
 import logging
 from django.core.mail import send_mail
 from django.conf import settings
-from cart.constants import EXPRESS_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
-from cart.services import convert_centimes_to_euros
+from ..constants import EXPRESS_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
+from ..services import convert_centimes_to_euros
 
 logger = logging.getLogger(__name__)
+
+def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
+                         cart_uuid, total_articles, cgv_version, add_insurance,
+                         total_verified, order_id, add_shipping):
+    if list_products is None:
+        logger.error("list_products is None, email not sent")
+        return
+    
+    total_verified_euros = convert_centimes_to_euros(total_verified)
+    total_articles_euros = convert_centimes_to_euros(total_articles)
+    shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
+    insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
+    insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= INSURANCE_MANDATORY_MIN else 'Non'
+    home_delivery = 'Oui' if add_shipping == 'True' else 'Non'
+
+    message = _build_email_message(
+        customer_name, customer_email, order_id, cart_uuid, cgv_version,
+        shipping_address, insurance, home_delivery, shipping_cost_euros,
+        total_articles_euros, insurance_cost_euros, total_verified_euros, list_products
+    )
+
+    try:
+        send_mail(
+            'Nouvelle commande reçue depuis leatherworkintravelingdb.com',
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.CLIENT_EMAIL],
+            html_message=message,
+        )
+    except Exception as e:
+        logger.error(f"Error sending email: {e}")
 
 def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv_version,
                           shipping_address, insurance, home_delivery, shipping_cost,
@@ -55,34 +86,3 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
     </body></html>
     """
     return message
-
-def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
-                         cart_uuid, total_articles, cgv_version, add_insurance,
-                         total_verified, order_id, add_shipping):
-    if list_products is None:
-        logger.error("list_products is None, email not sent")
-        return
-    
-    total_verified_euros = convert_centimes_to_euros(total_verified)
-    total_articles_euros = convert_centimes_to_euros(total_articles)
-    shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
-    insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= INSURANCE_MANDATORY_MIN else 'Non'
-    home_delivery = 'Oui' if add_shipping == 'True' else 'Non'
-
-    message = _build_email_message(
-        customer_name, customer_email, order_id, cart_uuid, cgv_version,
-        shipping_address, insurance, home_delivery, shipping_cost_euros,
-        total_articles_euros, insurance_cost_euros, total_verified_euros, list_products
-    )
-
-    try:
-        send_mail(
-            'Nouvelle commande reçue depuis leatherworkintravelingdb.com',
-            message,
-            settings.EMAIL_HOST_USER,
-            [settings.CLIENT_EMAIL],
-            html_message=message,
-        )
-    except Exception as e:
-        logger.error(f"Error sending email: {e}")

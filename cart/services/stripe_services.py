@@ -1,48 +1,16 @@
-import json
-import logging
-from django.conf import settings
 import stripe
-from django.utils.timezone import now
-from datetime import timedelta
-from legal.choices import DocumentType
-from legal.models import LegalDocument
+from django.conf import settings
+import logging
+import json
 import uuid
-from cart.constants import (
-    ALLOWED_COUNTRIES, CART_EXPIRATION_DAYS, CGV_EXPIRATION_DAYS, EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
-    INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
-    INSURANCE_MANDATORY_MIN,INSURANCE_THRESHOLD_1,
-    INSURANCE_THRESHOLD_2,INSURANCE_THRESHOLD_3,INSURANCE_COST_50_TO_125,
-    INSURANCE_COST_125_TO_250,INSURANCE_COST_250_TO_375,
-    INSURANCE_COST_ABOVE_375,
-)
+from cart.constants import ALLOWED_COUNTRIES
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__name__)
 
-class AmountMismatchError(Exception):
-    pass
-
 
 class StripeSessionError(Exception):
     pass
-
-
-def _build_product_list(cart):
-    """Build product list for Stripe metadata"""
-    products = []
-    for item in cart.cartitem_set.all():
-        image_url = next(
-            (getattr(item.product, f'image{i}').url
-             for i in range(1, 5)
-             if getattr(item.product, f'image{i}')
-             ),
-            'default-image-url'
-        )
-        products.append({
-            'name': item.product.name,
-            'image_url': image_url,
-        })
-    return products
 
 def create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes) -> str:
     item_count = cart.cartitem_set.count()
@@ -86,7 +54,7 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
     except Exception as e:
         logger.exception(f"Unexpected error creating Stripe session: {e}")
         raise StripeSessionError("Unexpected error")
-    
+   
 def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles):
     return {
         "cart_uuid": str(cart.uuid),
@@ -97,52 +65,6 @@ def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_arti
         "cgv_version": str(cart.cgv_accepted.version),
         "list_products": json.dumps(_build_product_list(cart)),
     }
-
-def get_total_centimes(total_articles, add_insurance, add_shipping) -> int:
-    total_centimes = int(round(total_articles * 100))
-
-    if total_centimes > INSURANCE_MANDATORY_MIN:
-        if total_centimes > INSURANCE_THRESHOLD_3:
-            total_centimes += INSURANCE_COST_ABOVE_375
-        elif total_centimes > INSURANCE_THRESHOLD_2:
-            total_centimes += INSURANCE_COST_250_TO_375
-        elif total_centimes > INSURANCE_THRESHOLD_1:
-            total_centimes += INSURANCE_COST_125_TO_250
-        else:
-            total_centimes += INSURANCE_COST_50_TO_125
-    elif INSURANCE_OPTIONAL_MIN < total_centimes <= INSURANCE_OPTIONAL_MAX:
-        if add_insurance:
-            total_centimes += INSURANCE_OPTIONAL_COST
-
-    total_centimes += EXPRESS_SHIPPING_COST if add_shipping else STANDARD_SHIPPING_COST
-
-    if total_centimes <= 0:
-        raise ValueError("Invalid total amount")
-
-    return total_centimes
-
-def verify_total(total_articles, add_insurance, add_shipping, front_total) -> int:
-    
-    total_centimes = get_total_centimes(total_articles, add_insurance, add_shipping)
-    front_total_centimes = int(round(front_total * 100))
-    
-    if front_total_centimes != total_centimes:
-        raise AmountMismatchError(f"Front: {front_total_centimes}, Back: {total_centimes}")
-    
-    return total_centimes
-
-def register_cgv_acceptance(cart) -> None:
-    if not cart.cgv_accepted:
-        latest_cgv = LegalDocument.objects.filter(
-            document_type=DocumentType.TERMS
-        ).latest('created_at')
-        cart.cgv_accepted = latest_cgv
-        cart.cgv_accepted_at = now()
-        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=CGV_EXPIRATION_DAYS)
-        cart.save()
-
-def convert_centimes_to_euros(centimes):
-    return round(float(centimes) / 100, 2)
 
 def get_stripe_session(session_id: str):
     session = stripe.checkout.Session.retrieve(session_id)
@@ -164,19 +86,6 @@ def get_stripe_session(session_id: str):
     
     return session, cart_uuid
 
-def process_successful_payment(cart) -> None:
-    """Mark cart as paid and update product availability"""
-    if not cart.paid:
-        cart.paid = True
-        cart.paid_at = now()
-        cart.cart_expires_at = cart.paid_at + timedelta(days=CART_EXPIRATION_DAYS)
-        cart.save()
-
-        for item in cart.cartitem_set.all():
-            item.product.available = False
-            item.product.pending_in_cart = False
-            item.product.save()
-
 def extract_session_data(session, metadata) -> dict:
     """Extract and prepare data from Stripe session"""
     shipping_address = session.get('collected_information', {}).get('shipping_details', {}).get('address', {})
@@ -197,6 +106,23 @@ def extract_session_data(session, metadata) -> dict:
         'total_verified': metadata.get('total_verified'),
     }
 
+def _build_product_list(cart):
+    """Build product list for Stripe metadata"""
+    products = []
+    for item in cart.cartitem_set.all():
+        image_url = next(
+            (getattr(item.product, f'image{i}').url
+             for i in range(1, 5)
+             if getattr(item.product, f'image{i}')
+             ),
+            'default-image-url'
+        )
+        products.append({
+            'name': item.product.name,
+            'image_url': image_url,
+        })
+    return products
+
 def _parse_list_products(list_products: str | list) -> list | None:
     """Parse and validate list_products from string or list"""
     if isinstance(list_products, str):
@@ -211,7 +137,6 @@ def _parse_list_products(list_products: str | list) -> list | None:
         return None
 
     return list_products
-
 
 def _format_shipping_address(shipping_address: dict) -> dict:
     """Format shipping address for email"""

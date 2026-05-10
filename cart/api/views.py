@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.email_services import send_email_to_owner
-from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
+from cart.services.email_services import send_email_to_owner
+from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
+from cart.services.pricing_services import AmountMismatchError
+from cart.services.stripe_services import StripeSessionError
 from core.services import get_session_expiration
 import stripe
-from datetime import timedelta
 from django.urls import reverse
 from django.conf import settings
 from catalog.models import Product
@@ -199,7 +200,6 @@ def stripe_webhook(request):
         if session.get("payment_link"):
             logger.warning("Payment via Payment Link ignored")
             return JsonResponse({'status': 'ignored - payment link'}, status=200)
-        # 🔹 Vérifier si `metadata` existe avant d'accéder à `cart_uuid`
         metadata = session.get("metadata", {})
         cart_uuid = metadata.get("cart_uuid")
         

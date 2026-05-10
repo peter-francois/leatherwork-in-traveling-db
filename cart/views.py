@@ -3,7 +3,6 @@ from cart.services import convert_centimes_to_euros, get_stripe_session
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 from .models import Cart, CartItem
-import uuid
 from core.services import get_session_expiration
 import stripe
 import logging
