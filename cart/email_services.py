@@ -3,6 +3,7 @@ import logging
 from django.core.mail import send_mail
 from django.conf import settings
 from cart.constants import EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST
+from cart.services import convert_centimes_to_euros
 
 logger = logging.getLogger(__name__)
 
@@ -82,12 +83,11 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
     """
     return message
 
-
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
                          cart_uuid, total_articles, cgv_version, add_insurance,
                          total_verified, order_id, add_shipping):
-    total_verified_euros = round(float(total_verified) / 100, 2)
-    total_articles_euros = round(float(total_articles) / 100, 2)
+    total_verified_euros = convert_centimes_to_euros(total_verified)
+    total_articles_euros = convert_centimes_to_euros(total_articles)
     shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
     insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= 50 else 'Non'

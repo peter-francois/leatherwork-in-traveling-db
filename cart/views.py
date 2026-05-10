@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from cart.services import get_total_centimes
+from cart.services import convert_centimes_to_euros
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 from .models import Cart, CartItem
@@ -44,9 +44,6 @@ def success_view(request):
             return redirect('/')
 
         cart_uuid = metadata["cart_uuid"]
-        add_insurance = metadata.get('add_insurance', 'false').lower() == 'true'
-        add_shipping = metadata.get('add_shipping', 'false').lower() == 'true'
-        total_articles = float(metadata.get('total_articles', 0))
 
         # ✅ Convertir cart_uuid en format UUID
         try:
@@ -62,11 +59,11 @@ def success_view(request):
         if total_verified_centimes is None:
             raise ValueError("Total verified is missing")
 
-        total_verified = round(total_verified_centimes / 100, 2)
+        total_verified_euros = convert_centimes_to_euros(total_verified_centimes)
 
         return render(request, 'cart/success.html', {
             'order_id': cart.id,
-            'total_amount': total_verified,
+            'total_amount': total_verified_euros,
             'payment_date': cart.paid_at if cart.paid_at else "Non disponible",
         })
 

@@ -7,7 +7,7 @@ from datetime import timedelta
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 from cart.constants import (
-    ALLOWED_COUNTRIES, CGV_EXPIRATION_DAYS, STANDARD_SHIPPING_COST,
+    ALLOWED_COUNTRIES, CGV_EXPIRATION_DAYS, EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
     INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
     INSURANCE_MANDATORY_MIN,INSURANCE_THRESHOLD_1,
     INSURANCE_THRESHOLD_2,INSURANCE_THRESHOLD_3,INSURANCE_COST_50_TO_125,
@@ -139,3 +139,6 @@ def register_cgv_acceptance(cart) -> None:
         cart.cgv_accepted_at = now()
         cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=CGV_EXPIRATION_DAYS)
         cart.save()
+
+def convert_centimes_to_euros(centimes):
+    return round(float(centimes) / 100, 2)
