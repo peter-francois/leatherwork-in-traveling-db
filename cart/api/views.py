@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from cart.email_services import send_email_to_owner
-from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, register_cgv_acceptance, verify_total
+from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, process_successful_payment, register_cgv_acceptance, verify_total
 from core.services import get_session_expiration
 import stripe
 from django.utils.timezone import now
@@ -187,39 +187,29 @@ def checkout(request):
 def stripe_webhook(request):
     payload = request.body
     sig_header = request.headers.get('Stripe-Signature', '')
-
-
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
     except ValueError:
         return HttpResponse("Invalid payload", status=400)
-    except stripe.error.SignatureVerificationError:
+    except stripe.SignatureVerificationError:
         return HttpResponse("Invalid signature", status=400)
-    # 🎯 Si un paiement est réussi
+    
+    # if payment is completed
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         if session.get("payment_link"):
-            logger.warning("Paiement via Payment Link ignoré.")
+            logger.warning("Payment via Payment Link ignored")
             return JsonResponse({'status': 'ignored - payment link'}, status=200)
         # 🔹 Vérifier si `metadata` existe avant d'accéder à `cart_uuid`
         metadata = session.get("metadata", {})
         cart_uuid = metadata.get("cart_uuid")
+        
         if not cart_uuid:
             logger.error("Cart UUID manquant.")
             return JsonResponse({'status': 'error - missing cart UUID'}, status=400)
 
         cart = get_object_or_404(Cart, uuid=cart_uuid)
-        if not cart.paid:  # Vérifier que le panier n'a pas déjà été traité
-            cart.paid = True
-            cart.paid_at = now()
-            cart.cart_expires_at = cart.paid_at + timedelta(days=10*365)
-            cart.save()
-        # 🔄 Mettre à jour la disponibilité des produits du panier
-            for item in cart.cartitem_set.all():
-                product = item.product
-                product.disponible = False
-                product.en_attente_dans_panier = False
-                product.save()
+        process_successful_payment(cart)
 
         logger.info(f"✅ Paiement reçu pour le panier {cart_uuid}")
 

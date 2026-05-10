@@ -25,3 +25,6 @@ INSURANCE_COST_ABOVE_375 = 800    # 8.00€
 
 # CGV expiration
 CGV_EXPIRATION_DAYS = 5 * 365           # 5 years
+
+# Cart expiration
+CART_EXPIRATION_DAYS = 10 * 365         # 10 years

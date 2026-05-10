@@ -8,7 +8,7 @@ from legal.choices import DocumentType
 from legal.models import LegalDocument
 import uuid
 from cart.constants import (
-    ALLOWED_COUNTRIES, CGV_EXPIRATION_DAYS, EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
+    ALLOWED_COUNTRIES, CART_EXPIRATION_DAYS, CGV_EXPIRATION_DAYS, EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
     INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
     INSURANCE_MANDATORY_MIN,INSURANCE_THRESHOLD_1,
     INSURANCE_THRESHOLD_2,INSURANCE_THRESHOLD_3,INSURANCE_COST_50_TO_125,
@@ -163,3 +163,17 @@ def get_stripe_session(session_id: str):
         raise ValueError("Total verified is missing")
     
     return session, cart_uuid
+
+def process_successful_payment(cart) -> None:
+    """Mark cart as paid and update product availability"""
+    if not cart.paid:
+        cart.paid = True
+        cart.paid_at = now()
+        cart.cart_expires_at = cart.paid_at + timedelta(days=CART_EXPIRATION_DAYS)
+        cart.save()
+
+        for item in cart.cartitem_set.all():
+            item.product.available = False
+            item.product.pending_in_cart = False
+            item.product.save()
+
