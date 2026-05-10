@@ -58,3 +58,10 @@ def add_product_to_cart(cart, product) -> None:
     product.pending_in_cart = True
     product.save()
 
+def empty_cart_and_release_products(cart) -> None:
+
+    for item in cart.cartitem_set.all():
+        item.product.pending_in_cart = False
+        item.product.save()
+    cart.cartitem_set.all().delete()
+    cart.delete()

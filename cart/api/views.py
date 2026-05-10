@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services.cart_services import add_product_to_cart, get_or_create_active_cart
+from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_or_create_active_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from cart.services.pricing_services import AmountMismatchError
@@ -21,7 +21,7 @@ def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if not product.available or product.pending_in_cart:
-        return JsonResponse({'success': False, 'message': 'Produit déjà pris'}, status=400)
+        return JsonResponse({'success': False, 'message': 'Product not available or pending in cart'}, status=400)
 
     cart = get_or_create_active_cart(request)
     add_product_to_cart(cart, product)
@@ -68,18 +68,12 @@ def cart_detail(request):
 def empty_cart(request):
     session_id = request.session.session_key
     if not session_id:
-        return JsonResponse({'success': False, 'message': 'Aucun panier trouvé'})
+        return JsonResponse({'success': False, 'message': 'No cart found'})
 
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
-        return JsonResponse({'success': False, 'message': 'Le panier est déjà vide'})
-    cart_items = CartItem.objects.filter(cart=cart)
-    for item in cart_items:
-        item.product.pending_in_cart = False
-        item.product.save()
-        item.delete()
-
-    cart.delete()  # Supprimer le panier après suppression des articles
+        return JsonResponse({'success': False, 'message': 'Cart already empty'})
+    empty_cart_and_release_products(cart)
 
     return JsonResponse({'success': True, 'message': 'Le panier a été vide'})
 
