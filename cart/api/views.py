@@ -112,10 +112,11 @@ def remove_from_cart(request, product_id):
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     cart_item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
     if cart_item:
+        product = cart_item.product
         cart_item.product.pending_in_cart = False
         cart_item.product.save()
         cart_item.delete()
-        return JsonResponse({'success': True, 'message': 'Article retiré du panier', 'article': {"id": cart_item.product.id, "price": cart_item.product.price}})
+        return JsonResponse({'success': True, 'message': 'Article retiré du panier', 'article': {"id": product.id, "price": product.price}})
     else:
         return JsonResponse({'success': False, 'message': 'Article non trouvé dans le panier'})
     
