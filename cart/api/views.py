@@ -1,12 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart
+from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from cart.services.pricing_services import AmountMismatchError
 from cart.services.stripe_services import StripeSessionError
-from core.services import get_session_expiration
 import stripe
 from django.urls import reverse
 from django.conf import settings
@@ -25,13 +24,11 @@ def add_to_cart(request, product_id):
 
     cart = get_or_create_active_cart(request)
     add_product_to_cart(cart, product)
-    expiration_date = get_session_expiration(request)
 
     return JsonResponse({
         'success': True,
         'message': f'{product.name} ajouté au panier',
         'cart_uuid': str(cart.uuid),
-        "session_expiration": expiration_date.strftime('%Y-%m-%d %H:%M:%S') if expiration_date else None,
     })
 
 def cart_detail(request):
@@ -62,15 +59,18 @@ def remove_from_cart(request, product_id):
     if not session_id:
         return JsonResponse({'success': False, 'message': 'Aucun panier trouvé'})
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
-    cart_item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
-    if cart_item:
-        product = cart_item.product
-        cart_item.product.pending_in_cart = False
-        cart_item.product.save()
-        cart_item.delete()
-        return JsonResponse({'success': True, 'message': 'Article retiré du panier', 'article': {"id": product.id, "price": product.price}})
-    else:
-        return JsonResponse({'success': False, 'message': 'Article non trouvé dans le panier'})
+    if not cart:
+        return JsonResponse({'success': False, 'message': 'No cart found'})
+    
+    product_data = remove_product_from_cart(cart, product_id)
+    if not product_data:
+        return JsonResponse({'success': False, 'message': 'Item not found in cart'})
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Item removed from cart',
+        'article': product_data
+    }) 
     
 def get_number_of_products(request):
     session_key = request.session.session_key

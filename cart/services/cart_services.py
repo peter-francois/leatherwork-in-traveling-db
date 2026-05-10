@@ -81,3 +81,15 @@ def get_cart_items_data(cart) -> list:
         }
         for item in cart_items
     ]
+
+def remove_product_from_cart(cart, product_id) -> dict | None:
+    cart_item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
+    if not cart_item:
+        return None
+
+    product = cart_item.product
+    product.pending_in_cart = False
+    product.save()
+    cart_item.delete()
+
+    return {'id': product.id, 'price': product.price}
