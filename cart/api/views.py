@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, register_cgv_acceptance, send_email_to_owner, verify_total
+from cart.email_services import send_email_to_owner
+from cart.services import AmountMismatchError, StripeSessionError, build_metadata, create_stripe_session, register_cgv_acceptance, verify_total
 from core.services import get_session_expiration
 import stripe
 from django.utils.timezone import now
