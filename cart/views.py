@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 def cart(request):
     session_key = request.session.session_key
     latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
-    cart = Cart.objects.filter(session_id=session_key, paid=False).first()
-    items = CartItem.objects.filter(cart=cart)
+    cart = Cart.objects.filter(session_id=session_key, paid=False).first() if session_key else None
+    items = CartItem.objects.filter(cart=cart) if cart else []
     total = sum((item.product.price - item.product.discount) * item.quantity for item in items)
     expiration_date = get_session_expiration(request)
 

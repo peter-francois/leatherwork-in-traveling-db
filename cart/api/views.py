@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from cart.services.cart_services import add_product_to_cart, get_or_create_active_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from cart.services.pricing_services import AmountMismatchError
@@ -12,7 +13,6 @@ from django.conf import settings
 from catalog.models import Product
 from ..models import Cart, CartItem
 import logging
-import uuid
 
 logger = logging.getLogger(__name__)
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -23,31 +23,9 @@ def add_to_cart(request, product_id):
     if not product.available or product.pending_in_cart:
         return JsonResponse({'success': False, 'message': 'Produit déjà pris'}, status=400)
 
-    if not request.session.session_key:
-        request.session.create()
-    session_id = request.session.session_key
-
-    # Vérifier si un panier existe pour cette session
-    cart, created = Cart.objects.get_or_create(session_id=session_id,defaults={'uuid': uuid.uuid4()})
-
-    if cart.paid:
-        request.session.create()
-        session_id = request.session.session_key
-        cart = Cart.objects.create(session_id=session_id, uuid=uuid.uuid4())
-
-    # Récupérer l'expiration de la session
+    cart = get_or_create_active_cart(request)
+    add_product_to_cart(cart, product)
     expiration_date = get_session_expiration(request)
-
-
-    # Ajouter le produit au panier
-    cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not item_created:
-        cart_item.quantity += 1
-        cart_item.save()
-
-    # Marquer le produit comme en attente dans le panier
-    product.pending_in_cart = True
-    product.save()
 
     return JsonResponse({
         'success': True,
