@@ -122,28 +122,15 @@ def remove_from_cart(request, product_id):
 def get_number_of_products(request):
     session_key = request.session.session_key
 
-    # Vérifie si le session_key est valide
     if not session_key:
         return JsonResponse({'success': False, 'number_of_products': 0})
 
-    try:
-        # Récupère le panier lié à la session
-        cart = Cart.objects.filter(session_id=session_key).first()
+    cart_items_count = CartItem.objects.filter(
+            cart__session_id=session_key,
+            cart__paid=False
+        ).count()
 
-        # Si aucun panier n'est trouvé
-        if not cart:
-            return JsonResponse({'success': False, 'number_of_products': 0})
-        if cart.paid:
-            return JsonResponse({'success': False, 'number_of_products': 0})
-
-        # Comptage des articles dans le panier
-        cart_items = CartItem.objects.filter(cart=cart)
-        cart_items_count = cart_items.count()
-        return JsonResponse({'success': True, 'number_of_products': cart_items_count})
-
-    except ObjectDoesNotExist:
-        # Si une erreur se produit avec l'accès aux objets, retourner une réponse vide
-        return JsonResponse({'success': False, 'number_of_products': 0})
+    return JsonResponse({'success': True, 'number_of_products': cart_items_count})
 
 def checkout(request):
     front_total = float(request.GET.get('front_total'))
