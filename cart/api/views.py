@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_or_create_active_cart
+from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from cart.services.pricing_services import AmountMismatchError
@@ -43,27 +43,7 @@ def cart_detail(request):
     if not cart:
         return JsonResponse({'cart': []})
 
-    cart_items = CartItem.objects.filter(cart=cart).select_related('product')
-    data = []
-
-    for item in cart_items:
-        product = item.product
-        
-        data.append({
-            'name': product.name,
-            'price': product.price,
-            'quantity': item.quantity,
-            'image1': product.image1.url if product.image1 else None,
-            'image2': product.image2.url if product.image2 else None,
-            'image3': product.image3.url if product.image3 else None,
-            'image4': product.image4.url if product.image4 else None,
-            'image5': product.image5.url if product.image5 else None,
-            'image6': product.image6.url if product.image6 else None,
-            'id': product.id,
-            'discount': product.discount
-        })
-
-    return JsonResponse({'cart': data})
+    return JsonResponse({'cart': get_cart_items_data(cart)})
 
 def empty_cart(request):
     session_id = request.session.session_key
