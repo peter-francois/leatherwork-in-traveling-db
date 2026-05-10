@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 from legal.choices import DocumentType
 from legal.models import LegalDocument
+import uuid
 from cart.constants import (
     ALLOWED_COUNTRIES, CGV_EXPIRATION_DAYS, EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
     INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
@@ -142,3 +143,23 @@ def register_cgv_acceptance(cart) -> None:
 
 def convert_centimes_to_euros(centimes):
     return round(float(centimes) / 100, 2)
+
+def get_stripe_session(session_id: str):
+    session = stripe.checkout.Session.retrieve(session_id)
+    
+    if session.payment_status != 'paid':
+        raise ValueError("Payment not completed")
+    
+    metadata = getattr(session, "metadata", {})
+    if not isinstance(metadata, dict) or "cart_uuid" not in metadata:
+        raise ValueError("Invalid metadata or missing cart_uuid")
+    
+    try:
+        cart_uuid = uuid.UUID(metadata["cart_uuid"])
+    except ValueError:
+        raise ValueError("Invalid cart UUID")
+    
+    if session.amount_total is None:
+        raise ValueError("Total verified is missing")
+    
+    return session, cart_uuid
