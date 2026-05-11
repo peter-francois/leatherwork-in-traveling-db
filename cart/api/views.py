@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
+from cart.services.cart_services import add_product_to_cart, convert_euros_to_centimes, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
 from cart.services.pricing_services import AmountMismatchError
@@ -107,9 +107,10 @@ def checkout(request):
     
     register_cgv_acceptance(cart)
 
-    total_articles = float(Cart.get_total(cart))
-    total_centimes = verify_total(total_articles, add_insurance, add_shipping, front_total)
-    metadata = build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles)
+    total_articles_euros = float(Cart.get_total(cart))
+    total_articles_centimes = convert_euros_to_centimes(total_articles_euros)
+    total_centimes = verify_total(total_articles_euros, add_insurance, add_shipping, front_total)
+    metadata = build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles_centimes)
 
     try:
         url = create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes)

@@ -9,8 +9,8 @@ from cart.constants import (
 class AmountMismatchError(Exception):
     pass
 
-def get_total_centimes(total_articles, add_insurance, add_shipping) -> int:
-    total_centimes = int(round(total_articles * 100))
+def get_total_centimes(total_articles_euros, add_insurance, add_shipping) -> int:
+    total_centimes = int(round(total_articles_euros * 100))
 
     if total_centimes > INSURANCE_MANDATORY_MIN:
         if total_centimes > INSURANCE_THRESHOLD_3:
@@ -32,9 +32,9 @@ def get_total_centimes(total_articles, add_insurance, add_shipping) -> int:
 
     return total_centimes
 
-def verify_total(total_articles, add_insurance, add_shipping, front_total) -> int:
+def verify_total(total_articles_euros, add_insurance, add_shipping, front_total) -> int:
     
-    total_centimes = get_total_centimes(total_articles, add_insurance, add_shipping)
+    total_centimes = get_total_centimes(total_articles_euros, add_insurance, add_shipping)
     front_total_centimes = int(round(front_total * 100))
     
     if front_total_centimes != total_centimes:
