@@ -1,8 +1,9 @@
 import logging
 from django.core.mail import send_mail
 from django.conf import settings
+from cart.services.pricing_services import calculate_insurance_cost_centimes, convert_centimes_to_euros
 from ..constants import EXPRESS_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
-from ..services import convert_centimes_to_euros
+
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +16,8 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
     
     total_verified_euros = convert_centimes_to_euros(total_verified)
     total_articles_euros = convert_centimes_to_euros(total_articles_centimes)
-    shipping_cost_euros = EXPRESS_SHIPPING_COST / 100 if add_shipping == 'True' else STANDARD_SHIPPING_COST / 100
+    shipping_cost_centimes = calculate_insurance_cost_centimes(total_verified, add_insurance)
+    shipping_cost_euros = convert_centimes_to_euros(shipping_cost_centimes)
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
     insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= INSURANCE_MANDATORY_MIN else 'Non'
     home_delivery = 'Oui' if add_shipping == 'True' else 'Non'

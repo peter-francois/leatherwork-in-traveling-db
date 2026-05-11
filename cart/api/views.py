@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from cart.services.cart_services import add_product_to_cart, convert_euros_to_centimes, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
+from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
 from cart.services.email_services import send_email_to_owner
 from cart.services import build_metadata, create_stripe_session, extract_session_data, process_successful_payment, register_cgv_acceptance, verify_total
-from cart.services.pricing_services import AmountMismatchError
+from cart.services.pricing_services import AmountMismatchError, AmountNegatifError, convert_euros_to_centimes, calculate_total_centimes
 from cart.services.stripe_services import StripeSessionError
 import stripe
 from django.urls import reverse
@@ -86,7 +86,7 @@ def get_number_of_products(request):
     return JsonResponse({'success': True, 'number_of_products': cart_items_count})
 
 def checkout(request):
-    front_total = float(request.GET.get('front_total'))
+    front_total_euros = float(request.GET.get('front_total'))
     add_insurance = request.GET.get('insurance') == '1'
     add_shipping = request.GET.get('shipping') == '1'
     accept_cgv = request.GET.get('acceptCGV') == '1'
@@ -109,11 +109,16 @@ def checkout(request):
 
     total_articles_euros = float(Cart.get_total(cart))
     total_articles_centimes = convert_euros_to_centimes(total_articles_euros)
-    total_centimes = verify_total(total_articles_euros, add_insurance, add_shipping, front_total)
+    total_centimes = calculate_total_centimes(total_articles_centimes, add_insurance, add_shipping)
+    front_total_centimes = convert_euros_to_centimes(front_total_euros)
     metadata = build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles_centimes)
 
     try:
+        verify_total(total_centimes,front_total_centimes)
         url = create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes)
+
+    except AmountNegatifError:
+        return JsonResponse({'error': 'Montant total négatif'}, status=400)
     
     except AmountMismatchError:
         return JsonResponse({'error': 'Montant incohérent'}, status=400)

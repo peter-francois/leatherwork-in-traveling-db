@@ -30,12 +30,6 @@ def process_successful_payment(cart) -> None:
             item.product.on_demand = True
             item.product.save()
 
-def convert_centimes_to_euros(centimes):
-    return round(float(centimes) / 100, 2)
-
-def convert_euros_to_centimes(euros):
-    return round(float(euros) * 100)
-
 def get_or_create_active_cart(request) -> Cart:
     if not request.session.session_key:
         request.session.create()
