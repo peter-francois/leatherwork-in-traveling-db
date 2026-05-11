@@ -9,14 +9,14 @@ logger = logging.getLogger(__name__)
 
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
                          cart_uuid, total_articles_centimes, cgv_version, add_insurance,
-                         total_verified, order_id, add_shipping):
+                         total_verified_centimes, order_id, add_shipping):
     if list_products is None:
         logger.error("list_products is None, email not sent")
         return
     
-    total_verified_euros = convert_centimes_to_euros(total_verified)
+    total_verified_euros = convert_centimes_to_euros(total_verified_centimes)
     total_articles_euros = convert_centimes_to_euros(total_articles_centimes)
-    shipping_cost_centimes = calculate_insurance_cost_centimes(total_verified, add_insurance)
+    shipping_cost_centimes = calculate_insurance_cost_centimes(total_verified_centimes, add_insurance)
     shipping_cost_euros = convert_centimes_to_euros(shipping_cost_centimes)
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
     insurance = 'Oui' if add_insurance == 'True' or total_articles_euros >= INSURANCE_MANDATORY_MIN else 'Non'
@@ -41,7 +41,7 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
 
 def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv_version,
                           shipping_address, insurance, home_delivery, shipping_cost,
-                          total_articles_euros, insurance_cost, total_verified, list_products) -> str:
+                          total_articles_euros, insurance_cost, total_verified_euros, list_products) -> str:
     """Build HTML email message"""
     message = f"""
     <html><body>
@@ -68,7 +68,7 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
         <li>Frais de port : {shipping_cost}€</li>
         <li>Total des articles : {total_articles_euros}€</li>
         <li>Coût de l'assurance: {insurance_cost}€</li>
-        <li><strong>Total de la commande frais de port et assurance inclus : {total_verified}€</strong></li>
+        <li><strong>Total de la commande frais de port et assurance inclus : {total_verified_euros}€</strong></li>
         <li><h5>Produits commandés :</h5><ul>
     """
 
