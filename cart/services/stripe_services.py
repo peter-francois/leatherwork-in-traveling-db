@@ -67,7 +67,10 @@ def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_arti
     }
 
 def get_stripe_session(session_id: str):
-    session = stripe.checkout.Session.retrieve(session_id)
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except stripe.StripeError as e:
+        raise ValueError(f"Stripe error: {e}")
     
     if session.payment_status != 'paid':
         raise ValueError("Payment not completed")
