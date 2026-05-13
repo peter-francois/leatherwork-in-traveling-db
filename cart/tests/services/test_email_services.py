@@ -99,10 +99,10 @@ class SendEmailToOwnerTest(TestCase):
             'cart_uuid': 'uuid-123',
             'total_articles_centimes': 10000,
             'cgv_version': '2024-01-01',
-            'add_insurance': 'False',
+            'is_optional_insurance': 'False',
             'total_verified_centimes': 10500,
             'order_id': 1,
-            'add_shipping': 'False',
+            'is_home_delivery': 'False',
         }
 
     def test_does_not_send_when_list_products_is_none(self):
@@ -146,18 +146,18 @@ class SendEmailToOwnerTest(TestCase):
                 insurance_arg = call_args[6]
                 self.assertEqual(insurance_arg, 'Oui')
 
-    def test_shipping_cost_is_express_when_add_shipping(self):
-        """Should use express shipping cost when add_shipping is True"""
+    def test_shipping_cost_is_express_when_is_home_delivery(self):
+        """Should use express shipping cost when is_home_delivery is True"""
         with patch('cart.services.email_services.send_mail'):
             with patch('cart.services.email_services._build_email_message') as mock_build:
                 mock_build.return_value = '<html></html>'
-                send_email_to_owner(**{**self.base_kwargs, 'add_shipping': 'True'})
+                send_email_to_owner(**{**self.base_kwargs, 'is_home_delivery': 'True'})
                 call_args = mock_build.call_args[0]
                 shipping_cost_arg = call_args[8]
-                self.assertEqual(shipping_cost_arg, 10.0)   # EXPRESS_SHIPPING_COST / 100
+                self.assertEqual(shipping_cost_arg, 10.0)   # HOME_DELIVERY_SHIPPING_COST / 100
 
     def test_shipping_cost_is_standard_when_no_shipping(self):
-        """Should use standard shipping cost when add_shipping is False"""
+        """Should use standard shipping cost when is_home_delivery is False"""
         with patch('cart.services.email_services.send_mail'):
             with patch('cart.services.email_services._build_email_message') as mock_build:
                 mock_build.return_value = '<html></html>'

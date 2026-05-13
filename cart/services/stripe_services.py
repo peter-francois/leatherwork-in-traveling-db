@@ -55,11 +55,11 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
         logger.exception(f"Unexpected error creating Stripe session: {e}")
         raise StripeSessionError("Unexpected error")
    
-def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles_centimes):
+def build_metadata(cart, is_optional_insurance, is_home_delivery, total_centimes, total_articles_centimes):
     return {
         "cart_uuid": str(cart.uuid),
-        "add_insurance": str(add_insurance),
-        "add_shipping": str(add_shipping),
+        "is_optional_insurance": str(is_optional_insurance),
+        "is_home_delivery": str(is_home_delivery),
         'total_articles_centimes': str(total_articles_centimes),
         "total_verified_centimes": str(total_centimes),
         "cgv_version": str(cart.cgv_accepted.version),
@@ -104,8 +104,8 @@ def extract_session_data(session, metadata) -> dict:
         'cart_uuid': metadata.get('cart_uuid'),
         'total_articles_centimes': int(metadata.get('total_articles_centimes')),
         'cgv_version': metadata.get('cgv_version'),
-        'add_insurance': metadata.get('add_insurance'),
-        'add_shipping': metadata.get('add_shipping'),
+        'is_optional_insurance': metadata.get('is_optional_insurance'),
+        'is_home_delivery': metadata.get('is_home_delivery'),
         'total_verified_centimes': int(metadata.get('total_verified_centimes')),
     }
 

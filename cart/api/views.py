@@ -87,8 +87,8 @@ def get_number_of_products(request):
 
 def checkout(request):
     front_total_euros = float(request.GET.get('front_total'))
-    add_insurance = request.GET.get('insurance') == '1'
-    add_shipping = request.GET.get('shipping') == '1'
+    is_optional_insurance = request.GET.get('insurance') == '1'
+    is_home_delivery = request.GET.get('shipping') == '1'
     accept_cgv = request.GET.get('acceptCGV') == '1'
     success_url = request.build_absolute_uri(reverse('cart:success'))
     cancel_url = request.build_absolute_uri(reverse('cart:cancel'))
@@ -109,9 +109,9 @@ def checkout(request):
 
     total_articles_euros = float(Cart.get_total(cart))
     total_articles_centimes = convert_euros_to_centimes(total_articles_euros)
-    total_centimes = calculate_total_centimes(total_articles_centimes, add_insurance, add_shipping)
+    total_centimes = calculate_total_centimes(total_articles_centimes, is_optional_insurance, is_home_delivery)
     front_total_centimes = convert_euros_to_centimes(front_total_euros)
-    metadata = build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles_centimes)
+    metadata = build_metadata(cart, is_optional_insurance, is_home_delivery, total_centimes, total_articles_centimes)
 
     try:
         verify_total(total_centimes,front_total_centimes)

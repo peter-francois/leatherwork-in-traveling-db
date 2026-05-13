@@ -2,25 +2,25 @@ import logging
 from django.core.mail import send_mail
 from django.conf import settings
 from cart.services.pricing_services import convert_centimes_to_euros
-from ..constants import EXPRESS_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
+from ..constants import HOME_DELIVERY_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
 
 
 logger = logging.getLogger(__name__)
 
 def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
-                         cart_uuid, total_articles_centimes, cgv_version, add_insurance,
-                         total_verified_centimes, order_id, add_shipping):
+                         cart_uuid, total_articles_centimes, cgv_version, is_optional_insurance,
+                         total_verified_centimes, order_id, is_home_delivery):
     if list_products is None:
         logger.error(f"list_products is None, email not sent for order: {cart_uuid}")
         return
     
     total_verified_euros = convert_centimes_to_euros(total_verified_centimes)
     total_articles_euros = convert_centimes_to_euros(total_articles_centimes)
-    shipping_cost_centimes = EXPRESS_SHIPPING_COST if add_shipping == 'True' else STANDARD_SHIPPING_COST
+    shipping_cost_centimes = HOME_DELIVERY_SHIPPING_COST if is_home_delivery == 'True' else STANDARD_SHIPPING_COST
     shipping_cost_euros = convert_centimes_to_euros(shipping_cost_centimes)
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if add_insurance == 'True' or total_articles_centimes >= INSURANCE_MANDATORY_MIN else 'Non'
-    home_delivery = 'Oui' if add_shipping == 'True' else 'Non'
+    insurance = 'Oui' if is_optional_insurance == 'True' or total_articles_centimes >= INSURANCE_MANDATORY_MIN else 'Non'
+    home_delivery = 'Oui' if is_home_delivery == 'True' else 'Non'
 
     message = _build_email_message(
         customer_name, customer_email, order_id, cart_uuid, cgv_version,

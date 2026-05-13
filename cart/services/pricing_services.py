@@ -1,5 +1,5 @@
 from cart.constants import (
-     EXPRESS_SHIPPING_COST, STANDARD_SHIPPING_COST,
+     HOME_DELIVERY_SHIPPING_COST, STANDARD_SHIPPING_COST,
     INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
     INSURANCE_MANDATORY_MIN,INSURANCE_THRESHOLD_1,
     INSURANCE_THRESHOLD_2,INSURANCE_THRESHOLD_3,INSURANCE_COST_50_TO_125,
@@ -12,25 +12,28 @@ class AmountMismatchError(Exception):
 class AmountNegatifError(Exception):
     pass
 
-def calculate_total_centimes(total_articles_centimes, add_insurance, add_shipping) -> int:
+def calculate_total_centimes(total_articles_centimes, is_optional_insurance, is_home_delivery) -> int:
+    if total_articles_centimes <= 0:
+        raise AmountNegatifError(
+            f"Invalid articles total amount: {total_articles_centimes}"
+        )
+    
     total_centimes = total_articles_centimes
+
     total_centimes += calculate_insurance_cost_centimes(
         total_centimes,
-        add_insurance
+        is_optional_insurance
     )
 
     total_centimes += (
-        EXPRESS_SHIPPING_COST
-        if add_shipping
+        HOME_DELIVERY_SHIPPING_COST
+        if is_home_delivery
         else STANDARD_SHIPPING_COST
     )
 
-    if total_centimes <= 0:
-        raise AmountNegatifError(f"Invalid total amount: {total_centimes}")
-
     return total_centimes
 
-def calculate_insurance_cost_centimes(total_centimes, add_insurance) -> int:
+def calculate_insurance_cost_centimes(total_centimes, is_optional_insurance) -> int:
     if total_centimes > INSURANCE_MANDATORY_MIN:
         if total_centimes > INSURANCE_THRESHOLD_3:
             return INSURANCE_COST_ABOVE_375
@@ -42,7 +45,7 @@ def calculate_insurance_cost_centimes(total_centimes, add_insurance) -> int:
             return INSURANCE_COST_50_TO_125
 
     elif INSURANCE_OPTIONAL_MIN < total_centimes <= INSURANCE_OPTIONAL_MAX:
-        if add_insurance:
+        if is_optional_insurance:
             return INSURANCE_OPTIONAL_COST
 
     return 0
