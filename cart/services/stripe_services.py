@@ -145,7 +145,7 @@ def _format_shipping_address(shipping_address: dict) -> dict:
     """Format shipping address for email"""
     line2 = shipping_address.get('line2')
     if line2 and line2.lower() != "none":
-        shipping_address['formatted'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
+        shipping_address['formatted_shipping_address'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
     else:
-        shipping_address['formatted'] = shipping_address.get('line1', 'Unknown')
+        shipping_address['formatted_shipping_address'] = shipping_address.get('line1', 'Unknown')
     return shipping_address
