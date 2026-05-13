@@ -10,6 +10,31 @@ logger = logging.getLogger(__name__)
 
 
 class StripeSessionError(Exception):
+    """Base Stripe session exception"""
+    pass
+
+
+class StripePaymentError(StripeSessionError):
+    """Raised when Stripe API fails"""
+    pass
+
+
+class StripeSessionUrlMissingError(StripeSessionError):
+    """Raised when Stripe session URL is missing"""
+    pass
+
+
+class StripeMetadataError(StripeSessionError):
+    """Raised when Stripe metadata is invalid"""
+    pass
+
+
+class StripePaymentNotCompletedError(StripeSessionError):
+    """Raised when payment is not completed"""
+    pass
+
+class StripeAmountError(StripeSessionError):
+    """Raised when Stripe amount is invalid or missing"""
     pass
 
 def create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes) -> str:
@@ -43,13 +68,16 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
         )
         session_url = checkout_session.url
         if session_url is None:
-            raise ValueError("Stripe checkout session URL is missing")
+            raise StripeSessionUrlMissingError("Stripe checkout session URL is missing")
 
         return session_url
 
     except stripe.StripeError as e:
         logger.error(f"Stripe error: {e}")
-        raise StripeSessionError("Stripe payment error")
+        raise StripePaymentError("Stripe payment error")
+    
+    except StripeSessionError:
+        raise
 
     except Exception as e:
         logger.exception(f"Unexpected error creating Stripe session: {e}")
@@ -70,22 +98,27 @@ def get_stripe_session(session_id: str):
     try:
         session = stripe.checkout.Session.retrieve(session_id)
     except stripe.StripeError as e:
-        raise ValueError(f"Stripe error: {e}")
+        logger.error(f"Stripe error retrieving session: {e}")
+        raise StripePaymentError("Stripe payment retrieval error")
     
     if session.payment_status != 'paid':
-        raise ValueError("Payment not completed")
+        raise StripePaymentNotCompletedError(
+            "Payment not completed"
+        )
     
     metadata = getattr(session, "metadata", {})
     if not isinstance(metadata, dict) or "cart_uuid" not in metadata:
-        raise ValueError("Invalid metadata or missing cart_uuid")
+        raise StripeMetadataError(
+            "Invalid metadata or missing cart_uuid"
+        )
     
     try:
         cart_uuid = uuid.UUID(metadata["cart_uuid"])
     except ValueError:
-        raise ValueError("Invalid cart UUID")
+        raise StripeMetadataError("Invalid cart UUID")
     
     if session.amount_total is None:
-        raise ValueError("Total verified is missing")
+        raise StripeAmountError("Total verified is missing")
     
     return session, cart_uuid
 
