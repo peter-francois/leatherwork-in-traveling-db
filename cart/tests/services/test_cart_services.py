@@ -13,7 +13,6 @@ from cart.services.cart_services import (
     remove_product_from_cart,
 )
 from cart.tests.helpers import make_cart, make_product, make_session
-from catalog.models import Product
 from legal.models import LegalDocument
 from legal.choices import DocumentType
 from django.utils import timezone
@@ -35,7 +34,7 @@ class RegisterCgvAcceptanceTest(TestCase):
     def test_registers_cgv_when_not_accepted(self):
         """Should register CGV acceptance when not already accepted"""
         self.assertIsNone(self.cart.cgv_accepted_at)
-        register_cgv_acceptance(self.cart)
+        register_cgv_acceptance(self.cart, self.cgv)
         self.cart.refresh_from_db()
         self.assertEqual(self.cart.cgv_accepted, self.cgv)
         self.assertIsNotNone(self.cart.cgv_accepted_at)
@@ -57,14 +56,14 @@ class RegisterCgvAcceptanceTest(TestCase):
                 content_en='New content',
             )
 
-        register_cgv_acceptance(self.cart)
+        register_cgv_acceptance(self.cart, self.cgv)
         self.cart.refresh_from_db()
         self.assertEqual(self.cart.cgv_accepted_at, original_time)
         self.assertNotEqual(self.cart.cgv_accepted, new_doc)
 
     def test_expiration_is_5_years(self):
         """Should set CGV expiration to constant CGV_EXPIRATION_DAYS"""
-        register_cgv_acceptance(self.cart)
+        register_cgv_acceptance(self.cart, self.cgv)
         self.cart.refresh_from_db()
         
         self.assertIsNotNone(self.cart.cgv_accepted_at)

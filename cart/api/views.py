@@ -10,8 +10,11 @@ import stripe
 from django.urls import reverse
 from django.conf import settings
 from catalog.models import Product
+from legal.choices import DocumentType
+from legal.models import LegalDocument
 from ..models import Cart, CartItem
 import logging
+from django.db import transaction
 
 logger = logging.getLogger(__name__)
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -104,14 +107,15 @@ def checkout(request):
     if not accept_cgv:
         logger.error("L'utilisateur n'a pas accepté les conditions générales de vente.")
         return JsonResponse({'error': 'Vous devez accepter les conditions générales de vente'}, status=400)
-    
-    register_cgv_acceptance(cart)
+    accepted_terms = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
+
+    accepted_terms_version = register_cgv_acceptance(cart, accepted_terms)  
 
     total_articles_euros = float(Cart.get_total(cart))
     total_articles_centimes = convert_euros_to_centimes(total_articles_euros)
     total_centimes = calculate_total_centimes(total_articles_centimes, is_optional_insurance, is_home_delivery)
     front_total_centimes = convert_euros_to_centimes(front_total_euros)
-    metadata = build_metadata(cart, is_optional_insurance, is_home_delivery, total_centimes, total_articles_centimes)
+    metadata = build_metadata(cart, is_optional_insurance, is_home_delivery, total_centimes, total_articles_centimes, accepted_terms_version)
 
     try:
         verify_total(total_centimes,front_total_centimes)
@@ -140,28 +144,50 @@ def stripe_webhook(request):
     except stripe.SignatureVerificationError:
         return HttpResponse("Invalid signature", status=400)
     
-    # if payment is completed
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-        if session.get("payment_link"):
-            logger.warning("Payment via Payment Link ignored")
-            return JsonResponse({'status': 'ignored - payment link'}, status=200)
-        metadata = session.get("metadata", {})
-        cart_uuid = metadata.get("cart_uuid")
-        
-        if not cart_uuid:
-            logger.error("Cart UUID manquant.")
-            return JsonResponse({'status': 'error - missing cart UUID'}, status=400)
-
-        cart = get_object_or_404(Cart, uuid=cart_uuid)
-        process_successful_payment(cart)
-
-        logger.info(f"Payment received for cart {cart_uuid}")
+    # if payment is not completed
+    if event['type'] != 'checkout.session.completed':
+        return JsonResponse({'status': 'ignored'})
+    
+    session = event['data']['object']
+    if session.get("payment_link"):
+        logger.warning("Payment via Payment Link ignored")
+        return JsonResponse({'status': 'ignored - payment link'}, status=200)
+    metadata = session.get("metadata", {})
+    cart_uuid = metadata.get("cart_uuid")
+    
+    if not cart_uuid:
+        logger.error("Cart UUID manquant.")
+        return JsonResponse({'status': 'error - missing cart UUID'}, status=400)
+    try:
+        with transaction.atomic():
+            cart = Cart.objects.select_for_update().get(uuid=cart_uuid)
+            if cart.paid:
+                logger.info(f"Already processed {cart_uuid}")
+                return JsonResponse({'status': 'already processed'}, status=200)
+            process_successful_payment(cart)
 
         data = extract_session_data(session, metadata)
+
         if data['list_products'] is None:
             logger.error("Invalid list_products")
             return JsonResponse({'status': 'error - invalid products'}, status=400)
 
         send_email_to_owner(order_id=cart.id, **data)
-    return JsonResponse({'status': 'success'}, status=200)
+        logger.info(f"Payment processed {cart_uuid}")
+        return JsonResponse({'status': 'success'}, status=200)
+    
+    except Cart.DoesNotExist:
+
+        return JsonResponse(
+            {'status': 'cart not found'},
+            status=404
+        )
+
+    except Exception:
+
+        logger.exception("Stripe webhook failed")
+
+        return JsonResponse(
+            {'status': 'error'},
+            status=500
+        )

@@ -101,6 +101,7 @@ class BuildMetadataTest(TestCase):
             is_home_delivery=False,
             total_centimes=2000,
             total_articles_centimes=1500,
+            accepted_terms_version= cart.cgv_accepted.version
         )
 
         self.assertEqual(result["cart_uuid"], str(cart.uuid))

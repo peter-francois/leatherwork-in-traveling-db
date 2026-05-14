@@ -1,20 +1,22 @@
 from cart.constants import CART_EXPIRATION_DAYS, CGV_EXPIRATION_DAYS
 from cart.models import Cart, CartItem
-from legal.choices import DocumentType
-from legal.models import LegalDocument
 from django.utils.timezone import now
 from datetime import timedelta
 import uuid
 
-def register_cgv_acceptance(cart) -> None:
+def register_cgv_acceptance(cart, accepted_terms) -> str:
+
     if not cart.cgv_accepted:
-        latest_cgv = LegalDocument.objects.filter(
-            document_type=DocumentType.TERMS
-        ).latest('created_at')
-        cart.cgv_accepted = latest_cgv
+        cart.cgv_accepted = accepted_terms
         cart.cgv_accepted_at = now()
-        cart.cgv_expires_at = cart.cgv_accepted_at + timedelta(days=CGV_EXPIRATION_DAYS)
+        cart.cgv_expires_at = (
+            cart.cgv_accepted_at
+            + timedelta(days=CGV_EXPIRATION_DAYS)
+        )
+
         cart.save()
+
+    return str(cart.cgv_accepted.version)
 
 def process_successful_payment(cart) -> None:
     """Mark cart as paid and update product availability"""
