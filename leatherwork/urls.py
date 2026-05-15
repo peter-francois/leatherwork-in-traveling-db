@@ -49,7 +49,7 @@ urlpatterns += [
     path('sitemap-en.xml', core_views.sitemap_lang, {'lang': 'en'}, name='sitemap-en'),
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
     path('api/legal/', include('legal.api.urls')),
-    path('api/cart/', include('cart.api.urls')),
+    path('api/cart/', include('cart.api.urls','cart_api')),
     path('api/catalog/', include('catalog.api.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
