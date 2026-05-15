@@ -8,18 +8,16 @@ from legal.choices import DocumentType
 from django.utils import timezone
 from datetime import timedelta
 
+from legal.tests import make_terms_document
+
 
 class CartViewTest(TestCase):
     """Tests for the cart view"""
 
     def setUp(self):
         self.client = Client()
-        self.cgv = LegalDocument.objects.create(
-            document_type=DocumentType.TERMS,
-            version='2024-01-01',
-            content_fr='CGV FR',
-            content_en='CGV EN',
-        )
+        self.cgv = make_terms_document()
+
 
     def test_returns_200(self):
         """Should return 200"""

@@ -17,18 +17,15 @@ from legal.models import LegalDocument
 from legal.choices import DocumentType
 from django.utils import timezone
 from datetime import timedelta
+from legal.tests import make_terms_document
 
 
 class RegisterCgvAcceptanceTest(TestCase):
     """Tests for register_cgv_acceptance service"""
 
     def setUp(self):
-        self.cgv = LegalDocument.objects.create(
-            document_type=DocumentType.TERMS,
-            version='2024-01-01',
-            content_fr='CGV FR',
-            content_en='CGV EN',
-        )
+        self.cgv = make_terms_document()
+
         self.cart = Cart.objects.create(session_id='test_session')
 
     def test_registers_cgv_when_not_accepted(self):

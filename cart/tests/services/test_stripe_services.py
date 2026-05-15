@@ -230,8 +230,8 @@ class ExtractSessionDataTest(TestCase):
         self.assertEqual(result["customer_email"], "test@test.com")
         self.assertEqual(result["customer_name"], "John Doe")
         self.assertEqual(result["cart_uuid"], "123")
-        self.assertEqual(result["total_articles_centimes"], 1000)
-        self.assertEqual(result["total_verified_centimes"], 1200)
+        self.assertEqual(result["total_articles_centimes"], '1000')
+        self.assertEqual(result["total_verified_centimes"], '1200')
         self.assertEqual(
             result["shipping_address"]["formatted_shipping_address"],
             "10 rue test, Batiment A"
