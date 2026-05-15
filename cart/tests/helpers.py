@@ -44,3 +44,32 @@ def call_management_command(command: str) -> str:
     out = StringIO()
     call_command(command, stdout=out)
     return out.getvalue()
+
+def make_stripe_checkout_event(cart_uuid: str) -> dict:
+    """Create a fake Stripe checkout.session.completed event"""
+    return {
+        'type': 'checkout.session.completed',
+        'data': {'object': {
+            'metadata': {
+                'cart_uuid': cart_uuid,
+                'list_products': '[{"name": "Product", "image_url": "http://example.com"}]',
+                'add_insurance': 'False',
+                'add_shipping': 'False',
+                'total_verified': '10500',
+                'total_articles': '10000',
+                'cgv_version': '2024-01-01',
+            },
+            'customer_details': {'email': 'test@test.com', 'name': 'Test User'},
+            'collected_information': {
+                'shipping_details': {
+                    'address': {
+                        'line1': '1 rue test',
+                        'city': 'Paris',
+                        'postal_code': '75001',
+                        'country': 'FR'
+                    }
+                }
+            },
+            'amount_total': 10500,
+        }}
+    }
