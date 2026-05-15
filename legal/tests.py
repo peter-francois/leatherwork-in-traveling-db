@@ -8,17 +8,21 @@ from django.utils import timezone
 from datetime import timedelta
 from unittest.mock import patch
 
-
-class GetLegalDocumentContentTest(TestCase):
-    """Tests for the get_legal_document_content service"""
-
-    def setUp(self):
-        self.document = LegalDocument.objects.create(
+# Helpers
+def make_terms_document() -> LegalDocument:
+    """Create a Terms (CGV) legal document"""
+    return LegalDocument.objects.create(
             document_type=DocumentType.TERMS,
             version='2024-01-01',
             content_fr='Contenu en français',
             content_en='Content in english',
         )
+# Test case
+class GetLegalDocumentContentTest(TestCase):
+    """Tests for the get_legal_document_content service"""
+
+    def setUp(self):
+        self.document = make_terms_document()
 
     def test_returns_french_content(self):
         """Should return french content when lang is fr"""

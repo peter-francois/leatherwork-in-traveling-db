@@ -41,14 +41,11 @@ def success_view(request):
             'total_amount': total_verified_euros,
             'payment_date': cart.paid_at if cart.paid_at else "Non disponible",
         })
-    
+        
     except ValueError as e:
-        logger.error(f"Validation error: {e}")
+        logger.error(f"Error: {e}")
         return redirect('/')
-    
-    except stripe.StripeError:
-        logger.error("Stripe error retrieving session")
-        return redirect('/')
+
 
 def cancel_view(request):
     return render(request, 'cart/cancel.html')

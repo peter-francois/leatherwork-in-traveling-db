@@ -10,6 +10,31 @@ logger = logging.getLogger(__name__)
 
 
 class StripeSessionError(Exception):
+    """Base Stripe session exception"""
+    pass
+
+
+class StripePaymentError(StripeSessionError):
+    """Raised when Stripe API fails"""
+    pass
+
+
+class StripeSessionUrlMissingError(StripeSessionError):
+    """Raised when Stripe session URL is missing"""
+    pass
+
+
+class StripeMetadataError(StripeSessionError):
+    """Raised when Stripe metadata is invalid"""
+    pass
+
+
+class StripePaymentNotCompletedError(StripeSessionError):
+    """Raised when payment is not completed"""
+    pass
+
+class StripeAmountError(StripeSessionError):
+    """Raised when Stripe amount is invalid or missing"""
     pass
 
 def create_stripe_session(cart, metadata, success_url, cancel_url, total_centimes) -> str:
@@ -43,46 +68,57 @@ def create_stripe_session(cart, metadata, success_url, cancel_url, total_centime
         )
         session_url = checkout_session.url
         if session_url is None:
-            raise ValueError("Stripe checkout session URL is missing")
+            raise StripeSessionUrlMissingError("Stripe checkout session URL is missing")
 
         return session_url
 
     except stripe.StripeError as e:
         logger.error(f"Stripe error: {e}")
-        raise StripeSessionError("Stripe payment error")
+        raise StripePaymentError("Stripe payment error")
+    
+    except StripeSessionError:
+        raise
 
     except Exception as e:
         logger.exception(f"Unexpected error creating Stripe session: {e}")
         raise StripeSessionError("Unexpected error")
    
-def build_metadata(cart, add_insurance, add_shipping, total_centimes, total_articles_centimes):
+def build_metadata(cart, is_optional_insurance, is_home_delivery, total_centimes, total_articles_centimes, accepted_terms_version):
     return {
         "cart_uuid": str(cart.uuid),
-        "add_insurance": str(add_insurance),
-        "add_shipping": str(add_shipping),
+        "is_optional_insurance": str(is_optional_insurance),
+        "is_home_delivery": str(is_home_delivery),
         'total_articles_centimes': str(total_articles_centimes),
         "total_verified_centimes": str(total_centimes),
-        "cgv_version": str(cart.cgv_accepted.version),
+        "cgv_version": str(accepted_terms_version),
         "list_products": json.dumps(_build_product_list(cart)),
     }
 
 def get_stripe_session(session_id: str):
-    session = stripe.checkout.Session.retrieve(session_id)
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except stripe.StripeError as e:
+        logger.error(f"Stripe error retrieving session: {e}")
+        raise StripePaymentError("Stripe payment retrieval error")
     
     if session.payment_status != 'paid':
-        raise ValueError("Payment not completed")
+        raise StripePaymentNotCompletedError(
+            "Payment not completed"
+        )
     
     metadata = getattr(session, "metadata", {})
     if not isinstance(metadata, dict) or "cart_uuid" not in metadata:
-        raise ValueError("Invalid metadata or missing cart_uuid")
+        raise StripeMetadataError(
+            "Invalid metadata or missing cart_uuid"
+        )
     
     try:
         cart_uuid = uuid.UUID(metadata["cart_uuid"])
     except ValueError:
-        raise ValueError("Invalid cart UUID")
+        raise StripeMetadataError("Invalid cart UUID")
     
     if session.amount_total is None:
-        raise ValueError("Total verified is missing")
+        raise StripeAmountError("Total verified is missing")
     
     return session, cart_uuid
 
@@ -99,11 +135,11 @@ def extract_session_data(session, metadata) -> dict:
         'shipping_address': shipping_address,
         'list_products': list_products,
         'cart_uuid': metadata.get('cart_uuid'),
-        'total_articles_centimes': int(metadata.get('total_articles_centimes')),
+        'total_articles_centimes': metadata.get('total_articles_centimes'),
         'cgv_version': metadata.get('cgv_version'),
-        'add_insurance': metadata.get('add_insurance'),
-        'add_shipping': metadata.get('add_shipping'),
-        'total_verified_centimes': int(metadata.get('total_verified_centimes')),
+        'is_optional_insurance': metadata.get('is_optional_insurance'),
+        'is_home_delivery': metadata.get('is_home_delivery'),
+        'total_verified_centimes': metadata.get('total_verified_centimes'),
     }
 
 def _build_product_list(cart):
@@ -142,7 +178,7 @@ def _format_shipping_address(shipping_address: dict) -> dict:
     """Format shipping address for email"""
     line2 = shipping_address.get('line2')
     if line2 and line2.lower() != "none":
-        shipping_address['formatted'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
+        shipping_address['formatted_shipping_address'] = ', '.join(filter(None, [shipping_address.get('line1', 'Unknown'), line2]))
     else:
-        shipping_address['formatted'] = shipping_address.get('line1', 'Unknown')
+        shipping_address['formatted_shipping_address'] = shipping_address.get('line1', 'Unknown')
     return shipping_address

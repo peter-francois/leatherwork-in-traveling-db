@@ -3,7 +3,7 @@ ALLOWED_COUNTRIES = ('FR', 'DE', 'AT', 'BE', 'ES', 'IT', 'LU', 'NL', 'PT')
 
 # Shipping costs in cents
 STANDARD_SHIPPING_COST = 500    # 5.00€
-EXPRESS_SHIPPING_COST = 1000    # 10.00€
+HOME_DELIVERY_SHIPPING_COST = 1000    # 10.00€
 
 # Insurance thresholds in cents
 INSURANCE_OPTIONAL_MIN = 2500   # 25.00€

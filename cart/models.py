@@ -4,6 +4,7 @@ from catalog.models import Product
 from legal.models import LegalDocument
 
 class Cart(models.Model):
+    id = models.AutoField(primary_key=True)
     session_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
     uuid = models.UUIDField(default=uuid.uuid4,unique=True, editable=False)
     cgv_accepted  = models.ForeignKey(LegalDocument, on_delete=models.PROTECT, null=True, limit_choices_to={'document_type': 'terms'},related_name='carts',)
