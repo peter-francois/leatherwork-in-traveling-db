@@ -19,7 +19,7 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
     shipping_cost_centimes = HOME_DELIVERY_SHIPPING_COST if is_home_delivery == 'True' else STANDARD_SHIPPING_COST
     shipping_cost_euros = convert_centimes_to_euros(shipping_cost_centimes)
     insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if is_optional_insurance == 'True' or total_articles_centimes >= INSURANCE_MANDATORY_MIN else 'Non'
+    insurance = 'Oui' if is_optional_insurance == 'True' or int(total_articles_centimes) >= INSURANCE_MANDATORY_MIN else 'Non'
     home_delivery = 'Oui' if is_home_delivery == 'True' else 'Non'
 
     message = _build_email_message(

@@ -135,11 +135,11 @@ def extract_session_data(session, metadata) -> dict:
         'shipping_address': shipping_address,
         'list_products': list_products,
         'cart_uuid': metadata.get('cart_uuid'),
-        'total_articles_centimes': int(metadata.get('total_articles_centimes')),
+        'total_articles_centimes': metadata.get('total_articles_centimes'),
         'cgv_version': metadata.get('cgv_version'),
         'is_optional_insurance': metadata.get('is_optional_insurance'),
         'is_home_delivery': metadata.get('is_home_delivery'),
-        'total_verified_centimes': int(metadata.get('total_verified_centimes')),
+        'total_verified_centimes': metadata.get('total_verified_centimes'),
     }
 
 def _build_product_list(cart):
