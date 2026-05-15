@@ -6,7 +6,7 @@ import uuid
 
 def register_cgv_acceptance(cart, accepted_terms) -> str:
 
-    if not cart.cgv_accepted:
+    if cart.cgv_accepted != accepted_terms:
         cart.cgv_accepted = accepted_terms
         cart.cgv_accepted_at = now()
         cart.cgv_expires_at = (
