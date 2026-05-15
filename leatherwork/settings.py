@@ -266,3 +266,67 @@ SITEMAP_INCLUDE_LASTMOD     = True
 SITEMAP_INCLUDE_PRIORITY    = True
 SITEMAP_INCLUDE_LOCATION    = True
 SITEMAP_URL                 = '/sitemap.xml'
+
+# Logger
+
+log_dir = os.path.join(BASE_DIR, '..', 'logs')
+os.makedirs(log_dir, exist_ok=True)
+LOG_LEVEL = 'DEBUG' if DEBUG else 'WARNING'
+LOG_HANDLERS = ['console'] if DEBUG else ['file']
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {funcName}:{lineno} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple' if DEBUG else 'verbose',
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(log_dir, 'django.log'),
+            'maxBytes': 1024 * 1024 * 5, # 5 MB max par fichier
+            'backupCount': 3, # garde 3 anciens fichiers
+            'formatter': 'verbose',
+            'level': LOG_LEVEL,
+        },
+    },
+    
+    'loggers': {
+        'django': {
+            'handlers': LOG_HANDLERS,
+            'level': 'INFO',
+            'propagate': True,
+        },'core': {
+            'handlers': LOG_HANDLERS,
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'cart': {
+            'handlers': LOG_HANDLERS,
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'legal': {
+            'handlers': LOG_HANDLERS,
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'catalog': {
+            'handlers': LOG_HANDLERS,
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+    },
+}
