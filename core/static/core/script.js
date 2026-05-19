@@ -1,105 +1,41 @@
+/* ============================================
+   LANGUAGE
+   ============================================ */
+
 const flags = document.querySelectorAll(".flag");
 
-let currentLanguage = localStorage.getItem("language") || "fr";
-
-async function getDocumentContent(documentType, lang) {
-  try {
-    const response = await fetch(
-      `/api/legal/get_document_content/${documentType}/${lang}/`,
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return await response.text(); // Récupérer le HTML en tant que texte
-  } catch (error) {
-    console.error("Error fetching document content:", error);
-    return "";
-  }
-}
+// DEV TODO: remove currentLanguage and localStorage after all JS files are migrated
+let currentLanguage = "fr";
 
 function getCurrentLanguage() {
-  const path = window.location.pathname;
-  if (path.startsWith("/en/")) return "en";
-  return "fr";
-}
-// Fonction pour changer la langue
-
-async function changeLanguage(lang, event = null, initial = false) {
-  if (event) event.preventDefault(); // Empêche rechargement
-
-  try {
-    // Mettre à jour la langue dans le stockage local
-    currentLanguage = lang;
-    localStorage.setItem("language", currentLanguage);
-
-    // Mettre à jour les contenus des documents
-    const documentPromises = [];
-
-    const documents = {
-      cgv_content: "terms",
-      cookies_content: "cookies",
-      legal_mentions_content: "legal_mentions",
-      privacy_policy_content: "privacy_policy",
-    };
-
-    for (const [elementId, docType] of Object.entries(documents)) {
-      const element = document.getElementById(elementId);
-      if (element) {
-        documentPromises.push(
-          getDocumentContent(docType, lang).then((content) => {
-            element.innerHTML = content;
-          }),
-        );
-      }
-    }
-
-    // Attendre que tous les documents soient chargés
-    await Promise.all(documentPromises);
-
-    // Mise à jour de l'interface
-    updateFlags(lang);
-
-    // Mettre à jour les prix si on est sur la page panier
-    if (
-      window.location.pathname.includes("panier") ||
-      window.location.pathname.includes("cart")
-    ) {
-      const orderTotal = document.getElementById("order-total");
-      const insuranceCost = document.getElementById("insurance-cost");
-      const totalAmount = document.getElementById("total-amount");
-
-      if (orderTotal && insuranceCost && totalAmount) {
-        const total = parseFloat(orderTotal.textContent.replace(",", "."));
-        orderTotal.textContent =
-          lang === "en" ? total.toFixed(2) : total.toFixed(2).replace(".", ",");
-
-        // Forcer la mise à jour de l'assurance et du total
-
-        await Promise.resolve(); // Attendre le prochain cycle
-        await updateInsurance();
-        await updateTotal();
-      }
-    }
-    // Déclencher l'événement après les mises à jour
-    document.dispatchEvent(new Event("languageChanged"));
-  } catch (error) {
-    console.error("Error during language change:", error);
-  }
+  return window.location.pathname.startsWith("/en/") ? "en" : "fr";
 }
 
-// Fonction séparée pour mettre à jour l'etat actif des drapeaux
-function updateFlags(lang) {
+function updateFlags() {
+  currentLanguage = getCurrentLanguage();
   flags.forEach((flag) => {
-    flag.classList.toggle("active", flag.getAttribute("data-lang") === lang);
+    flag.classList.toggle(
+      "active",
+      flag.getAttribute("data-lang") === currentLanguage,
+    );
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
-  // Langue déjà définie par Django via cookie
-  const lang = getCurrentLanguage() || "fr"; // fallback au cas où
 
-  // Lancer la logique JS avec cette langue (mais sans reload, ni changement d'URL)
-  changeLanguage(lang, null, true); // Le paramètre `initial = true` empêche le pushState
-});
+async function changeLanguage(lang, event = null) {
+  if (event) event.preventDefault();
+
+  currentLanguage = lang;
+  localStorage.setItem("language", currentLanguage);
+  updateFlags();
+
+  document.dispatchEvent(
+    new CustomEvent("languageChanged", { detail: { lang } }),
+  );
+}
+
+/* ============================================
+   MENU
+   ============================================ */
 
 // Fonction pour afficher le menu
 function toggleMenu() {
@@ -502,7 +438,6 @@ function displayProductImages(articleId) {
   fetch(`/api/catalog/get_product_images/${articleId}/`)
     .then((response) => {
       if (!response.ok) {
-        print(response)
         throw new Error("Network response was not ok");
       }
       return response.json();
@@ -947,3 +882,13 @@ if (document.getElementById("imageContainer")) {
     });
   });
 }
+
+/* ============================================
+   EVENT LISTENERS
+   ============================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = getCurrentLanguage() || "fr";
+
+  changeLanguage(lang);
+});
