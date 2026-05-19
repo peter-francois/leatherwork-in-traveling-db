@@ -1,18 +1,6 @@
-{% extends 'core/base.html' %}
+{% extends 'legal/base.html' %}
 {% load i18n %}
+
 {% block meta-description %}{% trans "En savoir plus sur l’utilisation des cookies sur notre site et comment vous pouvez gérer vos préférences. Nous respectons votre vie privée et vous informons de notre utilisation des cookies." %}{% endblock %}
 {% block title %}{% trans "Gestion des cookies - Leather Work In Traveling DB" %}{% endblock %}
-{% block head %}
-    <meta name="robots" content="noindex, follow">
-{% endblock %}
-{% block header %}
-    <h1 class = "legal_documents"><span id="cookies_title">{% trans "Gestion des cookies" %}</span> (version: {{ document.version }})</h1>
-{% endblock %}
-{% block content %}
-<section class="legal_documents">
-    <p><span id="publish_on">{% trans "Publié le :" %} </span>{{ document.created_at|date:"d/m/Y" }}</p>
-
-    <div id="cookies_content">
-    </div>
-</section>
-{% endblock %}
+{% block document_title %}{% trans "Gestion des cookies" %}{% endblock %}
