@@ -74,19 +74,6 @@ def remove_from_cart(request, product_id):
         'message': 'Item removed from cart',
         'article': product_data
     }) 
-    
-def get_number_of_products(request):
-    session_key = request.session.session_key
-
-    if not session_key:
-        return JsonResponse({'success': False, 'number_of_products': 0})
-
-    cart_items_count = CartItem.objects.filter(
-            cart__session_id=session_key,
-            cart__paid=False
-        ).count()
-
-    return JsonResponse({'success': True, 'number_of_products': cart_items_count})
 
 def checkout(request):
     front_total_euros = float(request.GET.get('front_total'))
