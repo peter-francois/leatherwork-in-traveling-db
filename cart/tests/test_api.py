@@ -168,17 +168,17 @@ class RemoveFromCartTest(TestCase):
         self.assertEqual(data['article']['id'], self.product.id)
 
 
-class GetNumberOfProductsTest(TestCase):
-    """Tests for get_number_of_products API view"""
+class CartCountTest(TestCase):
+    """Tests for cart_count view"""
 
     def setUp(self):
         self.client = Client()
 
     def test_returns_zero_when_no_session(self):
         """Should return 0 when no session exists"""
-        response = self.client.get(reverse('cart_api:get_number_of_products'))
-        data = response.json()
-        self.assertEqual(data['number_of_products'], 0)
+        response = self.client.get(reverse('cart:cart_count'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(int(response.content), 0)
 
     def test_returns_correct_count(self):
         """Should return correct number of products"""
@@ -190,8 +190,8 @@ class GetNumberOfProductsTest(TestCase):
         CartItem.objects.create(cart=cart, product=product1, quantity=1)
         CartItem.objects.create(cart=cart, product=product2, quantity=1)
 
-        response = self.client.get(reverse('cart_api:get_number_of_products'))
-        self.assertEqual(response.json()['number_of_products'], 2)
+        response = self.client.get(reverse('cart:cart_count'))
+        self.assertEqual(int(response.content), 2)
 
     def test_returns_zero_for_paid_cart(self):
         """Should return 0 for paid cart"""
@@ -201,8 +201,8 @@ class GetNumberOfProductsTest(TestCase):
         cart = Cart.objects.create(session_id=session.session_key, paid=True)
         CartItem.objects.create(cart=cart, product=product, quantity=1)
 
-        response = self.client.get(reverse('cart_api:get_number_of_products'))
-        self.assertEqual(response.json()['number_of_products'], 0)
+        response = self.client.get(reverse('cart:cart_count'))
+        self.assertEqual(int(response.content), 0)
 
 
 class CheckoutTest(TestCase):
