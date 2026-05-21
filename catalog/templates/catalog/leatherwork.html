@@ -2,13 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block meta-description %}{% trans "Découvrez nos sacs, portefeuilles, ceintures et accessoires en cuir faits main. Des pièces uniques, confectionnées avec soin pour une qualité exceptionnelle." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/maroquinerie/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/leather-goods/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/leather-goods/" hreflang="x-default" />
-{% endblock %}
+
 {% block title %}{% trans "Maroquinerie fait main - Sacs, portefeuilles et accessoires en cuir" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
 {% block header %}
     <h1 id="title_leathercraft">{% trans "Maroquinerie fait main – Sacs, portefeuilles et accessoires en cuir" %}</h1>

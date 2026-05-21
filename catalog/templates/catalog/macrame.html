@@ -3,13 +3,7 @@
 {% load i18n %}
 {% block meta-description %}{% trans "Sublimez votre style avec nos bijoux en macramé faits main : chaînes de corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une touche d'élégance unique." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
 {% block title %}{% trans "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/macrames/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/macrame/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/macrame/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
     <h1 id="title_macrame">{% trans "Bijoux et accessoires en macramé faits main – Originalité et style" %}</h1>
 {% endblock %}

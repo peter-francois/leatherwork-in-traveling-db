@@ -11,6 +11,22 @@
         <meta name="description" content="{% block meta-description %}{% trans 'Sacs, accessoires et décorations en cuir et macramé conçus avec passion. Des créations uniques pour sublimer votre quotidien. Commandez en ligne, expédition rapide.' %}{% endblock %}">
         <meta name="author" content="Leather Work In Traveling DB">
         {% block head %}
+
+            {% language "fr" %}
+                {% url request.resolver_match.view_name as url_fr %}
+            {% endlanguage %}
+
+            {% language "en" %}
+                {% url request.resolver_match.view_name as url_en %}
+            {% endlanguage %}
+
+            <link rel="alternate" href="https://www.leatherworkintravelingdb.com{{ url_fr }}" hreflang="fr">
+            <link rel="alternate" href="https://www.leatherworkintravelingdb.com{{ url_en }}" hreflang="en">
+            <link rel="canonical" href="https://www.leatherworkintravelingdb.com{{ request.path }}">
+            <link rel="alternate" href="https://www.leatherworkintravelingdb.com{{ url_fr }}" hreflang="x-default">
+            {% block robots %}
+                <meta name="robots" content="index, follow">
+            {% endblock %}
         {% endblock %}
         <meta property="og:title" content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
         <meta property="og:description" content="{% trans 'Découvrez des produits authentiques en maroquinerie et macramé faits main.' %}">

@@ -3,18 +3,7 @@
 {% load i18n %}
 {% block meta-description %}{% trans "Meta description index" %}{% endblock %}
 {% block title %}{% trans "Maroquinerie & macramé faits main - Leather Work In Traveling DB" %}{% endblock %}
-{% block head %}
-    <!-- Balises hreflang pour la page actuelle -->
-    {% get_current_language as current_language %}
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com{{ request.path }}" hreflang="{{ current_language }}" />
-    {% if current_language == "fr" %}
-        <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/" hreflang="en" />
-    {% elif current_language == "en" %}
-        <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/" hreflang="fr" />
-    {% endif %}
-    <link rel="canonical" href="https://www.leatherworkintravelingdb.com{{ request.path }}" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
 <h1 id="title_index">{% trans "Bienvenue dans notre boutique de maroquinerie et macramé faits main" %}</h1>
 {% endblock %}
