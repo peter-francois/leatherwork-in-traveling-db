@@ -30,16 +30,19 @@ body {
   padding: 0;
 }
 
+main {
+  margin: 30px auto;
+  max-width: 1440px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 2px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
+}
+
 /*Common*/
 section {
-  margin: 30px auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
   padding: 35px;
-  max-width: 1440px;
-  justify-self: center;
   background-color: #fcf6dc;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 h1,
 h2 {
@@ -70,6 +73,23 @@ h4 {
 p {
   font-size: 19px;
 }
+
+.intro-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 3px solid #8b5e3b;
+  width: 90%;
+  margin: auto;
+  padding: 30px;
+}
+
+.intro {
+  color: var(--color2);
+  line-height: 2;
+}
+
 .page-button {
   background-color: #00000080;
   border: 3px solid var(--color1);
@@ -591,18 +611,10 @@ aside {
   height: min-content;
   width: fit-content;
 }
-.intro {
-  border-bottom: 3px solid #8b5e3b;
-  width: 70%;
-  margin: 0px auto 25px auto;
-  padding: 20px 40px 30px 40px;
-  color: var(--color2);
-  line-height: 2;
-}
+
 #see_products_button {
   margin-top: 15px;
   font-size: 15px;
-  justify-self: center;
   padding: 5px 10px;
 }
 .outro {
@@ -1302,8 +1314,10 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
-  section {
+  main {
     margin: 15px 0px;
+  }
+  section {
     padding: 5px;
   }
   .display-tablet-laptop {
@@ -1728,9 +1742,6 @@ footer {
   #liste-articles {
     gap: 0px;
     margin: 10px 3px;
-  }
-  .intro {
-    padding: 10px 20px 15px 20px;
   }
   .outro {
     padding: 15px 20px 10px 20px;
