@@ -54,11 +54,12 @@
                 {% endblock %}
             </div>
         </header>
+        <main>
+            {% block content %}
+            {% endblock %}
 
-        {% block content %}
-        {% endblock %}
-
-        {% include 'core/components/_contact.html' %}
+            {% include 'core/components/_contact.html' %}
+        </main>
 
         {% include 'core/components/_footer.html' %}
         <script src="{% static 'core/js/htmx.min.js' %}"></script>

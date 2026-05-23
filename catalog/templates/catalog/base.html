@@ -21,12 +21,11 @@
 {% endblock %}
 
 {% block content %}
-<main>
     <section>
         {% block description %}
         {% endblock %}
     </section>
-    
+
     <section id="products-section">
         <!--Pagination Links-->
         {% include 'catalog/components/_pagination_link.html' %}
@@ -97,5 +96,4 @@
     </section>
 
     {% include 'catalog/components/_modal.html' %}
-</main>
 {% endblock %}
