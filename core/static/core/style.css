@@ -927,13 +927,13 @@ h2.product-name {
 /*Footer*/
 footer {
   background: var(--color3);
-  color: var(--color1);
   padding: 40px 20px;
   text-align: center;
 }
 
 .footer-container {
   display: flex;
+  color: var(--color1);
   justify-content: space-between;
   flex-wrap: wrap;
   max-width: 1200px;

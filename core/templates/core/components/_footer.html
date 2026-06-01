@@ -1,41 +1,40 @@
 {% load static %}
 {% load i18n %}
-<footer class="font-size-19">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h3 id="footer_about">{% trans "À propos" %}</h3>
-            <ul>
-                <!--<li><a id="footer_history" href="/a_propos">Notre histoire</a></li>-->
-                <li><a id="footer_contact">Contact</a></li>
-            </ul>
-        </div>
 
-        <div class="footer-section">
-            <h3 id="footer_legal">{% trans "Informations légales" %}</h3>
-            <ul>
-                <li><a id="footer_mention" href="{% url 'legal:legal_mentions' %}">{% trans "Mentions légales" %}</a></li>
-                <li><a id="footer_cgv" href="{% url 'legal:terms' %}">{% trans "Conditions Générales de Vente (CGV)" %}</a></li>
-                <li><a id="footer_policy" href="{% url 'legal:privacy_policy' %}">{% trans "Politique de Confidentialité" %}</a></li>
-                <li><a id="footer_cookie" href="{% url 'legal:cookies' %}">{% trans "Gestion des Cookies" %}</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h3 id="footer_social">{% trans "Suivez-nous" %}</h3>
-            <ul>
-                <li><a class="footer-link" href="https://www.facebook.com/{{ CLIENT_FACEBOOK }}/" target="_blank"><span class="footer-link-text">Facebook</span><img class="footer-social-icon"  alt="Icon facebook" src="{% static 'core/icons/facebook.svg' %}"></a></li>
-                <li><a class="footer-link" href="https://www.instagram.com/{{ CLIENT_INSTAGRAM }}/" target="_blank"><span class="footer-link-text">Instagram</span><img class="footer-social-icon"  alt="icon instagram" src="{% static 'core/icons/instagram.svg' %}"></a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h3 id="footer_payment">{% trans "Paiements sécurisés" %}</h3>
-            <p id="footer_payment_description">{% trans "Transactions sécurisées avec" %} <strong>Stripe</strong>.</p>
-            <img id="stripe_logo" src="{% static 'core/images/stripe_wordmark-slate.png' %}" alt="Paiement sécurisé via Stripe">
-        </div>
+<div class="footer-container">
+    <div class="footer-section">
+        <h3 id="footer_about">{% trans "À propos" %}</h3>
+        <ul>
+            <!--<li><a id="footer_history" href="/a_propos">Notre histoire</a></li>-->
+            <li><a id="footer_contact">Contact</a></li>
+        </ul>
     </div>
 
-    <div class="footer-bottom">
-        <p id="footer_copyright">© 2025 Leather work in traveling DB. {% trans "Tous droits réservés." %}</p>
+    <div class="footer-section">
+        <h3 id="footer_legal">{% trans "Informations légales" %}</h3>
+        <ul>
+            <li><a id="footer_mention" href="{% url 'legal:legal_mentions' %}">{% trans "Mentions légales" %}</a></li>
+            <li><a id="footer_cgv" href="{% url 'legal:terms' %}">{% trans "Conditions Générales de Vente (CGV)" %}</a></li>
+            <li><a id="footer_policy" href="{% url 'legal:privacy_policy' %}">{% trans "Politique de Confidentialité" %}</a></li>
+            <li><a id="footer_cookie" href="{% url 'legal:cookies' %}">{% trans "Gestion des Cookies" %}</a></li>
+        </ul>
     </div>
-</footer>
+
+    <div class="footer-section">
+        <h3 id="footer_social">{% trans "Suivez-nous" %}</h3>
+        <ul>
+            <li><a class="footer-link" href="https://www.facebook.com/{{ CLIENT_FACEBOOK }}/" target="_blank"><span class="footer-link-text">Facebook</span><img class="footer-social-icon"  alt="Icon facebook" src="{% static 'core/icons/facebook.svg' %}"></a></li>
+            <li><a class="footer-link" href="https://www.instagram.com/{{ CLIENT_INSTAGRAM }}/" target="_blank"><span class="footer-link-text">Instagram</span><img class="footer-social-icon"  alt="icon instagram" src="{% static 'core/icons/instagram.svg' %}"></a></li>
+        </ul>
+    </div>
+
+    <div class="footer-section">
+        <h3 id="footer_payment">{% trans "Paiements sécurisés" %}</h3>
+        <p id="footer_payment_description">{% trans "Transactions sécurisées avec" %} <strong>Stripe</strong>.</p>
+        <img id="stripe_logo" src="{% static 'core/images/stripe_wordmark-slate.png' %}" alt="Paiement sécurisé via Stripe">
+    </div>
+</div>
+
+<div class="footer-bottom">
+    <p id="footer_copyright">© 2025 Leather work in traveling DB. {% trans "Tous droits réservés." %}</p>
+</div>

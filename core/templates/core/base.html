@@ -57,14 +57,16 @@
         <main>
             {% block content %}
             {% endblock %}
-
-            {% include 'core/components/_contact.html' %}
+            
         </main>
-
-        {% include 'core/components/_footer.html' %}
+        <footer class="font-size-19">
+            {% include 'core/components/_contact.html' %}
+            {% include 'core/components/_footer.html' %}
+        </footer>
+        <div id="overlay" class="hidden"></div>
+        
         <script src="{% static 'core/js/htmx.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'core/script.js'%}"></script>
         {% block extra_js %}{% endblock %}
     </body>
-    <div id="overlay" class="hidden"></div>
 </html>
