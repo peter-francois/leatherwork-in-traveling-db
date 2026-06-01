@@ -664,12 +664,12 @@ section select {
   gap: 2rem;
 }
 
-.two-col-layout__aside--right {
-  order: 2;
-}
-.two-col-layout__aside--right ~ .two-col-layout__main {
-  order: 1;
-}
+.two-col-layout--aside-left .two-col-layout__aside  { order: 1; }
+.two-col-layout--aside-left .two-col-layout__main   { order: 2; }
+
+.two-col-layout--aside-right .two-col-layout__aside { order: 2; }
+.two-col-layout--aside-right .two-col-layout__main  { order: 1; }
+
 .filter-and-list {
   grid-template-columns: 0.22fr 0.78fr;
   justify-content: center;

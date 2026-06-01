@@ -31,12 +31,13 @@
         {% include 'catalog/components/_pagination_link.html' %}
     </nav>
 
-    <div class="grid-container filter-and-list ">
+    <div class="two-col-layout two-col-layout--aside-left">
         <!--Filter-->
-        {% include 'catalog/components/_filter.html' %}
-        
+        <aside class="filter two-col-layout__aside">
+            {% include 'catalog/components/_filter.html' %}
+        </aside>
         <!--List of products-->
-        <div id="liste-produits" class="grid-container tous_les_produits">
+        <section id="liste-produits" class="grid-container tous_les_produits two-col-layout__main">
             {% if products %}
             {% for produit in products %}
                 <div class="grid-container produit{% if produit.pending_in_cart or produit.on_demand %} unavailable{% endif %}" data-product-id="{{ produit.id }}">
@@ -77,7 +78,7 @@
             {% else %}
                 <p id="no_products">{% trans "Aucun produit disponible" %}</p>
             {% endif %}
-        </div>
+            </section>
     </div>
     <!--Pagination Links-->
     <nav aria-label="{% trans 'Pagination' %}" class="pagination text-center font-size-17">
