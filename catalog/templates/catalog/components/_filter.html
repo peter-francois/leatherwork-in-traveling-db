@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load static %}
+<div class="filter">
+    <form class="filter-form grid-container" method="GET">
+        {{ form.as_p }}
+        <button class="align-items-center font-size-17" id="filter_button" type="submit"><span id="filter_button_text">{% trans "Filtrer" %}</span><img id="filter-icon" src="{% static 'catalog/icons/filter-solid.svg' %}" alt="icon filter"></button>
+    </form>
+    {% if filter_used %}
+        {% if number_of_products_in_filter > 0 %}
+            <p class="number-of-products-in-filter text-center">{{ number_of_products_in_filter }} {% if number_of_products_in_filter > 1 %}{% trans 'articles trouvés après application du filtre.' %}{% else %}{% trans 'article trouvé après application du filtre.' %}{% endif %}</p>
+        {% endif %}
+        <button type="button" id="clean_filter" class="align-items-center page-button font-size-17 clean-button">{% trans "Effacer le filtre" %}</button>
+    {% endif %}
+</div>
