@@ -725,6 +725,11 @@ section select {
 #filter_button:hover #filter-icon {
   content: url(../catalog/icons/filter-solid-hover.svg);
 }
+
+.pagination {
+  width: fit-content;
+  margin: auto;
+}
 .pagination-button {
   display: inline-block;
   width: 7em;

@@ -21,15 +21,16 @@
 {% endblock %}
 
 {% block content %}
-    <section>
+    <header>
         {% block description %}
         {% endblock %}
-    </section>
+    </header>
 
     <section id="products-section">
         <!--Pagination Links-->
-        {% include 'catalog/components/_pagination_link.html' %}
-
+        <nav aria-label="{% trans 'Pagination' %}" class="pagination text-center font-size-17">
+            {% include 'catalog/components/_pagination_link.html' %}
+        </nav>
         <div class="grid-container filter-and-list">
             <!--Filter-->
             {% include 'catalog/components/_filter.html' %}
@@ -79,12 +80,14 @@
             </div>
         </div>
         <!--Pagination Links-->
-        {% include 'catalog/components/_pagination_link.html' %}
+        <nav aria-label="{% trans 'Pagination' %}" class="pagination text-center font-size-17">
+            {% include 'catalog/components/_pagination_link.html' %}
+        </nav>
     </section>
-    <section>
+    <footer>
         {% block outro %}
         {% endblock %}
-    </section>
+    </footer>
 
     {% include 'catalog/components/_modal.html' %}
 {% endblock %}
