@@ -1,0 +1,43 @@
+{% load i18n %}
+<ul id="liste-produits" class="grid-container tous_les_produits two-col-layout__main">
+    {% if products %}
+    {% for produit in products %}
+        <li class="grid-container produit{% if produit.pending_in_cart or produit.on_demand %} unavailable{% endif %}" data-product-id="{{ produit.id }}">
+            <h2 class="product-name">{{ produit.name }}</h2>
+                {% if produit.image1 or produit.image2 or produit.image3 or produit.image4 or produit.image5 or produit.image6 %}
+                    {% if produit.image1 %}
+                        <img src="{{ produit.image1.url }}" alt="{{ produit.name }}">
+                    {% elif produit.image2 %}
+                        <img src="{{ produit.image2.url }}" alt="{{ produit.name }}">
+                    {% elif produit.image3 %}
+                        <img src="{{ produit.image3.url }}" alt="{{ produit.name }}">
+                    {% elif produit.image4 %}
+                        <img src="{{ produit.image4.url }}" alt="{{ produit.name }}">
+                    {% elif produit.image5 %}
+                        <img src="{{ produit.image5.url }}" alt="{{ produit.name }}">
+                    {% elif produit.image6 %}
+                        <img src="{{ produit.image6.url }}" alt="{{ produit.name }}">
+                    {% endif %}
+                    <p class="click-hint">👆 {% trans 'Cliquez' %}</p>
+                {% else %}
+                    <p>{% trans "Aucune image disponible" %}</p>
+                {% endif %}
+            {% if not produit.pending_in_cart and not produit.on_demand %}
+                {% if produit.discount != 0.0 %}
+                    <p class="promo-widget">Promo</p>
+                    <p class="text-center new-price">Nouveau prix: {{ produit.final_price | floatformat:2 }}€</p>
+                    <p class="old-price">{% trans "Prix: " %} {{ produit.price | floatformat:2 }}€</p>
+                {% else %}
+                    <p>{% trans "Prix: " %} {{ produit.price | floatformat:2 }}€</p>
+                {% endif %}
+                <button class="align-items-center page-button add_to_cart_button" data-product-id="{{ produit.id }}">{% trans "Ajouter au panier" %}</button>
+            {% else %}
+                <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>
+                <a class="align-items-center page-button on-order-button text-center" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20fabrication%20de%20l'article%20{{ produit.name }}">{% trans 'Contactez-nous, disponible sur commande' %}</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    {% else %}
+        <p id="no_products">{% trans "Aucun produit disponible" %}</p>
+    {% endif %}
+</ul>
