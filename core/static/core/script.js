@@ -671,7 +671,7 @@ function debugElements() {
 }
 
 function scrollToProducts() {
-  const productsSection = document.getElementById("products-section");
+  const productsSection = document.getElementById("pagination-top");
   const offsetTop = productsSection.offsetTop - 62.5;
   if (productsSection) {
     window.scrollTo({

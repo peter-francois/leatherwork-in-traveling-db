@@ -35,7 +35,7 @@ main {
   max-width: 1440px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  padding: 2px;
+  padding: 2rem 4rem;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
   background-color: #fcf6dc;
 }
@@ -80,9 +80,9 @@ p {
   align-items: center;
   gap: 1rem;
   border-bottom: 3px solid #8b5e3b;
-  width: 90%;
+  width: 80%;
   margin: auto;
-  padding: 30px;
+  padding-bottom: 2rem;
 }
 
 .intro {
@@ -657,6 +657,19 @@ section select {
   border-radius: 5px;
   border: 2px solid var(--color2);
 }
+
+.two-col-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+
+.two-col-layout__aside--right {
+  order: 2;
+}
+.two-col-layout__aside--right ~ .two-col-layout__main {
+  order: 1;
+}
 .filter-and-list {
   grid-template-columns: 0.22fr 0.78fr;
   justify-content: center;
@@ -728,7 +741,7 @@ section select {
 
 .pagination {
   width: fit-content;
-  margin: auto;
+  margin: 35px auto;
 }
 .pagination-button {
   display: inline-block;
