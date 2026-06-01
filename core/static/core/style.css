@@ -74,19 +74,26 @@ p {
   font-size: 19px;
 }
 
-.intro-wrapper {
+.intro-outro {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  border-bottom: 3px solid #8b5e3b;
   width: 80%;
   margin: auto;
-  padding-bottom: 2rem;
   color: var(--color2);
   line-height: 2;
 }
 
+.intro-outro--intro {
+  border-bottom: 3px solid #8b5e3b;
+  padding-bottom: 2rem;
+}
+
+.intro-outro--outro {
+  border-top: 3px solid #8b5e3b;
+  padding-top: 2rem;
+}
 
 .page-button {
   background-color: #00000080;
@@ -615,14 +622,7 @@ aside {
   font-size: 15px;
   padding: 5px 10px;
 }
-.outro {
-  border-top: 3px solid #8b5e3b;
-  width: 70%;
-  margin: 25px auto 0px auto;
-  padding: 30px 40px 20px 40px;
-  color: var(--color2);
-  line-height: 2;
-}
+
 #custom_creation_button {
   margin-top: 20px;
 }
@@ -1762,9 +1762,7 @@ h2.product-name {
     gap: 0px;
     margin: 10px 3px;
   }
-  .outro {
-    padding: 15px 20px 10px 20px;
-  }
+
   h2.product-name {
     height: 90px;
   }
