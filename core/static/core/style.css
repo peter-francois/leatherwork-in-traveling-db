@@ -509,6 +509,7 @@ h2.product-name {
 }
 .produit,
 #liste-articles li {
+  height: 100%;
   justify-items: center;
   border: 2px solid var(--color2);
   border-radius: 10px;
@@ -658,8 +659,15 @@ section select {
 
 .two-col-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
   gap: 2rem;
+}
+
+.two-col-layout--aside-left.two-col-layout {
+  grid-template-columns: 280px 1fr;
+}
+
+.two-col-layout--aside-right.two-col-layout {
+  grid-template-columns: 1fr 280px;
 }
 
 .two-col-layout--aside-left .two-col-layout__aside {
@@ -785,7 +793,9 @@ section select {
 .tous_les_produits,
 #liste-articles {
   justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  align-items: stretch;
+  align-content: start;
   margin: 30px 25px;
   gap: 40px;
 }
