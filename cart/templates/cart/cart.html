@@ -29,7 +29,7 @@
             <!--List of products-->
         <ul class="two-col-layout__main grid-container tous_les_produits" id="liste-produits">
             {% for item in items %}
-                {% include 'catalog/components/_product_card.html' with produit=item.product %}
+                {% include 'catalog/components/_product_card.html' with product=item.product  page="cart"%}
             {% empty %}
                 <li id="no_products">{% trans "Aucun produit disponible" %}</li>
             {% endfor %}

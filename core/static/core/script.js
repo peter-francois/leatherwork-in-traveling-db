@@ -782,6 +782,14 @@ document.addEventListener("click", function (event) {
   }
 });
 
+document.addEventListener("click", function (event) {
+  if (event.target && event.target.matches(".delete_button")) {
+    const articleId = event.target.getAttribute("data-product-id");
+    if (!articleId) return;
+    remove_from_cart(articleId);
+  }
+});
+
 document.addEventListener("languageChanged", function () {
   if (
     window.location.pathname.includes("panier") ||
