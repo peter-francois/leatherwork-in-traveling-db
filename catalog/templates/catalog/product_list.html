@@ -1,28 +1,20 @@
-{% extends 'catalog/product_base.html' %}
+{% extends 'catalog/base.html' %}
 {% load static %}
 {% load i18n %}
 {% block meta-description %}{% trans "Découvrez notre sélection exclusive de créations uniques : bijoux originaux, accessoires, maroquinerie, macramés, objets hybrides et bien plus encore. Trouvez des produits inédits pour sublimer votre style. Livraison rapide et qualité garantie." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}
 {% endblock %}
 {% block title %}{% trans "Accessoires, maroquinerie & macramé faits main | Créations originales" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
     <h1 id="title_all_products">{% trans "Explorez Nos Créations - Trouvez votre style unique" %}</h1>
 {% endblock %}
 
 {% block description %}
-<p class ="text-center intro"><em>{% trans "Intro produits" %}</em>
+    <p class ="text-center"><em>{% trans "Intro produits" %}</em></p>
     <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-</p>
 {% endblock %}
 
 {% block outro %}
-<p class ="text-center outro"><em>{% trans "outro produits" %}</em>
+    <p class ="text-center"><em>{% trans "outro produits" %}</em></p>
     <a href="{% url 'core:custom_creation' %}" class="align-items-center page-button font-size-17" id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
-</p>
 {% endblock %}

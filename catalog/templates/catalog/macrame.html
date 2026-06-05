@@ -1,25 +1,19 @@
-{% extends 'catalog/product_base.html' %}
+{% extends 'catalog/base.html' %}
 {% load static %}
 {% load i18n %}
 {% block meta-description %}{% trans "Sublimez votre style avec nos bijoux en macramé faits main : chaînes de corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une touche d'élégance unique." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
 {% block title %}{% trans "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/macrames/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/macrame/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/macrame/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
     <h1 id="title_macrame">{% trans "Bijoux et accessoires en macramé faits main – Originalité et style" %}</h1>
 {% endblock %}
 
 {% block description %}
-    <p class ="text-center intro" id="intro"><em>{% trans "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits disponibles." %}</em>
-        <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-    </p>
-    {% endblock %}
+    <p class ="text-center"><em>{% trans "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits disponibles." %}</em></p>
+    <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
+{% endblock %}
 
 {% block outro %}
-    <p class ="text-center outro" id="outro">{% trans "outro macrames" %}</p>
+    <p class ="text-center"><em>{% trans "outro macrames" %}</em></p>
+    <a href="{% url 'core:custom_creation' %}" class="align-items-center page-button font-size-17" id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
 {% endblock %}

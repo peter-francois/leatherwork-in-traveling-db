@@ -1,27 +1,19 @@
-{% extends 'catalog/product_base.html' %}
+{% extends 'catalog/base.html' %}
 {% load static %}
 {% load i18n %}
 {% block meta-description %}{% trans "Découvrez nos sacs, portefeuilles, ceintures et accessoires en cuir faits main. Des pièces uniques, confectionnées avec soin pour une qualité exceptionnelle." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/maroquinerie/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/leather-goods/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/leather-goods/" hreflang="x-default" />
-{% endblock %}
+
 {% block title %}{% trans "Maroquinerie fait main - Sacs, portefeuilles et accessoires en cuir" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
 {% block header %}
     <h1 id="title_leathercraft">{% trans "Maroquinerie fait main – Sacs, portefeuilles et accessoires en cuir" %}</h1>
 {% endblock %}
 
 {% block description %}
-<p class ="text-center intro" id="intro"><em>{% trans "Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les produits disponibles." %}</em>
+    <p class ="text-center"><em>{% trans "Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les produits disponibles." %}</em></p>
     <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-</p>
 {% endblock %}
 
 {% block outro %}
-<p class ="text-center outro" id="outro"><em>{% trans "outro maroquinerie" %}</em>
+    <p class ="text-center"><em>{% trans "outro maroquinerie" %}</em></p>
     <a href="{% url 'core:custom_creation' %}" class="align-items-center page-button font-size-17" id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
-</p>
 {% endblock %}

@@ -1,25 +1,19 @@
-{% extends 'catalog/product_base.html' %}
+{% extends 'catalog/base.html' %}
 {% load static %}
 {% load i18n %}
 {% block meta-description %}{% trans "Découvrez nos créations uniques mêlant maroquinerie et macramé. Accessoires et bijoux alliant l’élégance du cuir à la finesse du tissage." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
 {% block title %}{% trans "Créations hybrides maroquinerie & macramé - Accessoires uniques" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block head %}
-    {{ block.super }}
-    <!-- Langues disponibles -->
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/produits/hybride/" hreflang="fr" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/hybrid/" hreflang="en" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/products/hybrid/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
     <h1 id="title_hybride">{% trans "Accessoires uniques alliant maroquinerie et macramé" %}</h1>
 {% endblock %}
 
 {% block description %}
-    <p class ="text-center intro"><em>{% trans "Intro hybride" %}</em>
-        <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-    </p>
+    <p class ="text-center"><em>{% trans "Intro hybride" %}</em></p>
+    <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
 {% endblock %}
 
 {% block outro %}
-    <p class ="text-center outro"><em>{% trans "outro hybride" %}</em></p>
+    <p class ="text-center"><em>{% trans "outro hybride" %}</em></p>
+    <a href="{% url 'core:custom_creation' %}" class="align-items-center page-button font-size-17" id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
 {% endblock %}

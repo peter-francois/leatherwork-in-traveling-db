@@ -116,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   displayCart();
   initCart();
-  updateTextCartButton();
   if (
     window.location.pathname.includes("panier") ||
     window.location.pathname.includes("cart")
@@ -267,9 +266,9 @@ function addToCart(articleId) {
         cart.push({ id: articleId });
         localStorage.setItem("cart", JSON.stringify(cart));
         alert(data.message);
-        updateTextCartButton();
         updateProductList(articleId); // Met à jour la liste des produits en retirant celui qui a été ajouté
         closeModal();
+        document.body.dispatchEvent(new Event("cartUpdated"));
       } else {
         alert("Erreur : " + data.message);
       }
@@ -288,37 +287,6 @@ function updateProductList(articleId) {
   if (productElement) {
     productElement.style.display = "none"; // Masquer l'élément du DOM
   }
-}
-
-// Fonction pour obtenir le nombre d'articles dans le panier
-async function getNumberOfProductsInCart() {
-  const response = await fetch(`/api/cart/get_number_of_products/`, {
-    method: "GET",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-  // Retourne directement le nombre d'articles
-  if (data.success) {
-    return data.number_of_products;
-  } else {
-    return 0; // Retourne 0 si il y a une erreur
-  }
-}
-
-// Fonction pour mettre à jour l'affichage du nombre d'articles dans le panier
-async function updateTextCartButton() {
-  const textCartButton = document.getElementById("text-cart-button");
-  if (!textCartButton) return;
-
-  // Récupérer le nombre d'articles dans le panier
-  const numberOfProducts = await getNumberOfProductsInCart();
-
-  // Mettre à jour l'affichage du bouton
-  textCartButton.textContent = numberOfProducts;
 }
 
 // Au chargement de la page, vérifier si l'UUID du panier est dans localStorage
@@ -373,7 +341,7 @@ function clearCart() {
         document.getElementById("total-amount").textContent = formattedZero;
         updateCartVisibility();
         initCart();
-        updateTextCartButton();
+        document.body.dispatchEvent(new Event("cartUpdated"));
       } else {
         alert("Erreur lors de la suppression du panier.");
       }
@@ -418,7 +386,7 @@ function remove_from_cart(articleId) {
         }
         updateInsurance();
         updateTotal();
-        updateTextCartButton();
+        document.body.dispatchEvent(new Event("cartUpdated"));
         alert(data.message);
       } else {
         alert("Erreur lors de la suppression de l'article.");
@@ -703,7 +671,7 @@ function debugElements() {
 }
 
 function scrollToProducts() {
-  const productsSection = document.getElementById("products-section");
+  const productsSection = document.getElementById("pagination-top");
   const offsetTop = productsSection.offsetTop - 62.5;
   if (productsSection) {
     window.scrollTo({
@@ -811,6 +779,14 @@ document.addEventListener("click", function (event) {
     const articleId = event.target.getAttribute("data-product-id");
     if (!articleId) return;
     addToCart(articleId);
+  }
+});
+
+document.addEventListener("click", function (event) {
+  if (event.target && event.target.matches(".delete_button")) {
+    const articleId = event.target.getAttribute("data-product-id");
+    if (!articleId) return;
+    remove_from_cart(articleId);
   }
 });
 

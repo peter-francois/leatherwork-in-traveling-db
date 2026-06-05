@@ -3,18 +3,7 @@
 {% load i18n %}
 {% block meta-description %}{% trans "Offrez-vous une création sur mesure ! Personnalisez vos articles de maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre service pour réaliser des pièces uniques et personnalisées." %}{% endblock %}
 {% block title %}{% trans "Accessoires cuir & macramé personnalisés | Création sur mesure" %}{% endblock %}
-{% block head %}
-    <!-- Balises hreflang pour la page actuelle -->
-    {% get_current_language as current_language %}
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com{{ request.path }}" hreflang="{{ current_language }}" />
-    {% if current_language == "fr" %}
-        <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/custom-creation/" hreflang="en" />
-    {% elif current_language == "en" %}
-        <link rel="alternate" href="https://www.leatherworkintravelingdb.com/fr/creation-sur-mesure/" hreflang="fr" />
-    {% endif %}
-    <link rel="canonical" href="https://www.leatherworkintravelingdb.com{{ request.path }}" />
-    <link rel="alternate" href="https://www.leatherworkintravelingdb.com/en/custom-creation/" hreflang="x-default" />
-{% endblock %}
+
 {% block header %}
     <h1 id="title_custom">{% trans "Création sur mesure de maroquinerie et macramé - Personnalisez vos accessoires" %}</h1>
 {% endblock %}
