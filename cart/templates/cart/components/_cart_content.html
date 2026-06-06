@@ -1,0 +1,26 @@
+{% load i18n %}
+{% if items %}
+    <button hx-post="{% url 'cart_api:empty_cart' %}"
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+            hx-target="#cart-content"
+            hx-swap="innerHTML">
+        {% trans "Vider le panier" %}
+    </button>
+
+    <div class="two-col-layout two-col-layout--aside-right">
+        <aside class="two-col-layout__aside">
+            {% include 'cart/components/_secure_payment.html' %}
+        </aside>
+        <ul class="two-col-layout__main grid-container">
+            {% for item in items %}
+                {% include 'catalog/components/_product_card.html' with product=item.product page='cart' %}
+            {% empty %}
+                <li>{% trans "Aucun produit" %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <section id="empty-section">
+        <p>{% trans "Votre panier est vide." %}</p>
+    </section>
+{% endif %}

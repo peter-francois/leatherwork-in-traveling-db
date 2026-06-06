@@ -12,41 +12,9 @@
 {% block description %}
 {% endblock %}
 {% block content %}
-{% if items %}
-<section class="cart-container">
-    
-    <button class="align-items-center page-button font-size-17 clean-button" id="clear_cart" >{% trans "Vider le panier" %}</button>
-        {% if expiration_date %}
-            <p ><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %} </span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
-        {% else %}
-            <p id="expiration_soon">⚠️ {% trans "Votre panier expirera bientôt." %}</p>
-        {% endif %}
-    <div class="two-col-layout two-col-layout--aside-right">     
-        {% if items %}
-            <aside class="text-center two-col-layout__aside">
-                {% include 'cart/components/_secure_payment.html' %}
-            </aside>
-        {% endif %}    
-            <!--List of products-->
-        <ul class="two-col-layout__main grid-container">
-            {% for item in items %}
-                {% include 'catalog/components/_product_card.html' with product=item.product  page="cart"%}
-            {% empty %}
-                <li id="no_products">{% trans "Aucun produit disponible" %}</li>
-            {% endfor %}
-        </ul> 
-    </div>
-        {% if expiration_date %}
-            <p ><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %} </span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
-        {% else %}
-            <p id="expiration_soon">⚠️ {% trans "Votre panier expirera bientôt." %}</p>
-        {% endif %}
-</section>
-{% endif %}
-<section id="empty-section">
-    <p id="empty_cart">{% trans "Votre panier est vide." %}</p>
-</section>
-
+<div id="cart-content">
+    {% include 'cart/components/_cart_content.html' %}
+</div>
 
 {% include 'catalog/components/_modal.html' %}
 
