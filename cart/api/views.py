@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from cart.services.cart_services import add_product_to_cart, empty_cart_and_release_products, get_cart_items_data, get_or_create_active_cart, remove_product_from_cart
 from cart.services.email_services import send_email_to_owner
@@ -59,21 +59,39 @@ def empty_cart(request):
 
 def remove_from_cart(request, product_id):
     session_id = request.session.session_key
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+    
     if not session_id:
-        return JsonResponse({'success': False, 'message': 'Aucun panier trouvé'})
+        return render(request, "core/components/_error.html", {
+            "debug": settings.DEBUG,
+            "error": "Session ID not found",
+            "status_code": 404,
+        })
+    
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
-        return JsonResponse({'success': False, 'message': 'No cart found'})
+        return render(request, "core/components/_error.html", {
+            "debug": settings.DEBUG,
+            "error": "Cart not found",
+            "status_code": 404,
+        })
     
-    product_data = remove_product_from_cart(cart, product_id)
-    if not product_data:
-        return JsonResponse({'success': False, 'message': 'Item not found in cart'})
-
-    return JsonResponse({
-        'success': True,
-        'message': 'Item removed from cart',
-        'article': product_data
-    }) 
+    result = remove_product_from_cart(cart, product_id)
+    if not result:
+        return render(request, "core/components/_error.html", {
+            "debug": settings.DEBUG,
+            "error": "Item not found in cart",
+            "status_code": 404,
+        })
+    
+    items = CartItem.objects.filter(cart=cart).select_related('product')
+    context = {
+        "items": items,
+    }
+    response = render(request, "cart/components/_cart_content.html", context)
+    response['HX-Trigger'] = 'cartUpdated'
+    return response
 
 def checkout(request):
     front_total_euros = float(request.GET.get('front_total'))

@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       updateInsurance();
       updateTotal();
-      updateCartVisibility();
+
     }
   }
 });
@@ -199,23 +199,7 @@ window.onload = function () {
     console.log("Aucun UUID trouvé dans localStorage.");
   }
 };
-// Fonction pour mettre à jour l'affichage du panier
-function updateCartVisibility() {
-  const orderTotal = parseFloat(
-    document.getElementById("order-total").textContent.replace(",", "."),
-  );
-  const cartSection = document.querySelector(".cart-container");
-  const emptyCartMessage = document.querySelector("#empty-section");
 
-  // Si le total est 0 ou indéfini, on considère le panier vide
-  if (orderTotal <= 0 || isNaN(orderTotal)) {
-    cartSection.style.display = "none";
-    emptyCartMessage.style.display = "block";
-  } else {
-    cartSection.style.display = "block";
-    emptyCartMessage.style.display = "none";
-  }
-}
 // Fonction pour vider le panier
 function clearCart() {
   fetch("/api/cart/empty_cart/", {
@@ -236,7 +220,7 @@ function clearCart() {
         const formattedZero = currentLanguage === "en" ? "0.00" : "0,00";
         document.getElementById("order-total").textContent = formattedZero;
         document.getElementById("total-amount").textContent = formattedZero;
-        updateCartVisibility();
+
         initCart();
         document.body.dispatchEvent(new Event("cartUpdated"));
       } else {
@@ -290,7 +274,7 @@ function remove_from_cart(articleId) {
       }
     })
     .finally(() => {
-      updateCartVisibility();
+
     });
 }
 
