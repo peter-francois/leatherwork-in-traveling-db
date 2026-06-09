@@ -130,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       updateInsurance();
       updateTotal();
-
     }
   }
 });
@@ -273,9 +272,7 @@ function remove_from_cart(articleId) {
         alert("Erreur lors de la suppression de l'article.");
       }
     })
-    .finally(() => {
-
-    });
+    .finally(() => {});
 }
 
 let currentImageIndex = 0; // Index de l'image actuelle
@@ -748,3 +745,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   changeLanguage(lang);
 });
+
+document.body.addEventListener("htmx:afterSwap", (e) => {
+  if (e.detail.target.id === "cart-content") {
+    updateInsurance();
+    updateTotal();
+    initCartListeners();
+  }
+});
+
+function initCartListeners() {
+  document.getElementById("add-insurance")?.addEventListener("change", () => {
+    updateInsurance();
+    updateTotal();
+  });
+  document
+    .getElementById("add-shipping")
+    ?.addEventListener("change", updateTotal);
+  document
+    .getElementById("checkout")
+    ?.addEventListener("click", handleCheckout);
+}
