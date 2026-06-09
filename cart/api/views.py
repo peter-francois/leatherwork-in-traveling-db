@@ -10,6 +10,7 @@ import stripe
 from django.urls import reverse
 from django.conf import settings
 from catalog.models import Product
+from core.services import get_session_expiration
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 from ..models import Cart, CartItem
@@ -86,8 +87,14 @@ def remove_from_cart(request, product_id):
         })
     
     items = CartItem.objects.filter(cart=cart).select_related('product')
+    latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest('created_at')
+    total = sum((item.product.price - item.product.discount) * item.quantity for item in items)
+    expiration_date = get_session_expiration(request)
     context = {
+        "expiration_date": expiration_date,
         "items": items,
+        "total": total,
+        "latest_cgv": latest_cgv,
     }
     response = render(request, "cart/components/_cart_content.html", context)
     response['HX-Trigger'] = 'cartUpdated'
