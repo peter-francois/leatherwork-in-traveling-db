@@ -566,7 +566,7 @@ section.cart-container div.grid-container {
   border: none;
   padding: 10px;
   cursor: pointer;
-  justify-self: right;
+  justify-self: left;
 }
 .clean-button:hover {
   background-color: #d32f2f;
