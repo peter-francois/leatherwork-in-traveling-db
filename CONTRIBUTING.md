@@ -125,6 +125,17 @@ Tests are organized per app, with shared helpers where applicable. Please add or
 
 ## Submitting a pull request
 
+Before opening your pull request, make sure your branch is up to date with `dev`. This catches conflicts early, while they're still yours to resolve, instead of surfacing them later during review.
+ 
+```bash
+git checkout dev
+git pull
+git checkout your-branch-name
+git merge dev
+```
+ 
+If this produces merge conflicts, resolve them locally, commit the resolution, and push before opening the PR.
+
 1. Push your branch and open a pull request against `dev`
 2. Make sure CI passes (tests run automatically on every PR)
 3. Once approved, a maintainer will merge it
