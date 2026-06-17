@@ -26,6 +26,14 @@
         <div>
             <h2 class="text-center">{% trans "Articles dans votre panier" %}</h2>
             <ul class="product-list-cart" id="liste-articles"></ul>
+            <!--List of products-->
+        <ul class="two-col-layout__main grid-container tous_les_produits" id="liste-produits">
+            {% for item in items %}
+                {% include 'catalog/components/_product_card.html' with product=item.product  page="cart"%}
+            {% empty %}
+                <li id="no_products">{% trans "Aucun produit disponible" %}</li>
+            {% endfor %}
+        </ul>
         </div>
         {% if items %}
         <aside class="text-center">
@@ -113,7 +121,7 @@
 </section>
 
 
-{% include 'catalog/modal.html' %}
+{% include 'catalog/components/_modal.html' %}
 
 </div>
 <script id="translations" type="application/json">

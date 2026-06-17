@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<div id="contact-form">
+    <button type="button" id="close-btn">&times;</button>
+    <h2 class="center" id="contact_title">{% trans "Besoin de renseignements ou de prendre contact pour un produit sur mesure ?" %}</h2>
+    <p class="contact-p" id="contact_description1 ">{% trans "Je suis à votre disposition pour toute information complémentaire, que ce soit sur le procédé de fabrication ou les matières premières utilisées." %}</p>
+    <p class="contact-p" id="contact_description2">{% trans "Vous souhaitez un produit"%} <strong>100 % {% trans "sur mesure" %}</strong> {% trans "ou personnaliser un produit existant ?" %}</p>
+    <p class="contact-p" id="contact_description3">{% trans "Contactez-moi dès maintenant pour en discuter et obtenir un devis personnalisé." %}</p>
+    <p class="contact-p" id="contact_description4">{% trans "Je suis joignable soit par télephone:" %}</p>
+    <a id="contact_phone" href="tel:{{ CLIENT_PHONE_NUMBER }}">{{ CLIENT_PHONE_NUMBER }}</a>
+    <br>
+    <p class="contact-p" id="contact_description5">{% trans "soit par email:" %}</p>
+    <a id="contact_email" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com">{{ CLIENT_EMAIL }}</a>
+    <br>
+    <p class="contact-p" id="contact_description6">{% trans "À très bientôt" %}</p>
+</div>
