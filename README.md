@@ -99,6 +99,8 @@ The project uses separate requirement files:
 
 App available at http://127.0.0.1:8000/
 
+See CONTRIBUTING.md for the complete development environment setup.
+
 ---
 
 ## Tests
