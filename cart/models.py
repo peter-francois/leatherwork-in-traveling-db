@@ -24,17 +24,19 @@ class Cart(models.Model):
     paid = models.BooleanField(default=False)
     paid_at = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self):
+        return f"Cart {self.uuid}"
+
     def get_total(self):
         return sum(
             (item.product.price - item.product.discount) * item.quantity
             for item in self.cartitem_set.all()
         )
 
-    def __str__(self):
-        return f"Cart {self.uuid}"
-
-
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"Cart/Item: {self.cart}/{self.product}"
