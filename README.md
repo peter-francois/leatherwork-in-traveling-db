@@ -4,6 +4,30 @@ Django e-commerce project for a leather goods shop — live at [leatherworkintra
 
 ---
 
+## About this project
+ 
+This is a production e-commerce platform built and maintained for a real, independent craftsperson who designs and sells leather and macramé pieces (bags, accessories, decorative items). The store handles the full customer journey: browsing a filtered catalog, managing a cart, and checking out securely via Stripe — with a bilingual (French/English) storefront targeting both local and international buyers.
+ 
+The project also serves as an open codebase for developers who want to:
+ 
+- See a complete, real-world Django e-commerce implementation (catalog, cart, checkout, legal pages, i18n)
+- Contribute to an actively used production project
+- Learn from or discuss architectural decisions as they evolve (see [ROADMAP.md](ROADMAP.md) for ongoing work, like the migration to HTMX)
+If you're a contributor, see [CONTRIBUTING.md](CONTRIBUTING.md) to get set up . No real Cloudinary or Stripe credentials are needed to start developing, demo data is provided.
+ 
+---
+
+## Features
+
+- Product listing with categories and filters
+- Shopping cart
+- Secure checkout with Stripe
+- Admin dashboard
+- Multilingual support (French / English)
+- Responsive design
+
+---
+
 ## Technologies
 
 - **Backend:** Django 5.1 (Python)
@@ -200,17 +224,6 @@ leatherwork-in-traveling-db/
 ├── .env.example
 └── README.md
 ```
-
----
-
-## Features
-
-- Product listing with categories and filters
-- Shopping cart
-- Secure checkout with Stripe
-- Admin dashboard
-- Multilingual support (French / English)
-- Responsive design
 
 ---
 

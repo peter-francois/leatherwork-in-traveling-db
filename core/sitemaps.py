@@ -2,15 +2,16 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils import translation
 
+
 class StaticSitemap(Sitemap):
     priority = 1.0
     changefreq = "monthly"
-    
-    def __init__(self, language = None):
+
+    def __init__(self, language=None):
         self.language = language
         self.static_urls = {
-            'index': 'core:index',
-            'custom-creation': 'core:custom_creation',
+            "index": "core:index",
+            "custom-creation": "core:custom_creation",
             # 'a_propos': 'boutique:a_propos',
         }
 

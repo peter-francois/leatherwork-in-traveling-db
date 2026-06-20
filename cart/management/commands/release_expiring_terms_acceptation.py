@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+
 from cart.models import Cart
 
 
@@ -21,4 +22,6 @@ class Command(BaseCommand):
             cgv_expires_at=None,
         )
 
-        self.stdout.write(f"✔️ Preuves d'acceptation des CGV supprimées pour {count} panier(s).")
+        self.stdout.write(
+            f"✔️ Preuves d'acceptation des CGV supprimées pour {count} panier(s)."
+        )
