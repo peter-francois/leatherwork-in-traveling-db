@@ -3,4 +3,4 @@
 pytest-django
 pytest-sugar
 ruff==0.15.18
-pre-commit=4.6.0
+pre-commit==4.6.0
