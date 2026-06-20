@@ -14,7 +14,7 @@ class Product(models.Model):
         max_length=50, choices=ProductType.choices, verbose_name="Type", default=""
     )
     description = models.CharField(
-        max_length=135, blank=True, null=True, verbose_name="Description"
+        default="", max_length=135, blank=True, verbose_name="Description"
     )
     price = models.FloatField(default=0.0, verbose_name="Prix")
     discount = models.FloatField(default=0.0, verbose_name="Remise")
