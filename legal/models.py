@@ -16,9 +16,10 @@ class LegalDocument(models.Model):
     content_en = models.TextField(default="")
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.get_document_type_display()} {self.version}"
-
     class Meta:
         ordering = ["-created_at"]
         unique_together = [["document_type", "version"]]
+
+    def __str__(self):
+        return f"{self.get_document_type_display()} {self.version}"
+
