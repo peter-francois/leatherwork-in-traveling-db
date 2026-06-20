@@ -12,3 +12,17 @@ from .stripe_services import (
     extract_session_data,
     get_stripe_session,
 )
+
+__all__ = [
+    "process_successful_payment",
+    "register_cgv_acceptance",
+    "send_email_to_owner",
+    "calculate_total_centimes",
+    "convert_centimes_to_euros",
+    "convert_euros_to_centimes",
+    "verify_total",
+    "build_metadata",
+    "create_stripe_session",
+    "extract_session_data",
+    "get_stripe_session",
+]
