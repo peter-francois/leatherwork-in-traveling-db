@@ -204,7 +204,7 @@ class SendEmailToOwnerTest(TestCase):
 
     def test_insurance_is_oui_when_mandatory(self):
         """Should set insurance to Oui when total exceeds mandatory threshold"""
-        with patch("cart.services.email_services.send_mail") as mock_send:
+        with patch("cart.services.email_services.send_mail"):
             with patch(
                 "cart.services.email_services._build_email_message"
             ) as mock_build:
