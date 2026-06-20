@@ -10,7 +10,22 @@ from .models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = [
+            "name",
+            "category",
+            "product_type",
+            "description",
+            "price",
+            "discount",
+            "image1",
+            "image2",
+            "image3",
+            "image4",
+            "image5",
+            "image6",
+            "available",
+            "on_demand",
+        ]
 
     def clean(self):
         cleaned_data = super().clean()

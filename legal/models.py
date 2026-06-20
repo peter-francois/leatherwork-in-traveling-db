@@ -22,4 +22,3 @@ class LegalDocument(models.Model):
 
     def __str__(self):
         return f"{self.get_document_type_display()} {self.version}"
-
