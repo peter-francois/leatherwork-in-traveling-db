@@ -1,21 +1,23 @@
+import json
+import uuid
 from unittest.mock import Mock, patch
+
+import stripe
 from django.test import TestCase
+
 from cart.services.stripe_services import (
     StripeAmountError,
     StripeMetadataError,
     StripePaymentNotCompletedError,
-    StripeSessionUrlMissingError,
-    create_stripe_session,
-    build_metadata,
-    get_stripe_session,
-    extract_session_data,
-    _parse_list_products,
-    _format_shipping_address,
     StripeSessionError,
+    StripeSessionUrlMissingError,
+    _format_shipping_address,
+    _parse_list_products,
+    build_metadata,
+    create_stripe_session,
+    extract_session_data,
+    get_stripe_session,
 )
-import stripe
-import json
-import uuid
 
 
 class CreateStripeSessionTest(TestCase):
@@ -43,7 +45,9 @@ class CreateStripeSessionTest(TestCase):
         self.assertEqual(result, "https://stripe-session-url")
 
     @patch("cart.services.stripe_services.stripe.checkout.Session.create")
-    def test_raises_StripeSessionUrlMissingError_when_session_url_is_missing(self, mock_create):
+    def test_raises_StripeSessionUrlMissingError_when_session_url_is_missing(
+        self, mock_create
+    ):
         """Should raise StripeSessionUrlMissingError when Stripe session URL is missing"""
 
         cart = Mock()
@@ -101,7 +105,7 @@ class BuildMetadataTest(TestCase):
             is_home_delivery=False,
             total_centimes=2000,
             total_articles_centimes=1500,
-            accepted_terms_version= cart.cgv_accepted.version
+            accepted_terms_version=cart.cgv_accepted.version,
         )
 
         self.assertEqual(result["cart_uuid"], str(cart.uuid))
@@ -110,10 +114,7 @@ class BuildMetadataTest(TestCase):
         self.assertEqual(result["total_verified_centimes"], "2000")
         self.assertEqual(result["total_articles_centimes"], "1500")
         self.assertEqual(result["cgv_version"], "v1")
-        self.assertEqual(
-            json.loads(result["list_products"]),
-            [{"name": "Product"}]
-        )
+        self.assertEqual(json.loads(result["list_products"]), [{"name": "Product"}])
 
 
 class GetStripeSessionTest(TestCase):
@@ -138,7 +139,9 @@ class GetStripeSessionTest(TestCase):
         self.assertEqual(result_uuid, cart_uuid)
 
     @patch("cart.services.stripe_services.stripe.checkout.Session.retrieve")
-    def test_raises_StripePaymentNotCompletedError_when_payment_not_completed(self, mock_retrieve):
+    def test_raises_StripePaymentNotCompletedError_when_payment_not_completed(
+        self, mock_retrieve
+    ):
         """Should raise StripePaymentNotCompletedError when payment is not paid"""
 
         session = Mock()
@@ -222,7 +225,7 @@ class ExtractSessionDataTest(TestCase):
                         "line2": "Batiment A",
                     }
                 }
-            }
+            },
         }
 
         result = extract_session_data(session, metadata)
@@ -230,11 +233,11 @@ class ExtractSessionDataTest(TestCase):
         self.assertEqual(result["customer_email"], "test@test.com")
         self.assertEqual(result["customer_name"], "John Doe")
         self.assertEqual(result["cart_uuid"], "123")
-        self.assertEqual(result["total_articles_centimes"], '1000')
-        self.assertEqual(result["total_verified_centimes"], '1200')
+        self.assertEqual(result["total_articles_centimes"], "1000")
+        self.assertEqual(result["total_verified_centimes"], "1200")
         self.assertEqual(
             result["shipping_address"]["formatted_shipping_address"],
-            "10 rue test, Batiment A"
+            "10 rue test, Batiment A",
         )
 
 
@@ -277,8 +280,7 @@ class FormatShippingAddressTest(TestCase):
         result = _format_shipping_address(address)
 
         self.assertEqual(
-            result["formatted_shipping_address"],
-            "10 rue test, Batiment A"
+            result["formatted_shipping_address"], "10 rue test, Batiment A"
         )
 
     def test_formats_address_without_line2(self):
@@ -290,10 +292,7 @@ class FormatShippingAddressTest(TestCase):
 
         result = _format_shipping_address(address)
 
-        self.assertEqual(
-            result["formatted_shipping_address"],
-            "10 rue test"
-        )
+        self.assertEqual(result["formatted_shipping_address"], "10 rue test")
 
     def test_formats_unknown_address_when_line1_missing(self):
         """Should fallback to Unknown when line1 is missing"""
@@ -302,7 +301,4 @@ class FormatShippingAddressTest(TestCase):
 
         result = _format_shipping_address(address)
 
-        self.assertEqual(
-            result["formatted_shipping_address"],
-            "Unknown"
-        )
+        self.assertEqual(result["formatted_shipping_address"], "Unknown")

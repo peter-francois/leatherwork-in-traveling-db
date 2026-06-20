@@ -1,21 +1,32 @@
 from django.contrib.sitemaps import Sitemap
+from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import translation
-from django.core.paginator import Paginator
-from catalog.models import Product
+
 from catalog.constants import PRODUCTS_PER_PAGE
+from catalog.models import Product
+
 
 class PaginatedCategorySitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.8
 
-    def __init__(self, language='fr'):
+    def __init__(self, language="fr"):
         self.language = language
         self.categories = [
-            ('catalog:product_list', Product.objects.order_by('-id')),
-            ('catalog:leather_list', Product.objects.filter(category='Maroquinerie').order_by('-id')),
-            ('catalog:macrame_list', Product.objects.filter(category='Macrame').order_by('-id')),
-            ('catalog:hybrid_list', Product.objects.filter(category='Hybride').order_by('-id')),
+            ("catalog:product_list", Product.objects.order_by("-id")),
+            (
+                "catalog:leather_list",
+                Product.objects.filter(category="Maroquinerie").order_by("-id"),
+            ),
+            (
+                "catalog:macrame_list",
+                Product.objects.filter(category="Macrame").order_by("-id"),
+            ),
+            (
+                "catalog:hybrid_list",
+                Product.objects.filter(category="Hybride").order_by("-id"),
+            ),
         ]
 
     def items(self):
@@ -31,5 +42,5 @@ class PaginatedCategorySitemap(Sitemap):
         with translation.override(self.language):
             url = reverse(view_name)
         if page_number == 1:
-            return url  
+            return url
         return f"{url}?page={page_number}"
