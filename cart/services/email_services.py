@@ -1,36 +1,74 @@
 import logging
-from django.core.mail import send_mail
-from django.conf import settings
-from cart.services.pricing_services import convert_centimes_to_euros
-from ..constants import HOME_DELIVERY_SHIPPING_COST, INSURANCE_MANDATORY_MIN, STANDARD_SHIPPING_COST
 
+from django.conf import settings
+from django.core.mail import send_mail
+
+from cart.services.pricing_services import convert_centimes_to_euros
+
+from ..constants import (
+    HOME_DELIVERY_SHIPPING_COST,
+    INSURANCE_MANDATORY_MIN,
+    STANDARD_SHIPPING_COST,
+)
 
 logger = logging.getLogger(__name__)
 
-def send_email_to_owner(customer_email, customer_name, shipping_address, list_products,
-                         cart_uuid, total_articles_centimes, cgv_version, is_optional_insurance,
-                         total_verified_centimes, order_id, is_home_delivery):
+
+def send_email_to_owner(
+    customer_email,
+    customer_name,
+    shipping_address,
+    list_products,
+    cart_uuid,
+    total_articles_centimes,
+    cgv_version,
+    is_optional_insurance,
+    total_verified_centimes,
+    order_id,
+    is_home_delivery,
+):
     if list_products is None:
         logger.error(f"list_products is None, email not sent for order: {cart_uuid}")
         return
-    
+
     total_verified_euros = convert_centimes_to_euros(total_verified_centimes)
     total_articles_euros = convert_centimes_to_euros(total_articles_centimes)
-    shipping_cost_centimes = HOME_DELIVERY_SHIPPING_COST if is_home_delivery == 'True' else STANDARD_SHIPPING_COST
+    shipping_cost_centimes = (
+        HOME_DELIVERY_SHIPPING_COST
+        if is_home_delivery == "True"
+        else STANDARD_SHIPPING_COST
+    )
     shipping_cost_euros = convert_centimes_to_euros(shipping_cost_centimes)
-    insurance_cost_euros = round(total_verified_euros - total_articles_euros - shipping_cost_euros, 2)
-    insurance = 'Oui' if is_optional_insurance == 'True' or int(total_articles_centimes) >= INSURANCE_MANDATORY_MIN else 'Non'
-    home_delivery = 'Oui' if is_home_delivery == 'True' else 'Non'
+    insurance_cost_euros = round(
+        total_verified_euros - total_articles_euros - shipping_cost_euros, 2
+    )
+    insurance = (
+        "Oui"
+        if is_optional_insurance == "True"
+        or int(total_articles_centimes) >= INSURANCE_MANDATORY_MIN
+        else "Non"
+    )
+    home_delivery = "Oui" if is_home_delivery == "True" else "Non"
 
     message = _build_email_message(
-        customer_name, customer_email, order_id, cart_uuid, cgv_version,
-        shipping_address, insurance, home_delivery, shipping_cost_euros,
-        total_articles_euros, insurance_cost_euros, total_verified_euros, list_products
+        customer_name,
+        customer_email,
+        order_id,
+        cart_uuid,
+        cgv_version,
+        shipping_address,
+        insurance,
+        home_delivery,
+        shipping_cost_euros,
+        total_articles_euros,
+        insurance_cost_euros,
+        total_verified_euros,
+        list_products,
     )
 
     try:
         send_mail(
-            'Nouvelle commande reçue depuis leatherworkintravelingdb.com',
+            "Nouvelle commande reçue depuis leatherworkintravelingdb.com",
             message,
             settings.EMAIL_HOST_USER,
             [settings.CLIENT_EMAIL],
@@ -39,9 +77,22 @@ def send_email_to_owner(customer_email, customer_name, shipping_address, list_pr
     except Exception as e:
         logger.error(f"Error sending email: {e} for order: {cart_uuid}")
 
-def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv_version,
-                          shipping_address, insurance, home_delivery, shipping_cost,
-                          total_articles_euros, insurance_cost, total_verified_euros, list_products) -> str:
+
+def _build_email_message(
+    customer_name,
+    customer_email,
+    order_id,
+    cart_uuid,
+    cgv_version,
+    shipping_address,
+    insurance,
+    home_delivery,
+    shipping_cost,
+    total_articles_euros,
+    insurance_cost,
+    total_verified_euros,
+    list_products,
+) -> str:
     """Build HTML email message"""
     message = f"""
     <html><body>
@@ -56,10 +107,10 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
     <ul>
         <li>Nom: {customer_name}</li>
         <li>Email: {customer_email}</li>
-        <li>Pays: {shipping_address.get('country', 'Unknown')}</li>
-        <li>Addresse : {shipping_address.get('formatted_shipping_address', 'Unknown')}</li>
-        <li>Code postal : {shipping_address.get('postal_code', 'Unknown')}</li>
-        <li>Ville: {shipping_address.get('city', 'Unknown')}</li>
+        <li>Pays: {shipping_address.get("country", "Unknown")}</li>
+        <li>Addresse : {shipping_address.get("formatted_shipping_address", "Unknown")}</li>
+        <li>Code postal : {shipping_address.get("postal_code", "Unknown")}</li>
+        <li>Ville: {shipping_address.get("city", "Unknown")}</li>
     </ul>
     <h5>Détails de la commande:</h5>
     <ul>
@@ -74,12 +125,14 @@ def _build_email_message(customer_name, customer_email, order_id, cart_uuid, cgv
 
     for product in list_products:
         if isinstance(product, dict):
-            image_url = product.get("image_url", 'default-image-url')
+            image_url = product.get("image_url", "default-image-url")
             product_name = product.get("name", "Unknown")
             message += f'<li><img src="{image_url}" alt="{product_name}" style="width:200px;" /> {product_name}</li>'
         else:
-            logger.error(f"Invalid product detected: {product_name} for order: {cart_uuid}")
-            message += f'<li>Error with product: {product_name}</li>'
+            logger.error(
+                f"Invalid product detected: {product_name} for order: {cart_uuid}"
+            )
+            message += f"<li>Error with product: {product_name}</li>"
 
     message += """
         </ul></li>

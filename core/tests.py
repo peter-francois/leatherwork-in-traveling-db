@@ -1,8 +1,9 @@
-from django.test import RequestFactory, TestCase, Client
-from django.urls import reverse
-from .services import generate_sitemap_index, get_session_expiration
-from django.utils import timezone
 from django.contrib.sessions.backends.db import SessionStore
+from django.test import Client, RequestFactory, TestCase
+from django.urls import reverse
+from django.utils import timezone
+
+from .services import generate_sitemap_index, get_session_expiration
 
 
 class IndexViewTest(TestCase):
@@ -13,72 +14,75 @@ class IndexViewTest(TestCase):
 
     def test_returns_200(self):
         """Should return a 200 status code"""
-        response = self.client.get(reverse('core:index'))
+        response = self.client.get(reverse("core:index"))
         self.assertEqual(response.status_code, 200)
 
     def test_sets_csrf_cookie(self):
         """Should set a CSRF cookie (required for JS requests)"""
-        response = self.client.get(reverse('core:index'))
-        self.assertIn('csrftoken', response.cookies)
+        response = self.client.get(reverse("core:index"))
+        self.assertIn("csrftoken", response.cookies)
 
     def test_uses_correct_template(self):
         """Should render core/index.html"""
-        response = self.client.get(reverse('core:index'))
-        self.assertTemplateUsed(response, 'core/index.html')
+        response = self.client.get(reverse("core:index"))
+        self.assertTemplateUsed(response, "core/index.html")
+
 
 class RobotsTxtTest(TestCase):
     """Tests for robots.txt SEO file"""
 
     def test_returns_200(self):
         """Should return a 200 status code"""
-        response = self.client.get(reverse('robots_txt'))
+        response = self.client.get(reverse("robots_txt"))
         self.assertEqual(response.status_code, 200)
 
     def test_content_type_is_plain_text(self):
         """Should return a plain text content type"""
-        response = self.client.get(reverse('robots_txt'))
-        self.assertEqual(response['Content-Type'], 'text/plain')
+        response = self.client.get(reverse("robots_txt"))
+        self.assertEqual(response["Content-Type"], "text/plain")
 
     def test_disallows_admin(self):
         """Should disallow admin crawling"""
-        response = self.client.get(reverse('robots_txt'))
-        self.assertIn(b'Disallow: /admin/', response.content)
+        response = self.client.get(reverse("robots_txt"))
+        self.assertIn(b"Disallow: /admin/", response.content)
+
 
 class GenerateSitemapIndexTest(TestCase):
     """Tests for the sitemap index XML generation service"""
 
     def test_returns_string(self):
         """Should return a string"""
-        result = generate_sitemap_index('https://example.com/', ['fr', 'en'])
+        result = generate_sitemap_index("https://example.com/", ["fr", "en"])
         self.assertIsInstance(result, str)
 
     def test_contains_xml_declaration(self):
         """Should start with XML declaration"""
-        result = generate_sitemap_index('https://example.com/', ['fr', 'en'])
+        result = generate_sitemap_index("https://example.com/", ["fr", "en"])
         self.assertIn('<?xml version="1.0" encoding="UTF-8"?>', result)
 
     def test_contains_sitemapindex_tag(self):
         """Should contain sitemapindex root tag"""
-        result = generate_sitemap_index('https://example.com/', ['fr', 'en'])
-        self.assertIn('<sitemapindex', result)
+        result = generate_sitemap_index("https://example.com/", ["fr", "en"])
+        self.assertIn("<sitemapindex", result)
 
     def test_generates_correct_urls(self):
         """Should generate one sitemap URL per language"""
-        result = generate_sitemap_index('https://example.com/', ['fr', 'en'])
-        self.assertIn('https://example.com/sitemap-fr.xml', result)
-        self.assertIn('https://example.com/sitemap-en.xml', result)
+        result = generate_sitemap_index("https://example.com/", ["fr", "en"])
+        self.assertIn("https://example.com/sitemap-fr.xml", result)
+        self.assertIn("https://example.com/sitemap-en.xml", result)
 
     def test_single_language(self):
         """Should work with a single language"""
-        result = generate_sitemap_index('https://example.com/', ['fr'])
-        self.assertIn('sitemap-fr.xml', result)
-        self.assertNotIn('sitemap-en.xml', result)
+        result = generate_sitemap_index("https://example.com/", ["fr"])
+        self.assertIn("sitemap-fr.xml", result)
+        self.assertNotIn("sitemap-en.xml", result)
 
     def test_empty_langs(self):
         """Should return valid XML with no sitemaps for empty lang list"""
-        result = generate_sitemap_index('https://example.com/', [])
-        self.assertIn('<sitemapindex', result)
-        self.assertNotIn('<sitemap>', result)
+        result = generate_sitemap_index("https://example.com/", [])
+        self.assertIn("<sitemapindex", result)
+        self.assertNotIn("<sitemap>", result)
+
 
 class GetSessionExpirationTest(TestCase):
     """Tests for the get_session_expiration service"""
@@ -88,7 +92,7 @@ class GetSessionExpirationTest(TestCase):
 
     def test_returns_none_when_no_session_key(self):
         """Should return None when request has no session key"""
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = SessionStore()
         # SessionStore have no saved session
         result = get_session_expiration(request)
@@ -100,7 +104,7 @@ class GetSessionExpirationTest(TestCase):
         session = SessionStore()
         session.create()
 
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = session
 
         result = get_session_expiration(request)
@@ -112,7 +116,7 @@ class GetSessionExpirationTest(TestCase):
         session = SessionStore()
         session.create()
 
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = session
 
         result = get_session_expiration(request)
@@ -125,9 +129,9 @@ class GetSessionExpirationTest(TestCase):
     def test_returns_none_when_session_does_not_exist_in_db(self):
         """Should return None when session key exists but not in DB"""
         session = SessionStore()
-        session._session_key = 'fake_session_key_not_in_db' # type: ignore # Force private attribute to simulate a non-existent session key
+        session._session_key = "fake_session_key_not_in_db"  # type: ignore # Force private attribute to simulate a non-existent session key
 
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = session
 
         result = get_session_expiration(request)

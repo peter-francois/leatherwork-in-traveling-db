@@ -1,22 +1,23 @@
-from django.test import TestCase, RequestFactory
-from unittest.mock import patch
 from datetime import timedelta
+from unittest.mock import patch
+
+from django.test import RequestFactory, TestCase
+from django.utils import timezone
+
 from cart.constants import CGV_EXPIRATION_DAYS
 from cart.models import Cart, CartItem
 from cart.services.cart_services import (
-    register_cgv_acceptance,
-    process_successful_payment,
-    get_or_create_active_cart,
     add_product_to_cart,
     empty_cart_and_release_products,
     get_cart_items_data,
+    get_or_create_active_cart,
+    process_successful_payment,
+    register_cgv_acceptance,
     remove_product_from_cart,
 )
 from cart.tests.helpers import make_cart, make_product, make_session
-from legal.models import LegalDocument
 from legal.choices import DocumentType
-from django.utils import timezone
-from datetime import timedelta
+from legal.models import LegalDocument
 from legal.tests import make_terms_document
 
 
@@ -26,7 +27,7 @@ class RegisterCgvAcceptanceTest(TestCase):
     def setUp(self):
         self.cgv = make_terms_document()
 
-        self.cart = Cart.objects.create(session_id='test_session')
+        self.cart = Cart.objects.create(session_id="test_session")
 
     def test_registers_cgv_when_not_accepted(self):
         """Should register CGV acceptance when not already accepted"""
@@ -45,12 +46,12 @@ class RegisterCgvAcceptanceTest(TestCase):
         self.cart.save()
 
         future = timezone.now() + timedelta(days=1)
-        with patch('django.utils.timezone.now', return_value=future):
+        with patch("django.utils.timezone.now", return_value=future):
             new_doc = LegalDocument.objects.create(
                 document_type=DocumentType.TERMS,
-                version='2024-06-01',
-                content_fr='Nouveau contenu',
-                content_en='New content',
+                version="2024-06-01",
+                content_fr="Nouveau contenu",
+                content_en="New content",
             )
 
         register_cgv_acceptance(self.cart, self.cgv)
@@ -62,17 +63,15 @@ class RegisterCgvAcceptanceTest(TestCase):
         """Should set CGV expiration to constant CGV_EXPIRATION_DAYS"""
         register_cgv_acceptance(self.cart, self.cgv)
         self.cart.refresh_from_db()
-        
+
         self.assertIsNotNone(self.cart.cgv_accepted_at)
         self.assertIsNotNone(self.cart.cgv_expires_at)
         assert self.cart.cgv_accepted_at is not None  # Pylance hint
-        assert self.cart.cgv_expires_at is not None   # Pylance hint
-        
+        assert self.cart.cgv_expires_at is not None  # Pylance hint
+
         expected = self.cart.cgv_accepted_at + timedelta(days=CGV_EXPIRATION_DAYS)
         self.assertAlmostEqual(
-            self.cart.cgv_expires_at.timestamp(),
-            expected.timestamp(),
-            delta=1
+            self.cart.cgv_expires_at.timestamp(), expected.timestamp(), delta=1
         )
 
 
@@ -118,7 +117,7 @@ class GetOrCreateActiveCartTest(TestCase):
 
     def test_creates_cart_when_none_exists(self):
         """Should create a new cart when none exists"""
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = self.client.session
         self.assertEqual(Cart.objects.count(), 0)
         cart = get_or_create_active_cart(request)
@@ -131,7 +130,7 @@ class GetOrCreateActiveCartTest(TestCase):
         session.save()
         existing_cart = Cart.objects.create(session_id=session.session_key)
 
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = session
         cart = get_or_create_active_cart(request)
         self.assertEqual(cart.id, existing_cart.id)
@@ -142,7 +141,7 @@ class GetOrCreateActiveCartTest(TestCase):
         session.save()
         Cart.objects.create(session_id=session.session_key, paid=True)
 
-        request = self.factory.get('/')
+        request = self.factory.get("/")
         request.session = session
         cart = get_or_create_active_cart(request)
         self.assertFalse(cart.paid)
@@ -155,7 +154,6 @@ class AddProductToCartTest(TestCase):
         self.session = make_session(expire_delta=timedelta(hours=24))
         self.product = make_product(available=True, pending_in_cart=True)
         self.cart = make_cart(self.session)
-
 
     def test_adds_product_to_cart(self):
         """Should add product to cart"""
@@ -214,14 +212,14 @@ class GetCartItemsDataTest(TestCase):
     def test_returns_correct_data(self):
         """Should return correct product data"""
         result = get_cart_items_data(self.cart)
-        self.assertEqual(result[0]['name'], self.product.name)
-        self.assertEqual(result[0]['price'], self.product.price)
-        self.assertEqual(result[0]['quantity'], 2)
-        self.assertEqual(result[0]['discount'], self.product.discount)
+        self.assertEqual(result[0]["name"], self.product.name)
+        self.assertEqual(result[0]["price"], self.product.price)
+        self.assertEqual(result[0]["quantity"], 2)
+        self.assertEqual(result[0]["discount"], self.product.discount)
 
     def test_returns_empty_list_when_no_items(self):
         """Should return empty list when cart has no items"""
-        empty_cart = Cart.objects.create(session_id='empty_session')
+        empty_cart = Cart.objects.create(session_id="empty_session")
         result = get_cart_items_data(empty_cart)
         self.assertEqual(result, [])
 
@@ -250,8 +248,8 @@ class RemoveProductFromCartTest(TestCase):
         """Should return product data"""
         result = remove_product_from_cart(self.cart, self.product.id)
         if result:
-            self.assertEqual(result['id'], self.product.id)
-            self.assertEqual(result['price'], self.product.price)
+            self.assertEqual(result["id"], self.product.id)
+            self.assertEqual(result["price"], self.product.price)
 
     def test_returns_none_when_product_not_in_cart(self):
         """Should return None when product not found in cart"""
