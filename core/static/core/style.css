@@ -700,8 +700,6 @@ section select {
   border: 1px solid #8c6b4f;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
-  margin-bottom: 30px;
 }
 
 /* Pour éviter que le filtre ne soit coupé en bas */
@@ -798,6 +796,7 @@ section select {
   align-content: start;
   margin: auto 0px;
   gap: 40px;
+  padding: 0px;
 }
 h2.product-name {
   height: 120px;
@@ -1147,6 +1146,10 @@ h2.product-name {
   main {
   padding: 1rem 2rem;
   }
+
+  .two-col-layout--aside-left.two-col-layout {
+  grid-template-columns: 220px 1fr;
+}
 
   .title_and_logo {
     padding: 40px 70px;
