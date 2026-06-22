@@ -438,9 +438,7 @@ a.linker {
 
 /*Panier*/
 .produit h3,
-#liste-articles li h3,
 .produit p,
-#liste-articles li p,
 .product-name {
   word-wrap: break-word; /* Coupe les mots trop longs */
   height: fit-content;
@@ -499,16 +497,7 @@ h2.product-name {
   object-fit: contain;
   margin: 10px 0;
 }
-#liste-articles {
-  list-style-type: none;
-  padding: 0;
-}
-#liste-articles img {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.produit,
-#liste-articles li {
+.produit {
   height: 100%;
   justify-items: center;
   border: 2px solid var(--color2);
@@ -519,8 +508,7 @@ h2.product-name {
   align-content: space-between;
 }
 
-.produit button,
-#liste-articles button {
+.produit button {
   height: fit-content;
 }
 
@@ -763,8 +751,7 @@ section select {
   margin-top: 10px;
   margin-bottom: 15px;
 }
-.two-col-layout__main,
-#liste-articles {
+.two-col-layout__main {
   justify-content: center;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   align-items: stretch;
@@ -776,8 +763,7 @@ section select {
 h2.product-name {
   height: 120px;
 }
-.two-col-layout__main img,
-#liste-articles img {
+.two-col-layout__main img {
   width: 11em;
   height: 11em;
   border: 2px solid var(--color2);
@@ -785,8 +771,7 @@ h2.product-name {
   display: block;
   object-fit: cover;
 }
-.two-col-layout__main img:hover,
-#liste-articles img:hover {
+.two-col-layout__main img:hover {
   transform: scale(1.07);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -1277,8 +1262,7 @@ h2.product-name {
   #description_page_all_products {
     font-size: 14px;
   }
-  .two-col-layout__main,
-  #liste-articles {
+  .two-col-layout__main {
     grid-template-columns: repeat(2, 1fr);
     margin: 15px 10px;
     gap: 1rem;
@@ -1288,12 +1272,10 @@ h2.product-name {
     margin-bottom: 15px;
   }
 
-  .produit,
-  #liste-articles li {
+  .produit {
     padding: 10px;
   }
   .produit button,
-  #liste-articles button,
   .produit a,
   .on-order-button {
     margin-top: 10px;
@@ -1528,7 +1510,6 @@ h2.product-name {
   }
 
   .produit button,
-  #liste-articles button,
   .on-order-button {
     margin-top: 13px;
     padding: 5px;
@@ -1543,8 +1524,7 @@ h2.product-name {
     padding: 6px 12px;
     width: 6em;
   }
-  .two-col-layout__main img,
-  #liste-articles img {
+  .two-col-layout__main img {
     width: 10em;
     height: 10em;
   }
@@ -1557,8 +1537,7 @@ h2.product-name {
   #br-pagination {
     display: block;
   }
-  .two-col-layout__main,
-  #liste-articles {
+  .two-col-layout__main {
     grid-template-columns: repeat(2, 1fr);
     gap: 5px;
   }
@@ -1567,8 +1546,7 @@ h2.product-name {
     font-size: 10px;
   }
 
-  .produit,
-  #liste-articles li {
+  .produit {
     padding: 5px;
   }
   #modal {
@@ -1759,7 +1737,6 @@ h2.product-name {
     margin-bottom: 10px;
   }
   .produit button,
-  #liste-articles button,
   .on-order-button {
     font-size: 11px;
   }
@@ -1772,8 +1749,7 @@ h2.product-name {
     font-size: 12px;
     padding: 5px 10px;
   }
-  .two-col-layout__main,
-  #liste-articles {
+  .two-col-layout__main {
     gap: 0px;
     margin: 10px 3px;
   }
@@ -1784,10 +1760,6 @@ h2.product-name {
   .two-col-layout__main img {
     width: 5em;
     height: 6em;
-  }
-  #liste-articles img {
-    width: 8em;
-    height: 8em;
   }
   #modal h3 {
     top: 35px;
