@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-  initCart();
   if (
     window.location.pathname.includes("panier") ||
     window.location.pathname.includes("cart")
@@ -130,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       updateInsurance();
       updateTotal();
-      updateCartVisibility();
     }
   }
 });
@@ -141,10 +139,18 @@ function getCSRFTokenFromMeta() {
   return csrfTokenMeta ? csrfTokenMeta.getAttribute("content") : "";
 }
 function initCart() {
-  if (!localStorage.getItem("cart")) {
-    localStorage.setItem("cart", JSON.stringify([]));
-  }
+  const cartContent = document.getElementById("cart-content");
+  if (!cartContent) return;
+
+  const isCartEmpty = document.getElementById("empty-section");
+  if (isCartEmpty) return;
+  
+  updateInsurance();
+  updateTotal();
+  updateShippingCost();
+  initCartListeners();
 }
+
 // Ajouter un produit au panier
 function addToCart(articleId) {
   fetch(`/api/cart/add_to_cart/${articleId}/`, {
@@ -199,23 +205,7 @@ window.onload = function () {
     console.log("Aucun UUID trouvé dans localStorage.");
   }
 };
-// Fonction pour mettre à jour l'affichage du panier
-function updateCartVisibility() {
-  const orderTotal = parseFloat(
-    document.getElementById("order-total").textContent.replace(",", "."),
-  );
-  const cartSection = document.querySelector(".cart-container");
-  const emptyCartMessage = document.querySelector("#empty-section");
 
-  // Si le total est 0 ou indéfini, on considère le panier vide
-  if (orderTotal <= 0 || isNaN(orderTotal)) {
-    cartSection.style.display = "none";
-    emptyCartMessage.style.display = "block";
-  } else {
-    cartSection.style.display = "block";
-    emptyCartMessage.style.display = "none";
-  }
-}
 // Fonction pour vider le panier
 function clearCart() {
   fetch("/api/cart/empty_cart/", {
@@ -236,8 +226,6 @@ function clearCart() {
         const formattedZero = currentLanguage === "en" ? "0.00" : "0,00";
         document.getElementById("order-total").textContent = formattedZero;
         document.getElementById("total-amount").textContent = formattedZero;
-        updateCartVisibility();
-        initCart();
         document.body.dispatchEvent(new Event("cartUpdated"));
       } else {
         alert("Erreur lors de la suppression du panier.");
@@ -249,49 +237,6 @@ function clearCart() {
 function cleanFilter() {
   // Redirige vers l'URL de base sans paramètres GET
   window.location.href = window.location.pathname;
-}
-
-// Fonction pour supprimer un article du panier
-function remove_from_cart(articleId) {
-  fetch(`/api/cart/remove_from_cart/${articleId}/`, {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart = cart.filter((item) => parseInt(item.id) !== parseInt(articleId));
-        localStorage.setItem("cart", JSON.stringify(cart));
-        const addInsurance = document.getElementById("add-insurance");
-        let orderTotal = parseFloat(
-          document.getElementById("order-total").textContent.replace(",", "."),
-        );
-        const priceArticle = parseFloat(data.article.price.toFixed(2));
-        orderTotal -= priceArticle;
-        // Formater selon la langue
-        const formattedTotal =
-          currentLanguage === "en"
-            ? orderTotal.toFixed(2)
-            : orderTotal.toFixed(2).replace(".", ",");
-        document.getElementById("order-total").textContent = formattedTotal;
-        if (orderTotal < 25) {
-          addInsurance.checked = false;
-        }
-        updateInsurance();
-        updateTotal();
-        document.body.dispatchEvent(new Event("cartUpdated"));
-        alert(data.message);
-      } else {
-        alert("Erreur lors de la suppression de l'article.");
-      }
-    })
-    .finally(() => {
-      updateCartVisibility();
-    });
 }
 
 let currentImageIndex = 0; // Index de l'image actuelle
@@ -401,8 +346,9 @@ function closeModal() {
 
 // Fonction pour mettre à jour les frais de port
 function updateShippingCost() {
-  const currentLang = localStorage.getItem("language") || "fr";
   const shippingOption = document.getElementById("add-shipping");
+  if (!shippingOption) return;
+  const currentLang = localStorage.getItem("language") || "fr";
   const shippingCostSpan = document.getElementById("shipping-cost");
   if (shippingOption.checked) {
     const shippingCost = 10;
@@ -423,6 +369,8 @@ function updateShippingCost() {
 // Fonction pour mettre à jour l'assurance
 
 function updateInsurance() {
+  const insuranceOption = document.getElementById("insurance-option");
+  if (!insuranceOption) return;
   const orderTotalElement = document.getElementById("order-total");
 
   if (!orderTotalElement) {
@@ -432,7 +380,6 @@ function updateInsurance() {
   const orderTotal = parseFloat(
     orderTotalElement.textContent.replace(",", "."),
   );
-  const insuranceOption = document.getElementById("insurance-option"); // Checkbox assurance optionnelle
   const mandatoryInsurance = document.getElementById("mandatory-insurance"); // Assurance obligatoire
   const insuranceCostSpan = document.getElementById("insurance-cost"); // Prix assurance optionnelle
   const mandatoryInsuranceCostSpan = document.getElementById(
@@ -495,10 +442,11 @@ function updateInsurance() {
 }
 // Fonction pour mettre à jour le total
 function updateTotal() {
+  const totalAmountElement = document.getElementById("total-amount");
+  if (!totalAmountElement) return;
   const currentLang = localStorage.getItem("language") || "fr";
   const orderTotalElement = document.getElementById("order-total");
   const insuranceCostElement = document.getElementById("insurance-cost");
-  const totalAmountElement = document.getElementById("total-amount");
 
   if (!orderTotalElement || !insuranceCostElement || !totalAmountElement) {
     return;
@@ -627,14 +575,6 @@ if (document.getElementById("add-insurance")) {
       updateTotal();
     });
 }
-if (document.getElementById("add-shipping")) {
-  document
-    .getElementById("add-shipping")
-    .addEventListener("change", function () {
-      updateShippingCost();
-      updateTotal();
-    });
-}
 
 if (document.getElementById("checkout")) {
   document.getElementById("checkout").addEventListener("click", function () {
@@ -675,14 +615,6 @@ document.addEventListener("click", function (event) {
     const articleId = event.target.getAttribute("data-product-id");
     if (!articleId) return;
     addToCart(articleId);
-  }
-});
-
-document.addEventListener("click", function (event) {
-  if (event.target && event.target.matches(".delete_button")) {
-    const articleId = event.target.getAttribute("data-product-id");
-    if (!articleId) return;
-    remove_from_cart(articleId);
   }
 });
 
@@ -763,4 +695,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getCurrentLanguage() || "fr";
 
   changeLanguage(lang);
+  initCart();
 });
+
+document.body.addEventListener("htmx:afterSwap", (e) => {
+  if (e.detail.target.id === "cart-content") {
+    updateInsurance();
+    updateTotal();
+    updateShippingCost();
+    initCartListeners();
+  }
+});
+
+function initCartListeners() {
+  const addShipping = document.getElementById("add-shipping");
+  const addInsurance = document.getElementById("add-insurance");
+  const checkout = document.getElementById("checkout");
+
+  addShipping?.replaceWith(addShipping.cloneNode(true));
+  addInsurance?.replaceWith(addInsurance.cloneNode(true));
+  checkout?.replaceWith(checkout.cloneNode(true));
+
+  document.getElementById("add-shipping")?.addEventListener("change", () => {
+    updateShippingCost();
+    updateTotal();
+  });
+  document.getElementById("add-insurance")?.addEventListener("change", () => {
+    updateInsurance();
+    updateTotal();
+  });
+  document
+    .getElementById("checkout")
+    ?.addEventListener("click", handleCheckout);
+}
