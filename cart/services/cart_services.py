@@ -60,43 +60,25 @@ def add_product_to_cart(cart, product) -> None:
     product.save()
 
 
-def empty_cart_and_release_products(cart) -> None:
+def empty_cart_and_release_products(cart) -> bool:
+    cart_items = cart.cartitem_set.all()
+    if not cart_items.exists():
+        return False
 
-    for item in cart.cartitem_set.all():
+    for item in cart_items:
         item.product.pending_in_cart = False
         item.product.save()
-    cart.cartitem_set.all().delete()
     cart.delete()
+    return True
 
 
-def get_cart_items_data(cart) -> list:
-    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
-    return [
-        {
-            "name": item.product.name,
-            "price": item.product.price,
-            "quantity": item.quantity,
-            "id": item.product.id,
-            "discount": item.product.discount,
-            **{
-                f"image{i}": getattr(item.product, f"image{i}").url
-                if getattr(item.product, f"image{i}")
-                else None
-                for i in range(1, 7)
-            },
-        }
-        for item in cart_items
-    ]
-
-
-def remove_product_from_cart(cart, product_id) -> dict | None:
+def remove_product_from_cart(cart, product_id) -> bool:
     cart_item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
     if not cart_item:
-        return None
+        return False
 
     product = cart_item.product
     product.pending_in_cart = False
     product.save()
     cart_item.delete()
-
-    return {"id": product.id, "price": product.price}
+    return True

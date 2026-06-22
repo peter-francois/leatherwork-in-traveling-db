@@ -1,0 +1,38 @@
+{% load i18n %}
+{% if items %}
+    <button class="align-items-center page-button font-size-17 clean-button"
+            hx-post="{% url 'cart_api:empty_cart' %}"
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+            hx-target="#cart-content"
+            hx-swap="innerHTML">
+        {% trans "Vider le panier" %}
+    </button>
+
+    {% if expiration_date %}
+        <p ><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %} </span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
+    {% else %}
+        <p id="expiration_soon">⚠️ {% trans "Votre panier expirera bientôt." %}</p>
+    {% endif %}
+
+    <div class="two-col-layout two-col-layout--aside-right">
+        <aside class="two-col-layout__aside">
+            {% include 'cart/components/_secure_payment.html' %}
+        </aside>
+        <ul class="two-col-layout__main grid-container">
+            {% for item in items %}
+                {% include 'catalog/components/_product_card.html' with product=item.product page='cart' %}
+            {% empty %}
+                <li>{% trans "Aucun produit" %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if expiration_date %}
+        <p ><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %} </span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
+    {% else %}
+        <p id="expiration_soon">⚠️ {% trans "Votre panier expirera bientôt." %}</p>
+    {% endif %}
+{% else %}
+    <section id="empty-section">
+        <p>{% trans "Votre panier est vide." %}</p>
+    </section>
+{% endif %}

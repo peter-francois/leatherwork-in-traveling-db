@@ -114,8 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-  displayCart();
-  initCart();
   if (
     window.location.pathname.includes("panier") ||
     window.location.pathname.includes("cart")
@@ -131,112 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       updateInsurance();
       updateTotal();
-      updateCartVisibility();
     }
   }
 });
-
-// Fonction pour afficher les articles du panier
-function displayCart() {
-  fetch("/api/cart/cart_detail/")
-    .then((response) => response.json())
-    .then((data) => {
-      let listeArticles = document.getElementById("liste-articles");
-      if (listeArticles) {
-        const formatNumber = (num) =>
-          currentLanguage === "en"
-            ? num.toFixed(2)
-            : num.toFixed(2).replace(".", ",");
-        listeArticles.innerHTML = "";
-        data.cart.forEach((article) => {
-          const translations_front = JSON.parse(
-            document.getElementById("translations").textContent,
-          );
-          let li = document.createElement("li");
-          let img = document.createElement("img");
-          let clickHint = document.createElement("p");
-          clickHint.textContent = "👆 " + translations_front.click_hint;
-          clickHint.classList.add("click-hint");
-          clickHint.onclick = () => displayProductImages(article.id);
-          let h3 = document.createElement("h3");
-          let p = document.createElement("p");
-          p.textContent = translations_front.price;
-          p.style.margin = "0px";
-          let span = document.createElement("span");
-          let span2 = document.createElement("span");
-          span.textContent = formatNumber(article.price);
-          span2.textContent = `€ (x${article.quantity})`;
-          h3.textContent = `${article.name}`;
-          p.appendChild(span);
-          p.appendChild(span2);
-          img.onclick = () => displayProductImages(article.id);
-          img.alt = `${article.name}`;
-
-          let button = document.createElement("button");
-          button.textContent = translations_front.delete_button;
-          button.onclick = () => remove_from_cart(article.id);
-          button.classList.add("page-button", "delete_button");
-          li.appendChild(h3);
-          if (article.image1) {
-            img.src = article.image1;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image2) {
-            img.src = article.image2;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-          } else if (article.image3) {
-            img.src = article.image3;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image4) {
-            img.src = article.image4;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image5) {
-            img.src = article.image5;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image6) {
-            img.src = article.image6;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else {
-            img.src = ""; // Aucune image disponible
-            let p = document.createElement("p");
-            p.classList.add("no-image");
-            p.textContent = translations_front.no_image;
-          }
-          if (article.discount > 0.0) {
-            let promoWidget = document.createElement("p");
-            promoWidget.classList.add("promo-widget");
-            promoWidget.textContent = "Promo";
-            li.append(promoWidget);
-            let new_price = document.createElement("p");
-            new_price.style.margin = "0px";
-            new_price.textContent = `Nouveau prix: ${formatNumber(article.price - article.discount)}€`;
-            li.appendChild(new_price);
-            p.style.textDecoration = "line-through";
-            p.style.textDecorationThickness = "3px";
-            p.style.textDecorationColor = "#da0410";
-          } else {
-            p.style.textDecoration = "none";
-          }
-          li.appendChild(p);
-          li.appendChild(button);
-          listeArticles.appendChild(li);
-        });
-      }
-    })
-    .catch((error) =>
-      console.error("Erreur lors de la récupération du panier:", error),
-    );
-}
 
 // Fonction pour récupérer le token CSRF depuis le meta tag
 function getCSRFTokenFromMeta() {
@@ -244,10 +139,18 @@ function getCSRFTokenFromMeta() {
   return csrfTokenMeta ? csrfTokenMeta.getAttribute("content") : "";
 }
 function initCart() {
-  if (!localStorage.getItem("cart")) {
-    localStorage.setItem("cart", JSON.stringify([]));
-  }
+  const cartContent = document.getElementById("cart-content");
+  if (!cartContent) return;
+
+  const isCartEmpty = document.getElementById("empty-section");
+  if (isCartEmpty) return;
+  
+  updateInsurance();
+  updateTotal();
+  updateShippingCost();
+  initCartListeners();
 }
+
 // Ajouter un produit au panier
 function addToCart(articleId) {
   fetch(`/api/cart/add_to_cart/${articleId}/`, {
@@ -302,23 +205,7 @@ window.onload = function () {
     console.log("Aucun UUID trouvé dans localStorage.");
   }
 };
-// Fonction pour mettre à jour l'affichage du panier
-function updateCartVisibility() {
-  const orderTotal = parseFloat(
-    document.getElementById("order-total").textContent.replace(",", "."),
-  );
-  const cartSection = document.querySelector(".cart-container");
-  const emptyCartMessage = document.querySelector("#empty-section");
 
-  // Si le total est 0 ou indéfini, on considère le panier vide
-  if (orderTotal <= 0 || isNaN(orderTotal)) {
-    cartSection.style.display = "none";
-    emptyCartMessage.style.display = "block";
-  } else {
-    cartSection.style.display = "block";
-    emptyCartMessage.style.display = "none";
-  }
-}
 // Fonction pour vider le panier
 function clearCart() {
   fetch("/api/cart/empty_cart/", {
@@ -339,8 +226,6 @@ function clearCart() {
         const formattedZero = currentLanguage === "en" ? "0.00" : "0,00";
         document.getElementById("order-total").textContent = formattedZero;
         document.getElementById("total-amount").textContent = formattedZero;
-        updateCartVisibility();
-        initCart();
         document.body.dispatchEvent(new Event("cartUpdated"));
       } else {
         alert("Erreur lors de la suppression du panier.");
@@ -352,50 +237,6 @@ function clearCart() {
 function cleanFilter() {
   // Redirige vers l'URL de base sans paramètres GET
   window.location.href = window.location.pathname;
-}
-
-// Fonction pour supprimer un article du panier
-function remove_from_cart(articleId) {
-  fetch(`/api/cart/remove_from_cart/${articleId}/`, {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart = cart.filter((item) => parseInt(item.id) !== parseInt(articleId));
-        localStorage.setItem("cart", JSON.stringify(cart));
-        const addInsurance = document.getElementById("add-insurance");
-        let orderTotal = parseFloat(
-          document.getElementById("order-total").textContent.replace(",", "."),
-        );
-        const priceArticle = parseFloat(data.article.price.toFixed(2));
-        orderTotal -= priceArticle;
-        // Formater selon la langue
-        const formattedTotal =
-          currentLanguage === "en"
-            ? orderTotal.toFixed(2)
-            : orderTotal.toFixed(2).replace(".", ",");
-        document.getElementById("order-total").textContent = formattedTotal;
-        if (orderTotal < 25) {
-          addInsurance.checked = false;
-        }
-        updateInsurance();
-        updateTotal();
-        document.body.dispatchEvent(new Event("cartUpdated"));
-        alert(data.message);
-      } else {
-        alert("Erreur lors de la suppression de l'article.");
-      }
-    })
-    .finally(() => {
-      displayCart();
-      updateCartVisibility();
-    });
 }
 
 let currentImageIndex = 0; // Index de l'image actuelle
@@ -505,8 +346,9 @@ function closeModal() {
 
 // Fonction pour mettre à jour les frais de port
 function updateShippingCost() {
-  const currentLang = localStorage.getItem("language") || "fr";
   const shippingOption = document.getElementById("add-shipping");
+  if (!shippingOption) return;
+  const currentLang = localStorage.getItem("language") || "fr";
   const shippingCostSpan = document.getElementById("shipping-cost");
   if (shippingOption.checked) {
     const shippingCost = 10;
@@ -527,6 +369,8 @@ function updateShippingCost() {
 // Fonction pour mettre à jour l'assurance
 
 function updateInsurance() {
+  const insuranceOption = document.getElementById("insurance-option");
+  if (!insuranceOption) return;
   const orderTotalElement = document.getElementById("order-total");
 
   if (!orderTotalElement) {
@@ -536,7 +380,6 @@ function updateInsurance() {
   const orderTotal = parseFloat(
     orderTotalElement.textContent.replace(",", "."),
   );
-  const insuranceOption = document.getElementById("insurance-option"); // Checkbox assurance optionnelle
   const mandatoryInsurance = document.getElementById("mandatory-insurance"); // Assurance obligatoire
   const insuranceCostSpan = document.getElementById("insurance-cost"); // Prix assurance optionnelle
   const mandatoryInsuranceCostSpan = document.getElementById(
@@ -599,10 +442,11 @@ function updateInsurance() {
 }
 // Fonction pour mettre à jour le total
 function updateTotal() {
+  const totalAmountElement = document.getElementById("total-amount");
+  if (!totalAmountElement) return;
   const currentLang = localStorage.getItem("language") || "fr";
   const orderTotalElement = document.getElementById("order-total");
   const insuranceCostElement = document.getElementById("insurance-cost");
-  const totalAmountElement = document.getElementById("total-amount");
 
   if (!orderTotalElement || !insuranceCostElement || !totalAmountElement) {
     return;
@@ -731,14 +575,6 @@ if (document.getElementById("add-insurance")) {
       updateTotal();
     });
 }
-if (document.getElementById("add-shipping")) {
-  document
-    .getElementById("add-shipping")
-    .addEventListener("change", function () {
-      updateShippingCost();
-      updateTotal();
-    });
-}
 
 if (document.getElementById("checkout")) {
   document.getElementById("checkout").addEventListener("click", function () {
@@ -779,14 +615,6 @@ document.addEventListener("click", function (event) {
     const articleId = event.target.getAttribute("data-product-id");
     if (!articleId) return;
     addToCart(articleId);
-  }
-});
-
-document.addEventListener("click", function (event) {
-  if (event.target && event.target.matches(".delete_button")) {
-    const articleId = event.target.getAttribute("data-product-id");
-    if (!articleId) return;
-    remove_from_cart(articleId);
   }
 });
 
@@ -867,4 +695,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getCurrentLanguage() || "fr";
 
   changeLanguage(lang);
+  initCart();
 });
+
+document.body.addEventListener("htmx:afterSwap", (e) => {
+  if (e.detail.target.id === "cart-content") {
+    updateInsurance();
+    updateTotal();
+    updateShippingCost();
+    initCartListeners();
+  }
+});
+
+function initCartListeners() {
+  const addShipping = document.getElementById("add-shipping");
+  const addInsurance = document.getElementById("add-insurance");
+  const checkout = document.getElementById("checkout");
+
+  addShipping?.replaceWith(addShipping.cloneNode(true));
+  addInsurance?.replaceWith(addInsurance.cloneNode(true));
+  checkout?.replaceWith(checkout.cloneNode(true));
+
+  document.getElementById("add-shipping")?.addEventListener("change", () => {
+    updateShippingCost();
+    updateTotal();
+  });
+  document.getElementById("add-insurance")?.addEventListener("change", () => {
+    updateInsurance();
+    updateTotal();
+  });
+  document
+    .getElementById("checkout")
+    ?.addEventListener("click", handleCheckout);
+}

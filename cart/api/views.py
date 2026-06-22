@@ -3,8 +3,8 @@ import logging
 import stripe
 from django.conf import settings
 from django.db import transaction
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -19,7 +19,6 @@ from cart.services import (
 from cart.services.cart_services import (
     add_product_to_cart,
     empty_cart_and_release_products,
-    get_cart_items_data,
     get_or_create_active_cart,
     remove_product_from_cart,
 )
@@ -32,10 +31,11 @@ from cart.services.pricing_services import (
 )
 from cart.services.stripe_services import StripeSessionError
 from catalog.models import Product
+from core.services import get_session_expiration
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 
-from ..models import Cart
+from ..models import Cart, CartItem
 
 logger = logging.getLogger(__name__)
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -62,46 +62,117 @@ def add_to_cart(request, product_id):
     )
 
 
-def cart_detail(request):
-    session_id = request.session.session_key
-    if not session_id:
-        return JsonResponse({"cart": []})
-
-    cart = Cart.objects.filter(session_id=session_id, paid=False).first()
-    if not cart:
-        return JsonResponse({"cart": []})
-
-    return JsonResponse({"cart": get_cart_items_data(cart)})
-
-
 def empty_cart(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
     session_id = request.session.session_key
     if not session_id:
-        return JsonResponse({"success": False, "message": "No cart found"})
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Session ID not found",
+                "status_code": 404,
+            },
+        )
 
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
-        return JsonResponse({"success": False, "message": "Cart already empty"})
-    empty_cart_and_release_products(cart)
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Cart not found",
+                "status_code": 404,
+            },
+        )
 
-    return JsonResponse({"success": True, "message": "Le panier a été vide"})
+    result = empty_cart_and_release_products(cart)
+    if not result:
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "No item found in cart",
+                "status_code": 404,
+            },
+        )
+
+    context = {
+        "items": [],
+        "total": 0,
+        "expiration_date": None,
+        "latest_cgv": LegalDocument.objects.filter(
+            document_type=DocumentType.TERMS
+        ).latest("created_at"),
+    }
+    response = render(request, "cart/components/_cart_content.html", context)
+    response["HX-Trigger"] = "cartUpdated"
+    return response
 
 
 def remove_from_cart(request, product_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
     session_id = request.session.session_key
+
     if not session_id:
-        return JsonResponse({"success": False, "message": "Aucun panier trouvé"})
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Session ID not found",
+                "status_code": 404,
+            },
+        )
+
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
-        return JsonResponse({"success": False, "message": "No cart found"})
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Cart not found",
+                "status_code": 404,
+            },
+        )
 
-    product_data = remove_product_from_cart(cart, product_id)
-    if not product_data:
-        return JsonResponse({"success": False, "message": "Item not found in cart"})
+    result = remove_product_from_cart(cart, product_id)
+    if not result:
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Item not found in cart",
+                "status_code": 404,
+            },
+        )
 
-    return JsonResponse(
-        {"success": True, "message": "Item removed from cart", "article": product_data}
+    items = CartItem.objects.filter(cart=cart).select_related("product")
+    latest_cgv = LegalDocument.objects.filter(document_type=DocumentType.TERMS).latest(
+        "created_at"
     )
+    total = sum(
+        (item.product.price - item.product.discount) * item.quantity for item in items
+    )
+    expiration_date = get_session_expiration(request)
+    context = {
+        "expiration_date": expiration_date,
+        "items": items,
+        "total": total,
+        "latest_cgv": latest_cgv,
+    }
+    response = render(request, "cart/components/_cart_content.html", context)
+    response["HX-Trigger"] = "cartUpdated"
+    return response
 
 
 def checkout(request):
