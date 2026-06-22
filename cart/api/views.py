@@ -19,7 +19,6 @@ from cart.services import (
 from cart.services.cart_services import (
     add_product_to_cart,
     empty_cart_and_release_products,
-    get_cart_items_data,
     get_or_create_active_cart,
     remove_product_from_cart,
 )
@@ -61,18 +60,6 @@ def add_to_cart(request, product_id):
             "cart_uuid": str(cart.uuid),
         }
     )
-
-
-def cart_detail(request):
-    session_id = request.session.session_key
-    if not session_id:
-        return JsonResponse({"cart": []})
-
-    cart = Cart.objects.filter(session_id=session_id, paid=False).first()
-    if not cart:
-        return JsonResponse({"cart": []})
-
-    return JsonResponse({"cart": get_cart_items_data(cart)})
 
 
 def empty_cart(request):

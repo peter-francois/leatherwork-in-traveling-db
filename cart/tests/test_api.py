@@ -63,38 +63,6 @@ class AddToCartTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class CartDetailTest(TestCase):
-    """Tests for cart_detail API view"""
-
-    def setUp(self):
-        self.client = Client()
-
-    def test_returns_empty_cart_when_no_session(self):
-        """Should return empty cart when no session exists"""
-        response = self.client.get(reverse("cart_api:cart_detail"))
-        self.assertEqual(response.json(), {"cart": []})
-
-    def test_returns_empty_cart_when_no_cart(self):
-        """Should return empty cart when no cart exists for session"""
-        session = self.client.session
-        session.save()
-        response = self.client.get(reverse("cart_api:cart_detail"))
-        self.assertEqual(response.json(), {"cart": []})
-
-    def test_returns_cart_items(self):
-        """Should return cart items when cart exists"""
-        session = self.client.session
-        session.save()
-        product = make_product()
-        cart = Cart.objects.create(session_id=session.session_key)
-        CartItem.objects.create(cart=cart, product=product, quantity=1)
-
-        response = self.client.get(reverse("cart_api:cart_detail"))
-        data = response.json()
-        self.assertEqual(len(data["cart"]), 1)
-        self.assertEqual(data["cart"][0]["name"], product.name)
-
-
 class EmptyCartTest(TestCase):
     """Tests for empty_cart API view"""
 
