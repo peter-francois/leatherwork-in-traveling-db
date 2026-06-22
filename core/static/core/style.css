@@ -1075,9 +1075,6 @@ h2.product-name {
 }
 
 /* Custom creation*/
-.container-custom {
-  background: white;
-}
 .section-custom {
   margin: 50px 0px;
 }
@@ -1143,11 +1140,6 @@ h2.product-name {
 }
 #custom-picture-4 {
   border-radius: 0 50% 0 50%;
-}
-
-.container-custom h2 {
-  border-bottom: 3px solid #8b5e3b;
-  padding-bottom: 5px;
 }
 
 @media only screen and (max-width: 1182px) {
