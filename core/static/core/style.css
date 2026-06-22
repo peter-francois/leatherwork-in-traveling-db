@@ -663,66 +663,38 @@ section select {
 }
 
 .two-col-layout--aside-left.two-col-layout {
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 240px 1fr;
 }
 
 .two-col-layout--aside-right.two-col-layout {
   grid-template-columns: 1fr 280px;
 }
 
-.two-col-layout--aside-left .two-col-layout__aside {
-  order: 1;
-}
-.two-col-layout--aside-left .two-col-layout__main {
-  order: 2;
-}
+.two-col-layout--aside-left .two-col-layout__aside { order: 1; }
+.two-col-layout--aside-left .two-col-layout__main  { order: 2; }
 
-.two-col-layout--aside-right .two-col-layout__aside {
-  order: 2;
-}
-.two-col-layout--aside-right .two-col-layout__main {
-  order: 1;
-}
+.two-col-layout--aside-right .two-col-layout__aside { order: 2; }
+.two-col-layout--aside-right .two-col-layout__main  { order: 1; }
 
-.filter-and-list {
-  grid-template-columns: 0.22fr 0.78fr;
-  justify-content: center;
-  margin-bottom: 20px;
-}
 .filter {
   position: sticky;
-  top: 80px; /* Espacement par rapport au haut de la fenêtre */
-  align-self: start; /* Pour éviter que le filtre ne s'étire */
-  max-height: 90vh; /* Hauteur maximale pour éviter de dépasser l'écran */
-  overflow-y: auto; /* Ajout d'une barre de défilement si le contenu est trop long */
-  padding: 15px;
+  top: 80px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
   background-color: #fcf6dc;
   border: 1px solid #8c6b4f;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Pour éviter que le filtre ne soit coupé en bas */
 .filter::after {
   content: "";
   display: block;
   height: 20px;
 }
 
-.filter-form {
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
-  align-items: start;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
-}
-.filter-form p {
-  margin: 0px 0px;
-  width: 90%;
-  box-sizing: border-box;
-  justify-self: center;
-}
+
 #filter_button {
   margin-top: 10px;
   justify-content: center;
@@ -738,15 +710,18 @@ section select {
   width: 7em;
   justify-self: center;
 }
+
 #filter_button:hover {
   background: var(--color1);
   color: var(--color2);
 }
+
 #filter-icon {
   width: 17px;
   height: 17px;
   padding-left: 10px;
 }
+
 #filter_button:hover #filter-icon {
   content: url(../catalog/icons/filter-solid-hover.svg);
 }
@@ -1146,15 +1121,7 @@ h2.product-name {
   main {
   padding: 1rem 2rem;
   }
-
-  .two-col-layout--aside-left.two-col-layout {
-  grid-template-columns: 220px 1fr;
-  }
-
-  .two-col-layout {
-  gap: 2rem;
-  }
-
+  
   .title_and_logo {
     padding: 40px 70px;
   }
@@ -1349,8 +1316,24 @@ h2.product-name {
   main {
     padding: 0.5rem 1rem;
   }
-  .two-col-layout {
-  gap: 2rem;
+  .two-col-layout--aside-left.two-col-layout,
+  .two-col-layout--aside-right.two-col-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Catalog : filtre au-dessus des produits */
+  .two-col-layout--aside-left .two-col-layout__aside { order: 1; }
+  .two-col-layout--aside-left .two-col-layout__main  { order: 2; }
+
+  /* Cart : articles au-dessus, résumé paiement en dessous */
+  .two-col-layout--aside-right .two-col-layout__aside { order: 2; }
+  .two-col-layout--aside-right .two-col-layout__main  { order: 1; }
+
+  .filter {
+    position: static;
+    max-height: none;
+    top: auto;
   }
   section {
     padding: 5px;
@@ -1666,6 +1649,18 @@ h2.product-name {
 
     main {
     padding: 0.2rem 0.5rem;
+  }
+  .two-col-layout--aside-left.two-col-layout,
+  .two-col-layout--aside-right.two-col-layout {
+    gap: 1rem;
+  }
+
+  .filter {
+    padding: 10px;
+  }
+
+  #filter_button {
+    width: 100%;
   }
   /*Header*/
   h1 {
