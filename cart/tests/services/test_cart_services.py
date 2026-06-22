@@ -188,11 +188,14 @@ class EmptyCartAndReleaseProductsTest(TestCase):
         self.product.refresh_from_db()
         self.assertFalse(self.product.pending_in_cart)
 
-    def test_deletes_cart_items(self):
-        """Should delete all cart items"""
-        cart_id = self.cart.id
-        empty_cart_and_release_products(self.cart)
-        self.assertEqual(CartItem.objects.filter(cart_id=cart_id).count(), 0)
+    def test_returns_false_when_cart_already_empty(self):
+        """Should return False and not delete anything when cart has no items"""
+        empty_cart = Cart.objects.create(session_id="empty-session")
+
+        result = empty_cart_and_release_products(empty_cart)
+
+        self.assertFalse(result)
+        self.assertTrue(Cart.objects.filter(id=empty_cart.id).exists())
 
 
 class GetCartItemsDataTest(TestCase):

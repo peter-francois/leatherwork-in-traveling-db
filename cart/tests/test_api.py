@@ -68,30 +68,66 @@ class EmptyCartTest(TestCase):
 
     def setUp(self):
         self.client = Client()
+        LegalDocument.objects.create(document_type=DocumentType.TERMS, version="1.0")
 
-    def test_returns_error_when_no_session(self):
-        """Should return error when no session exists"""
-        response = self.client.post(reverse("cart_api:empty_cart"))
-        self.assertFalse(response.json()["success"])
-
-    def test_returns_error_when_no_cart(self):
-        """Should return error when no cart exists"""
         session = self.client.session
         session.save()
+        self.session_key = session.session_key
+
+        self.product = make_product(pending_in_cart=True)
+        self.cart = Cart.objects.create(session_id=self.session_key)
+        self.cart_item = CartItem.objects.create(
+            cart=self.cart, product=self.product, quantity=1
+        )
+
+    def test_rejects_non_post_requests(self):
+        """Should reject GET requests with a 405"""
+        response = self.client.get(reverse("cart_api:empty_cart"))
+        self.assertEqual(response.status_code, 405)
+
+    def test_returns_error_partial_when_no_session(self):
+        """Should render the error partial when no session exists"""
+        client = Client()  # fresh client, no session cookie at all
+        response = client.post(reverse("cart_api:empty_cart"))
+        self.assertTemplateUsed(response, "core/components/_error.html")
+
+    def test_returns_error_partial_when_no_cart(self):
+        """Should render the error partial when no cart exists for the session"""
+        self.cart.delete()  # session exists, but its cart is gone
         response = self.client.post(reverse("cart_api:empty_cart"))
-        self.assertFalse(response.json()["success"])
+        self.assertTemplateUsed(response, "core/components/_error.html")
+
+    def test_returns_error_partial_when_cart_already_empty(self):
+        """Should render the error partial when the cart has no items"""
+        self.cart_item.delete()  # cart exists, but it's empty
+        response = self.client.post(reverse("cart_api:empty_cart"))
+        self.assertTemplateUsed(response, "core/components/_error.html")
 
     def test_empties_cart_successfully(self):
-        """Should empty cart and return success"""
-        session = self.client.session
-        session.save()
-        product = make_product()
-        cart = Cart.objects.create(session_id=session.session_key)
-        CartItem.objects.create(cart=cart, product=product, quantity=1)
-
+        """Should delete the cart and render the updated (empty) cart content"""
         response = self.client.post(reverse("cart_api:empty_cart"))
-        self.assertTrue(response.json()["success"])
-        self.assertEqual(Cart.objects.count(), 0)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Cart.objects.filter(id=self.cart.id).count(), 0)
+        self.assertTemplateUsed(response, "cart/components/_cart_content.html")
+
+    def test_releases_product_on_success(self):
+        """Should reset pending_in_cart on the product after emptying the cart"""
+        self.client.post(reverse("cart_api:empty_cart"))
+
+        self.product.refresh_from_db()
+        self.assertFalse(self.product.pending_in_cart)
+
+    def test_triggers_cart_updated_event_on_success(self):
+        """Should set the HX-Trigger header so the navbar count refreshes"""
+        response = self.client.post(reverse("cart_api:empty_cart"))
+        self.assertEqual(response.headers.get("HX-Trigger"), "cartUpdated")
+
+    def test_does_not_trigger_cart_updated_on_error(self):
+        """Should not set HX-Trigger when there was nothing to empty"""
+        self.cart_item.delete()
+        response = self.client.post(reverse("cart_api:empty_cart"))
+        self.assertIsNone(response.headers.get("HX-Trigger"))
 
 
 class RemoveFromCartTest(TestCase):
