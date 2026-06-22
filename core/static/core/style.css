@@ -659,7 +659,7 @@ section select {
 
 .two-col-layout {
   display: grid;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .two-col-layout--aside-left.two-col-layout {
@@ -791,11 +791,11 @@ section select {
 .two-col-layout__main,
 #liste-articles {
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   align-items: stretch;
   align-content: start;
   margin: auto 0px;
-  gap: 40px;
+  gap: 2rem;
   padding: 0px;
 }
 h2.product-name {
@@ -1310,7 +1310,7 @@ h2.product-name {
   #liste-articles {
     grid-template-columns: repeat(2, 1fr);
     margin: 15px 10px;
-    gap: 10px;
+    gap: 1rem;
   }
   .filter {
     margin-top: 15px;
@@ -1344,6 +1344,9 @@ h2.product-name {
 @media only screen and (max-width: 768px) {
   main {
     padding: 0.5rem 1rem;
+  }
+  .two-col-layout {
+  gap: 2rem;
   }
   section {
     padding: 5px;
