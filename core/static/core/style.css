@@ -655,7 +655,7 @@ section select {
 }
 
 .two-col-layout--aside-right.two-col-layout {
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr 240px;
 }
 
 .two-col-layout--aside-left .two-col-layout__aside { order: 1; }
@@ -1106,7 +1106,16 @@ h2.product-name {
   main {
   padding: 1rem 2rem;
   }
-  
+  .two-col-layout {
+  gap: 2rem;
+  }
+  .two-col-layout--aside-left.two-col-layout {
+  grid-template-columns: 220px 1fr;
+}
+
+.two-col-layout--aside-right.two-col-layout {
+  grid-template-columns: 1fr 220px;
+}
   .title_and_logo {
     padding: 40px 70px;
   }
@@ -1268,8 +1277,7 @@ h2.product-name {
     gap: 1rem;
   }
   .filter {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    padding:1rem;
   }
 
   .produit {
