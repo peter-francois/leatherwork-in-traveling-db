@@ -9,7 +9,6 @@ from cart.models import Cart, CartItem
 from cart.services.cart_services import (
     add_product_to_cart,
     empty_cart_and_release_products,
-    get_cart_items_data,
     get_or_create_active_cart,
     process_successful_payment,
     register_cgv_acceptance,
@@ -196,35 +195,6 @@ class EmptyCartAndReleaseProductsTest(TestCase):
 
         self.assertFalse(result)
         self.assertTrue(Cart.objects.filter(id=empty_cart.id).exists())
-
-
-class GetCartItemsDataTest(TestCase):
-    """Tests for get_cart_items_data service"""
-
-    def setUp(self):
-        self.session = make_session(expire_delta=timedelta(hours=24))
-        self.product = make_product(available=True, pending_in_cart=True)
-        self.cart = make_cart(self.session)
-        CartItem.objects.create(cart=self.cart, product=self.product, quantity=2)
-
-    def test_returns_list(self):
-        """Should return a list"""
-        result = get_cart_items_data(self.cart)
-        self.assertIsInstance(result, list)
-
-    def test_returns_correct_data(self):
-        """Should return correct product data"""
-        result = get_cart_items_data(self.cart)
-        self.assertEqual(result[0]["name"], self.product.name)
-        self.assertEqual(result[0]["price"], self.product.price)
-        self.assertEqual(result[0]["quantity"], 2)
-        self.assertEqual(result[0]["discount"], self.product.discount)
-
-    def test_returns_empty_list_when_no_items(self):
-        """Should return empty list when cart has no items"""
-        empty_cart = Cart.objects.create(session_id="empty_session")
-        result = get_cart_items_data(empty_cart)
-        self.assertEqual(result, [])
 
 
 class RemoveProductFromCartTest(TestCase):

@@ -72,26 +72,6 @@ def empty_cart_and_release_products(cart) -> bool:
     return True
 
 
-def get_cart_items_data(cart) -> list:
-    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
-    return [
-        {
-            "name": item.product.name,
-            "price": item.product.price,
-            "quantity": item.quantity,
-            "id": item.product.id,
-            "discount": item.product.discount,
-            **{
-                f"image{i}": getattr(item.product, f"image{i}").url
-                if getattr(item.product, f"image{i}")
-                else None
-                for i in range(1, 7)
-            },
-        }
-        for item in cart_items
-    ]
-
-
 def remove_product_from_cart(cart, product_id) -> bool:
     cart_item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
     if not cart_item:
