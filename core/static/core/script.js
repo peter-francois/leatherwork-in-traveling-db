@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-  displayCart();
   initCart();
   if (
     window.location.pathname.includes("panier") ||
@@ -135,108 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
-// Fonction pour afficher les articles du panier
-function displayCart() {
-  fetch("/api/cart/cart_detail/")
-    .then((response) => response.json())
-    .then((data) => {
-      let listeArticles = document.getElementById("liste-articles");
-      if (listeArticles) {
-        const formatNumber = (num) =>
-          currentLanguage === "en"
-            ? num.toFixed(2)
-            : num.toFixed(2).replace(".", ",");
-        listeArticles.innerHTML = "";
-        data.cart.forEach((article) => {
-          const translations_front = JSON.parse(
-            document.getElementById("translations").textContent,
-          );
-          let li = document.createElement("li");
-          let img = document.createElement("img");
-          let clickHint = document.createElement("p");
-          clickHint.textContent = "👆 " + translations_front.click_hint;
-          clickHint.classList.add("click-hint");
-          clickHint.onclick = () => displayProductImages(article.id);
-          let h3 = document.createElement("h3");
-          let p = document.createElement("p");
-          p.textContent = translations_front.price;
-          p.style.margin = "0px";
-          let span = document.createElement("span");
-          let span2 = document.createElement("span");
-          span.textContent = formatNumber(article.price);
-          span2.textContent = `€ (x${article.quantity})`;
-          h3.textContent = `${article.name}`;
-          p.appendChild(span);
-          p.appendChild(span2);
-          img.onclick = () => displayProductImages(article.id);
-          img.alt = `${article.name}`;
-
-          let button = document.createElement("button");
-          button.textContent = translations_front.delete_button;
-          button.onclick = () => remove_from_cart(article.id);
-          button.classList.add("page-button", "delete_button");
-          li.appendChild(h3);
-          if (article.image1) {
-            img.src = article.image1;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image2) {
-            img.src = article.image2;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-          } else if (article.image3) {
-            img.src = article.image3;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image4) {
-            img.src = article.image4;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image5) {
-            img.src = article.image5;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else if (article.image6) {
-            img.src = article.image6;
-            img.alt = `${article.name}`;
-            li.appendChild(img);
-            li.appendChild(clickHint);
-          } else {
-            img.src = ""; // Aucune image disponible
-            let p = document.createElement("p");
-            p.classList.add("no-image");
-            p.textContent = translations_front.no_image;
-          }
-          if (article.discount > 0.0) {
-            let promoWidget = document.createElement("p");
-            promoWidget.classList.add("promo-widget");
-            promoWidget.textContent = "Promo";
-            li.append(promoWidget);
-            let new_price = document.createElement("p");
-            new_price.style.margin = "0px";
-            new_price.textContent = `Nouveau prix: ${formatNumber(article.price - article.discount)}€`;
-            li.appendChild(new_price);
-            p.style.textDecoration = "line-through";
-            p.style.textDecorationThickness = "3px";
-            p.style.textDecorationColor = "#da0410";
-          } else {
-            p.style.textDecoration = "none";
-          }
-          li.appendChild(p);
-          li.appendChild(button);
-          listeArticles.appendChild(li);
-        });
-      }
-    })
-    .catch((error) =>
-      console.error("Erreur lors de la récupération du panier:", error),
-    );
-}
 
 // Fonction pour récupérer le token CSRF depuis le meta tag
 function getCSRFTokenFromMeta() {
@@ -393,7 +290,6 @@ function remove_from_cart(articleId) {
       }
     })
     .finally(() => {
-      displayCart();
       updateCartVisibility();
     });
 }
