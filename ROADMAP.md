@@ -12,7 +12,7 @@ We're progressively moving dynamic interactions away from custom `fetch` + manua
 |---|---|---|
 | Remove item from cart | ✅ Done | Returns `_cart_content.html` partial, triggers `cartUpdated` via `HX-Trigger` |
 | Cart item count (navbar) | ✅ Done | Listens for `cartUpdated from:body` |
-| Clear cart | 🚧 In progress | Same pattern as remove item |
+| Clear cart | ✅ Done | Same pattern as remove item |
 | Add to cart (from catalog) | 🚧 In progress | Being worked on in `refactor/js` |
 | Catalog filtering | ⏳ Not started | Still relies on the legacy approach |
 

@@ -38,7 +38,7 @@
         </aside>
         
         <!--List of products-->
-        <ul class="two-col-layout__main grid-container tous_les_produits" id="liste-produits">
+        <ul class="two-col-layout__main grid-container">
             {% for product in products %}
                 {% include 'catalog/components/_product_card.html' with page='catalog' %}
             {% empty %}

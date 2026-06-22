@@ -9,7 +9,6 @@ from cart.models import Cart, CartItem
 from cart.services.cart_services import (
     add_product_to_cart,
     empty_cart_and_release_products,
-    get_cart_items_data,
     get_or_create_active_cart,
     process_successful_payment,
     register_cgv_acceptance,
@@ -188,40 +187,14 @@ class EmptyCartAndReleaseProductsTest(TestCase):
         self.product.refresh_from_db()
         self.assertFalse(self.product.pending_in_cart)
 
-    def test_deletes_cart_items(self):
-        """Should delete all cart items"""
-        cart_id = self.cart.id
-        empty_cart_and_release_products(self.cart)
-        self.assertEqual(CartItem.objects.filter(cart_id=cart_id).count(), 0)
+    def test_returns_false_when_cart_already_empty(self):
+        """Should return False and not delete anything when cart has no items"""
+        empty_cart = Cart.objects.create(session_id="empty-session")
 
+        result = empty_cart_and_release_products(empty_cart)
 
-class GetCartItemsDataTest(TestCase):
-    """Tests for get_cart_items_data service"""
-
-    def setUp(self):
-        self.session = make_session(expire_delta=timedelta(hours=24))
-        self.product = make_product(available=True, pending_in_cart=True)
-        self.cart = make_cart(self.session)
-        CartItem.objects.create(cart=self.cart, product=self.product, quantity=2)
-
-    def test_returns_list(self):
-        """Should return a list"""
-        result = get_cart_items_data(self.cart)
-        self.assertIsInstance(result, list)
-
-    def test_returns_correct_data(self):
-        """Should return correct product data"""
-        result = get_cart_items_data(self.cart)
-        self.assertEqual(result[0]["name"], self.product.name)
-        self.assertEqual(result[0]["price"], self.product.price)
-        self.assertEqual(result[0]["quantity"], 2)
-        self.assertEqual(result[0]["discount"], self.product.discount)
-
-    def test_returns_empty_list_when_no_items(self):
-        """Should return empty list when cart has no items"""
-        empty_cart = Cart.objects.create(session_id="empty_session")
-        result = get_cart_items_data(empty_cart)
-        self.assertEqual(result, [])
+        self.assertFalse(result)
+        self.assertTrue(Cart.objects.filter(id=empty_cart.id).exists())
 
 
 class RemoveProductFromCartTest(TestCase):
@@ -234,24 +207,44 @@ class RemoveProductFromCartTest(TestCase):
         CartItem.objects.create(cart=self.cart, product=self.product, quantity=1)
 
     def test_removes_product_from_cart(self):
-        """Should remove product from cart"""
+        """Should remove the cart item"""
+        self.assertEqual(CartItem.objects.filter(cart=self.cart).count(), 1)
         remove_product_from_cart(self.cart, self.product.id)
         self.assertEqual(CartItem.objects.filter(cart=self.cart).count(), 0)
 
     def test_releases_product(self):
         """Should release product from pending state"""
+        self.assertTrue(self.product.pending_in_cart)
         remove_product_from_cart(self.cart, self.product.id)
         self.product.refresh_from_db()
         self.assertFalse(self.product.pending_in_cart)
 
-    def test_returns_product_data(self):
-        """Should return product data"""
+    def test_returns_true_on_success(self):
+        """Should return True when the product was removed"""
         result = remove_product_from_cart(self.cart, self.product.id)
-        if result:
-            self.assertEqual(result["id"], self.product.id)
-            self.assertEqual(result["price"], self.product.price)
+        self.assertTrue(result)
 
-    def test_returns_none_when_product_not_in_cart(self):
-        """Should return None when product not found in cart"""
+    def test_returns_false_when_product_not_in_cart(self):
+        """Should return False when product not found in cart"""
         result = remove_product_from_cart(self.cart, 9999)
-        self.assertIsNone(result)
+        self.assertFalse(result)
+
+    def test_does_not_delete_other_items_in_cart(self):
+        """Should only remove the targeted item, leaving the rest of the cart untouched"""
+        other_product = make_product(available=True)
+        CartItem.objects.create(cart=self.cart, product=other_product, quantity=2)
+
+        remove_product_from_cart(self.cart, self.product.id)
+
+        remaining_item = CartItem.objects.get(cart=self.cart)
+        self.assertEqual(remaining_item.product, other_product)
+
+    def test_does_not_affect_other_carts(self):
+        """Should not touch a CartItem with the same product in a different cart"""
+        other_session = make_session(expire_delta=timedelta(hours=24))
+        other_cart = make_cart(other_session)
+        CartItem.objects.create(cart=other_cart, product=self.product, quantity=1)
+
+        remove_product_from_cart(self.cart, self.product.id)
+
+        self.assertEqual(CartItem.objects.filter(cart=other_cart).count(), 1)
