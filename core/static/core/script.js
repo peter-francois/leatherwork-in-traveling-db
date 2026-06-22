@@ -139,7 +139,12 @@ function getCSRFTokenFromMeta() {
   return csrfTokenMeta ? csrfTokenMeta.getAttribute("content") : "";
 }
 function initCart() {
-  if (!document.getElementById("cart-content")) return;
+  const cartContent = document.getElementById("cart-content");
+  if (!cartContent) return;
+
+  const isCartEmpty = document.getElementById("empty-section");
+  if (isCartEmpty) return;
+  
   updateInsurance();
   updateTotal();
   updateShippingCost();
