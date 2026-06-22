@@ -1,8 +1,10 @@
+from datetime import timedelta
+
+from django.contrib.sessions.models import Session
 from django.core.management.base import BaseCommand
 from django.utils.timezone import now
-from django.contrib.sessions.models import Session
+
 from cart.models import Cart
-from datetime import timedelta
 
 
 class Command(BaseCommand):
@@ -11,16 +13,20 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         expiration_threshold = now() + timedelta(hours=1)
 
-        expiring_sessions = Session.objects.filter(expire_date__lte=expiration_threshold)
+        expiring_sessions = Session.objects.filter(
+            expire_date__lte=expiration_threshold
+        )
         if not expiring_sessions.exists():
             self.stdout.write("✅ Aucun panier expiré à libérer.")
             return
 
-        expired_session_keys = list(expiring_sessions.values_list('session_key', flat=True))
+        expired_session_keys = list(
+            expiring_sessions.values_list("session_key", flat=True)
+        )
         expired_carts = Cart.objects.filter(
             session_id__in=expired_session_keys,
             paid=False,
-        ).prefetch_related('cartitem_set__product')
+        ).prefetch_related("cartitem_set__product")
 
         if not expired_carts.exists():
             self.stdout.write("✅ Aucun panier à libérer.")
@@ -41,4 +47,6 @@ class Command(BaseCommand):
 
         expiring_sessions.delete()
 
-        self.stdout.write(f"✔️ {total_products_liberated} produit(s) libéré(s) et {total_carts_deleted} panier(s) supprimé(s).")
+        self.stdout.write(
+            f"✔️ {total_products_liberated} produit(s) libéré(s) et {total_carts_deleted} panier(s) supprimé(s)."
+        )

@@ -1,18 +1,24 @@
+from datetime import timedelta
+
+from django.contrib.sessions.models import Session
 from django.test import TestCase
 from django.utils.timezone import now
-from django.contrib.sessions.models import Session
-from datetime import timedelta
+
 from cart.models import Cart, CartItem
-from cart.tests.helpers import call_management_command, make_cart, make_product, make_session
-
-
-
+from cart.tests.helpers import (
+    call_management_command,
+    make_cart,
+    make_product,
+    make_session,
+)
 
 # ── release_expiring_carts ────────────────────────────────────────────────────
 
+
 class ReleaseExpiringCartsCommandTest(TestCase):
     """Tests for the release_expiring_carts management command."""
-    command = 'release_expiring_carts'
+
+    command = "release_expiring_carts"
 
     def test_no_expiring_sessions(self):
         """Should report nothing to release when no sessions are expiring."""
@@ -70,7 +76,9 @@ class ReleaseExpiringCartsCommandTest(TestCase):
         session = make_session(expire_delta=timedelta(minutes=30))
         make_cart(session, paid=False)
         call_management_command(self.command)
-        self.assertFalse(Session.objects.filter(session_key=session.session_key).exists())
+        self.assertFalse(
+            Session.objects.filter(session_key=session.session_key).exists()
+        )
 
     def test_output_reports_correct_counts(self):
         """Should report correct number of products liberated and carts deleted."""
@@ -86,9 +94,11 @@ class ReleaseExpiringCartsCommandTest(TestCase):
         self.assertIn("2 produit(s) libéré(s)", output)
         self.assertIn("1 panier(s) supprimé(s)", output)
 
+
 class ReleaseExpiringCarts10YearsCommandTest(TestCase):
     """Tests for the release_expiring_carts_10_years management command."""
-    command = 'release_expiring_carts_10_years'
+
+    command = "release_expiring_carts_10_years"
 
     def test_no_expired_carts(self):
         """Should report nothing to delete when no carts have expired."""
@@ -142,9 +152,11 @@ class ReleaseExpiringCarts10YearsCommandTest(TestCase):
 
 # ── release_expiring_term_acceptation ────────────────────────────────────────
 
+
 class ReleaseExpiringCGVCommandTest(TestCase):
     """Tests for the release_expiring_CGV_Acceptation management command."""
-    command = 'release_expiring_terms_acceptation'
+
+    command = "release_expiring_terms_acceptation"
 
     def test_no_expired_cgv(self):
         """Should report nothing when no CGV have expired."""

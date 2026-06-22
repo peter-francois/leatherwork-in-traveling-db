@@ -1,20 +1,27 @@
 from django.test import TestCase
+
+from cart.constants import (
+    HOME_DELIVERY_SHIPPING_COST,
+    INSURANCE_COST_50_TO_125,
+    INSURANCE_COST_125_TO_250,
+    INSURANCE_COST_250_TO_375,
+    INSURANCE_COST_ABOVE_375,
+    INSURANCE_MANDATORY_MIN,
+    INSURANCE_OPTIONAL_COST,
+    INSURANCE_OPTIONAL_MIN,
+    INSURANCE_THRESHOLD_1,
+    INSURANCE_THRESHOLD_2,
+    INSURANCE_THRESHOLD_3,
+    STANDARD_SHIPPING_COST,
+)
 from cart.services.pricing_services import (
-    calculate_total_centimes,
-    calculate_insurance_cost_centimes,
-    verify_total,
-    convert_centimes_to_euros,
-    convert_euros_to_centimes,
     AmountMismatchError,
     AmountNegatifError,
-)
-from cart.constants import (
-    HOME_DELIVERY_SHIPPING_COST, STANDARD_SHIPPING_COST,
-    INSURANCE_OPTIONAL_MIN, INSURANCE_OPTIONAL_MAX, INSURANCE_OPTIONAL_COST,
-    INSURANCE_MANDATORY_MIN, INSURANCE_THRESHOLD_1,
-    INSURANCE_THRESHOLD_2, INSURANCE_THRESHOLD_3,
-    INSURANCE_COST_50_TO_125, INSURANCE_COST_125_TO_250,
-    INSURANCE_COST_250_TO_375, INSURANCE_COST_ABOVE_375,
+    calculate_insurance_cost_centimes,
+    calculate_total_centimes,
+    convert_centimes_to_euros,
+    convert_euros_to_centimes,
+    verify_total,
 )
 
 
@@ -23,7 +30,9 @@ class CalculateInsuranceCostCentimesTest(TestCase):
 
     def test_returns_zero_below_optional_min(self):
         """Should return 0 when total is below optional insurance threshold"""
-        result = calculate_insurance_cost_centimes(INSURANCE_OPTIONAL_MIN, is_optional_insurance=False)
+        result = calculate_insurance_cost_centimes(
+            INSURANCE_OPTIONAL_MIN, is_optional_insurance=False
+        )
         self.assertEqual(result, 0)
 
     def test_returns_zero_in_optional_range_without_insurance(self):
@@ -68,37 +77,51 @@ class CalculateTotalCentimesTest(TestCase):
 
     def test_adds_standard_shipping_when_no_express(self):
         """Should add standard shipping cost when is_home_delivery is False"""
-        result = calculate_total_centimes(1000, is_optional_insurance=False, is_home_delivery=False)
+        result = calculate_total_centimes(
+            1000, is_optional_insurance=False, is_home_delivery=False
+        )
         self.assertEqual(result, 1000 + STANDARD_SHIPPING_COST)
 
     def test_adds_express_shipping_when_requested(self):
         """Should add home delivery shipping cost when is_home_delivery is True"""
-        result = calculate_total_centimes(1000, is_optional_insurance=False, is_home_delivery=True)
+        result = calculate_total_centimes(
+            1000, is_optional_insurance=False, is_home_delivery=True
+        )
         self.assertEqual(result, 1000 + HOME_DELIVERY_SHIPPING_COST)
 
     def test_adds_optional_insurance_when_requested(self):
         """Should add optional insurance cost when in optional range and is_optional_insurance is True"""
         total = INSURANCE_OPTIONAL_MIN + 1
-        result = calculate_total_centimes(total, is_optional_insurance=True, is_home_delivery=False)
-        self.assertEqual(result, total + INSURANCE_OPTIONAL_COST + STANDARD_SHIPPING_COST)
+        result = calculate_total_centimes(
+            total, is_optional_insurance=True, is_home_delivery=False
+        )
+        self.assertEqual(
+            result, total + INSURANCE_OPTIONAL_COST + STANDARD_SHIPPING_COST
+        )
 
     def test_adds_mandatory_insurance_automatically(self):
         """Should add mandatory insurance regardless of is_optional_insurance flag"""
         total = INSURANCE_MANDATORY_MIN + 1
         excepted = total + INSURANCE_COST_50_TO_125 + STANDARD_SHIPPING_COST
-        result = calculate_total_centimes(total, is_optional_insurance=False, is_home_delivery=False)
+        result = calculate_total_centimes(
+            total, is_optional_insurance=False, is_home_delivery=False
+        )
         self.assertEqual(result, excepted)
 
     def test_raises_amount_negatif_error_when_total_is_zero(self):
         """Should raise AmountNegatifError when total is zero or negative"""
         with self.assertRaises(AmountNegatifError):
-            calculate_total_centimes(0, is_optional_insurance=False, is_home_delivery=False)
+            calculate_total_centimes(
+                0, is_optional_insurance=False, is_home_delivery=False
+            )
 
     def test_returns_correct_total_with_all_options(self):
         """Should return correct total with insurance and express shipping"""
         total = INSURANCE_MANDATORY_MIN + 1
         expected = total + INSURANCE_COST_50_TO_125 + HOME_DELIVERY_SHIPPING_COST
-        result = calculate_total_centimes(total, is_optional_insurance=True, is_home_delivery=True)
+        result = calculate_total_centimes(
+            total, is_optional_insurance=True, is_home_delivery=True
+        )
         self.assertEqual(result, expected)
 
 
@@ -133,7 +156,7 @@ class ConvertCentimesToEurosTest(TestCase):
 
     def test_handles_string_input(self):
         """Should handle string input"""
-        self.assertEqual(convert_centimes_to_euros('1000'), 10.0)
+        self.assertEqual(convert_centimes_to_euros("1000"), 10.0)
 
 
 class ConvertEurosToCentimesTest(TestCase):
@@ -146,7 +169,7 @@ class ConvertEurosToCentimesTest(TestCase):
 
     def test_handles_string_input(self):
         """Should handle string input"""
-        self.assertEqual(convert_euros_to_centimes('10.0'), 1000)
+        self.assertEqual(convert_euros_to_centimes("10.0"), 1000)
 
     def test_rounds_correctly(self):
         """Should round correctly"""
