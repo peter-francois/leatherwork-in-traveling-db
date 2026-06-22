@@ -26,7 +26,7 @@ body {
   background-color: #fcf6c8;
   color: #333;
   line-height: 1.6;
-  margin: 0 -2px;
+  margin: 0px;
   padding: 0;
 }
 
@@ -1149,7 +1149,11 @@ h2.product-name {
 
   .two-col-layout--aside-left.two-col-layout {
   grid-template-columns: 220px 1fr;
-}
+  }
+
+  .two-col-layout {
+  gap: 2rem;
+  }
 
   .title_and_logo {
     padding: 40px 70px;
