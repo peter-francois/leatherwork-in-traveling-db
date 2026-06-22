@@ -89,9 +89,10 @@ def empty_cart(request):
 
 
 def remove_from_cart(request, product_id):
-    session_id = request.session.session_key
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
+
+    session_id = request.session.session_key
 
     if not session_id:
         return render(

@@ -9,6 +9,8 @@ from django.urls import reverse
 
 from cart.models import Cart, CartItem
 from cart.tests.helpers import make_product, make_session, make_stripe_checkout_event
+from legal.choices import DocumentType
+from legal.models import LegalDocument
 from legal.tests import make_terms_document
 
 
@@ -134,36 +136,69 @@ class RemoveFromCartTest(TestCase):
         session.save()
         self.cart = Cart.objects.create(session_id=session.session_key)
         CartItem.objects.create(cart=self.cart, product=self.product, quantity=1)
+        LegalDocument.objects.create(document_type=DocumentType.TERMS, version="1.0")
+
+    def test_rejects_non_post_requests(self):
+        """Should reject GET requests with a 405"""
+        response = self.client.get(
+            reverse("cart_api:remove_from_cart", args=[self.product.id])
+        )
+        self.assertEqual(response.status_code, 405)
 
     def test_removes_product_successfully(self):
-        """Should remove product and return success"""
+        """Should remove the cart item and render the updated cart content"""
         response = self.client.post(
             reverse("cart_api:remove_from_cart", args=[self.product.id])
         )
-        self.assertTrue(response.json()["success"])
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(CartItem.objects.count(), 0)
+        self.assertTemplateUsed(response, "cart/components/_cart_content.html")
 
-    def test_returns_error_when_no_session(self):
-        """Should return error when no session exists"""
+    def test_resets_pending_in_cart_on_product(self):
+        """Should reset pending_in_cart on the product after removal"""
+        self.product.pending_in_cart = True
+        self.product.save()
+
+        self.client.post(reverse("cart_api:remove_from_cart", args=[self.product.id]))
+
+        self.product.refresh_from_db()
+        self.assertFalse(self.product.pending_in_cart)
+
+    def test_triggers_cart_updated_event(self):
+        """Should set the HX-Trigger header so the navbar count refreshes"""
+        response = self.client.post(
+            reverse("cart_api:remove_from_cart", args=[self.product.id])
+        )
+        self.assertEqual(response.headers.get("HX-Trigger"), "cartUpdated")
+
+    def test_returns_error_partial_when_no_session(self):
+        """Should render the error partial when no session exists"""
         client = Client()  # fresh client without session
         response = client.post(
             reverse("cart_api:remove_from_cart", args=[self.product.id])
         )
-        self.assertFalse(response.json()["success"])
+        self.assertTemplateUsed(response, "core/components/_error.html")
 
-    def test_returns_error_when_product_not_in_cart(self):
-        """Should return error when product not in cart"""
-        response = self.client.post(reverse("cart_api:remove_from_cart", args=[9999]))
-        self.assertFalse(response.json()["success"])
-
-    def test_returns_product_data(self):
-        """Should return product data in response"""
-        response = self.client.post(
+    def test_returns_error_partial_when_cart_not_found(self):
+        """Should render the error partial when the session has no active cart"""
+        client = Client()
+        session = client.session
+        session.save()
+        # session exists, but no Cart was ever created for it
+        response = client.post(
             reverse("cart_api:remove_from_cart", args=[self.product.id])
         )
-        data = response.json()
-        self.assertIn("article", data)
-        self.assertEqual(data["article"]["id"], self.product.id)
+        self.assertTemplateUsed(response, "core/components/_error.html")
+
+    def test_returns_error_partial_when_product_not_in_cart(self):
+        """Should render the error partial when the product isn't in the cart"""
+        response = self.client.post(reverse("cart_api:remove_from_cart", args=[9999]))
+        self.assertTemplateUsed(response, "core/components/_error.html")
+
+    def test_does_not_trigger_cart_updated_on_error(self):
+        """Should not set HX-Trigger when the removal failed"""
+        response = self.client.post(reverse("cart_api:remove_from_cart", args=[9999]))
+        self.assertIsNone(response.headers.get("HX-Trigger"))
 
 
 class CartCountTest(TestCase):
