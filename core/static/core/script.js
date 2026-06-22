@@ -346,6 +346,8 @@ function closeModal() {
 
 // Fonction pour mettre à jour les frais de port
 function updateShippingCost() {
+  const shippingOption = document.getElementById("add-shipping");
+  if (!shippingOption) return;
   const currentLang = localStorage.getItem("language") || "fr";
   const shippingOption = document.getElementById("add-shipping");
   const shippingCostSpan = document.getElementById("shipping-cost");
@@ -368,6 +370,8 @@ function updateShippingCost() {
 // Fonction pour mettre à jour l'assurance
 
 function updateInsurance() {
+  const insuranceOption = document.getElementById("insurance-option");
+  if (!insuranceOption) return;
   const orderTotalElement = document.getElementById("order-total");
 
   if (!orderTotalElement) {
@@ -440,10 +444,11 @@ function updateInsurance() {
 }
 // Fonction pour mettre à jour le total
 function updateTotal() {
+  const totalAmountElement = document.getElementById("total-amount");
+  if (!totalAmountElement) return;
   const currentLang = localStorage.getItem("language") || "fr";
   const orderTotalElement = document.getElementById("order-total");
   const insuranceCostElement = document.getElementById("insurance-cost");
-  const totalAmountElement = document.getElementById("total-amount");
 
   if (!orderTotalElement || !insuranceCostElement || !totalAmountElement) {
     return;
