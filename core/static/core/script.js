@@ -349,7 +349,6 @@ function updateShippingCost() {
   const shippingOption = document.getElementById("add-shipping");
   if (!shippingOption) return;
   const currentLang = localStorage.getItem("language") || "fr";
-  const shippingOption = document.getElementById("add-shipping");
   const shippingCostSpan = document.getElementById("shipping-cost");
   if (shippingOption.checked) {
     const shippingCost = 10;
@@ -381,7 +380,6 @@ function updateInsurance() {
   const orderTotal = parseFloat(
     orderTotalElement.textContent.replace(",", "."),
   );
-  const insuranceOption = document.getElementById("insurance-option"); // Checkbox assurance optionnelle
   const mandatoryInsurance = document.getElementById("mandatory-insurance"); // Assurance obligatoire
   const insuranceCostSpan = document.getElementById("insurance-cost"); // Prix assurance optionnelle
   const mandatoryInsuranceCostSpan = document.getElementById(
