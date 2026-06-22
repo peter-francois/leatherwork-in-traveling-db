@@ -60,13 +60,16 @@ def add_product_to_cart(cart, product) -> None:
     product.save()
 
 
-def empty_cart_and_release_products(cart) -> None:
+def empty_cart_and_release_products(cart) -> bool:
+    cart_items = cart.cartitem_set.all()
+    if not cart_items.exists():
+        return False
 
-    for item in cart.cartitem_set.all():
+    for item in cart_items:
         item.product.pending_in_cart = False
         item.product.save()
-    cart.cartitem_set.all().delete()
     cart.delete()
+    return True
 
 
 def get_cart_items_data(cart) -> list:

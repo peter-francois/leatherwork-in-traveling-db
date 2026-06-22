@@ -63,16 +63,56 @@ def add_to_cart(request, product_id):
 
 
 def empty_cart(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
     session_id = request.session.session_key
     if not session_id:
-        return JsonResponse({"success": False, "message": "No cart found"})
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Session ID not found",
+                "status_code": 404,
+            },
+        )
 
     cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
-        return JsonResponse({"success": False, "message": "Cart already empty"})
-    empty_cart_and_release_products(cart)
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Cart not found",
+                "status_code": 404,
+            },
+        )
 
-    return JsonResponse({"success": True, "message": "Le panier a été vide"})
+    result = empty_cart_and_release_products(cart)
+    if not result:
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "No item found in cart",
+                "status_code": 404,
+            },
+        )
+
+    context = {
+        "items": [],
+        "total": 0,
+        "expiration_date": None,
+        "latest_cgv": LegalDocument.objects.filter(
+            document_type=DocumentType.TERMS
+        ).latest("created_at"),
+    }
+    response = render(request, "cart/components/_cart_content.html", context)
+    response["HX-Trigger"] = "cartUpdated"
+    return response
 
 
 def remove_from_cart(request, product_id):
