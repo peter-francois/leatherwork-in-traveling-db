@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static %}
 
-<form class="grid-container" method="GET">
+<form class="grid-container filter-form" method="GET">
     {{ form.as_p }}
     <button class="align-items-center font-size-17" id="filter_button" type="submit"><span id="filter_button_text">{% trans "Filtrer" %}</span><img id="filter-icon" src="{% static 'catalog/icons/filter-solid.svg' %}" alt="icon filter"></button>
 </form>
