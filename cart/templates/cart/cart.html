@@ -1,23 +1,21 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load i18n %}
-{% block meta-description %}{% trans "Vérifiez votre panier et passez commande en toute sécurité via Stripe. Profitez de la livraison rapide pour recevoir vos créations en maroquinerie et macramé faits main." %}{% endblock %}
-{% block title %}{% trans "Panier - Commande sécurisée en maroquinerie et macramé" %}{% endblock %}
+{% block meta-description %}
+  {% trans "Vérifiez votre panier et passez commande en toute sécurité via Stripe. Profitez de la livraison rapide pour recevoir vos créations en maroquinerie et macramé faits main." %}
+{% endblock %}
+{% block title %}
+  {% trans "Panier - Commande sécurisée en maroquinerie et macramé" %}
+{% endblock %}
 {% block head %}
-    <meta name="robots" content="noindex, follow">
+  <meta name="robots" content="noindex, follow">
 {% endblock %}
 {% block header %}
-<h1 id="title_cart">{% trans "Votre panier - Vérifiez et finalisez votre commande" %}</h1>
+  <h1 id="title_cart">{% trans "Votre panier - Vérifiez et finalisez votre commande" %}</h1>
 {% endblock %}
-{% block description %}
-{% endblock %}
+{% block description %}{% endblock %}
 {% block content %}
-<div id="cart-content">
-    {% include 'cart/components/_cart_content.html' %}
+  <div id="cart-content">{% include 'cart/components/_cart_content.html' %}</div>
+  {% include 'catalog/components/_modal.html' %}
 </div>
-
-{% include 'catalog/components/_modal.html' %}
-
-</div>
-
 {% endblock %}

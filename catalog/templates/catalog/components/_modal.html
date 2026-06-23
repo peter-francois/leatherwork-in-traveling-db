@@ -1,37 +1,37 @@
 {% load i18n %}
 <div id="modal">
-    <h2 class="text-center" id="nom-article"></h2>
-    <button id="close-button" type="button">&times;</button>
-    <div class="grid-container">
-        <div class="product-info">
-            <h3>Description:</h3>
-            <p id="description-article"></p>
-            <p id="promo-widget" class="promo-widget">Promo</p>
-            
-            <div class="new-price-div">
-                <h3 id="new_price_h3" >Nouveau prix: </h3>
-                <p id="new_price"></p>
-            </div>
-            
-            <div class="price-div">
-                <h3 id="prix-article-h3">{% trans "Prix: " %}</h3>
-                <p id="prix-article"></p>
-            </div>
-            {% if request.resolver_match.url_name != 'panier'%}
-            <button class="align-items-center page-button add_to_cart_button font-size-17" type="button" id="id_add_to_cart_button" >{% trans "Ajouter au panier" %}</button>
-            {% endif %}
-        </div>
-        <div class="image-and-buttons">
-            <div class="image-container" id="imageContainer">
-                <img id="current-image" src="" alt="Image du produit">
-                <div class="loupe" id="loupe">
-                    <img src="" alt="Zoom du produit" id="zoomImage">
-                </div>
-            </div>
-            <div class="image-buttons">
-                <button class="font-size-17" id="prev-button" type="button">{% trans "Précédent" %}</button>
-                <button class="font-size-17" id="next-button" type="button">{% trans "Suivant" %}</button>
-            </div>
-        </div>
+  <h2 class="text-center" id="nom-article"></h2>
+  <button id="close-button" type="button">&times;</button>
+  <div class="grid-container">
+    <div class="product-info">
+      <h3>Description:</h3>
+      <p id="description-article"></p>
+      <p id="promo-widget" class="promo-widget">Promo</p>
+      <div class="new-price-div">
+        <h3 id="new_price_h3">Nouveau prix:</h3>
+        <p id="new_price"></p>
+      </div>
+      <div class="price-div">
+        <h3 id="prix-article-h3">{% trans "Prix: " %}</h3>
+        <p id="prix-article"></p>
+      </div>
+      {% if request.resolver_match.url_name != 'panier' %}
+        <button class="align-items-center page-button add_to_cart_button font-size-17"
+                type="button"
+                id="id_add_to_cart_button">{% trans "Ajouter au panier" %}</button>
+      {% endif %}
     </div>
+    <div class="image-and-buttons">
+      <div class="image-container" id="imageContainer">
+        <img id="current-image" src="" alt="Image du produit">
+        <div class="loupe" id="loupe">
+          <img src="" alt="Zoom du produit" id="zoomImage">
+        </div>
+      </div>
+      <div class="image-buttons">
+        <button class="font-size-17" id="prev-button" type="button">{% trans "Précédent" %}</button>
+        <button class="font-size-17" id="next-button" type="button">{% trans "Suivant" %}</button>
+      </div>
+    </div>
+  </div>
 </div>
