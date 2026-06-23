@@ -1,66 +1,72 @@
 {% load i18n %}
 {% load l10n %}
 <h2>{% trans "Paiement sécurisé" %}</h2>
-<p><span id="shipping_cost">✅ {% trans "Les frais de port sont de" %}
+<p>
+  <span id="shipping_cost">✅ {% trans "Les frais de port sont de" %}
     {{ 5|floatformat:2|localize }}€*
-    </span>
-    <span id="insurance_25_euros">{% trans "et incluent une assurance jusqu'à " %}
-            {{ 25|floatformat:2|localize }}€.
-    </span>
+  </span>
+  <span id="insurance_25_euros">{% trans "et incluent une assurance jusqu'à " %}
+    {{ 25|floatformat:2|localize }}€.
+  </span>
 </p>
 <div id="shipping-option">
-    <input type="checkbox" id="add-shipping"> 
-    <label class="font-size-17" for="add-shipping" id="add-shipping-label">{% trans "Option de livraison à domicile" %} 
-        {{ 5|floatformat:2|localize }}€
-    </label>
+  <input type="checkbox" id="add-shipping">
+  <label class="font-size-17" for="add-shipping" id="add-shipping-label">
+    {% trans "Option de livraison à domicile" %}
+    {{ 5|floatformat:2|localize }}€
+  </label>
 </div>
 <div id="mandatory-insurance" class="hidden">
-    <div class="separator-cart"></div>
-    <p>
-        <span id="mandatory_insurance_2">🚨 {% trans "Une assurance obligatoire de" %} </span>
-        <span id="mandatory-insurance-cost">0</span>
-        <span id="mandatory_insurance_3">€** 
-            {% trans "sera ajoutée pour les commandes comprise entre" %}
-            {{ 50|floatformat:2|localize }}€
-            {% trans "et" %}
-            {{ 500|floatformat:2|localize }}€.
-        </span>
-        <span id="mandatory_insurance_4"><br><br>⚠️ {% trans "L'indemnisation forfaitaire maximal est de" %} {{ 500|floatformat:2|localize }}€ ⚠️</span>
-    </p>
+  <div class="separator-cart"></div>
+  <p>
+    <span id="mandatory_insurance_2">🚨 {% trans "Une assurance obligatoire de" %}</span>
+    <span id="mandatory-insurance-cost">0</span>
+    <span id="mandatory_insurance_3">€**
+      {% trans "sera ajoutée pour les commandes comprise entre" %}
+      {{ 50|floatformat:2|localize }}€
+      {% trans "et" %}
+      {{ 500|floatformat:2|localize }}€.
+    </span>
+    <span id="mandatory_insurance_4">
+      <br>
+      <br>
+    ⚠️ {% trans "L'indemnisation forfaitaire maximal est de" %} {{ 500|floatformat:2|localize }}€ ⚠️</span>
+  </p>
 </div>
 <div class="separator-cart"></div>
 <p id="total_articles">
-    <span id="total_articles_title">{% trans "Total des articles :" %} </span>
-    <span id="order-total">{{total | floatformat:2 }}</span>€
+  <span id="total_articles_title">{% trans "Total des articles :" %}</span>
+  <span id="order-total">{{ total | floatformat:2 }}</span>€
 </p>
-<p id="shipping_cost_short">{% trans "Frais de port :" %} 
-    <span id="shipping-cost">5,00</span>€
+<p id="shipping_cost_short">
+  {% trans "Frais de port :" %}
+  <span id="shipping-cost">5,00</span>€
 </p>
 <p id="insurance">
-    <span id="insurance_cost">{% trans "Assurance :" %} </span>
-    <span id="insurance-cost">0.00</span>€
-    <span id="insurance_25_euros_2" >
-        <br>
-        {% trans "Inclue jusqu'à " %}
-        {{ 25|floatformat:2|localize }}€.
-    </span>
+  <span id="insurance_cost">{% trans "Assurance :" %}</span>
+  <span id="insurance-cost">0.00</span>€
+  <span id="insurance_25_euros_2">
+    <br>
+    {% trans "Inclue jusqu'à " %}
+    {{ 25|floatformat:2|localize }}€.
+  </span>
 </p>
 <div id="insurance-option" class="hidden">
-    <input type="checkbox" id="add-insurance"> 
-    <label class="font-size-17" for="add-insurance" id="add-insurance-label">{% trans "Assurer la totalité de la valeur des produits" %} (+{{ 2|floatformat:2|localize }}€)</label>
+  <input type="checkbox" id="add-insurance">
+  <label class="font-size-17" for="add-insurance" id="add-insurance-label">{% trans "Assurer la totalité de la valeur des produits" %} (+{{ 2|floatformat:2|localize }}€)</label>
 </div>
 <div class="separator-cart"></div>
 <p>
-    <span id="total_amount_title">{% trans "Total de la commande :" %} </span>
-    <span id="total-amount">0</span>€
+  <span id="total_amount_title">{% trans "Total de la commande :" %}</span>
+  <span id="total-amount">0</span>€
 </p>
 <p>
-<input type="checkbox" id="accept-cgv"> 
-<label id="label-for-accept-cgv" for="accept-cgv" >
-        <span id="accept-cgv-label">{% trans "J'accepte les" %} 
-            <a href="/cgv" target="_blank">{% trans "conditions générales de vente" %}</a>.
-        </span>({{ latest_cgv.version }})
-    </label>
+  <input type="checkbox" id="accept-cgv">
+  <label id="label-for-accept-cgv" for="accept-cgv">
+    <span id="accept-cgv-label">{% trans "J'accepte les" %}
+      <a href="/cgv" target="_blank">{% trans "conditions générales de vente" %}</a>.
+    </span>({{ latest_cgv.version }})
+  </label>
 </p>
 <button class="page-button" id="checkout">{% trans "Payer via Stripe" %}</button>
 <br>

@@ -1,25 +1,32 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load i18n %}
-{% block meta-description %}{% trans "Découvrez mon savoir-faire et l'histoire de Leather Work In Traveling DB. Créations uniques alliant tradition et modernité." %}{% endblock %}
-{% block title %}{% trans "À propos - L’histoire et le savoir-faire de Leather Work In Traveling DB" %}{% endblock %}
+{% block meta-description %}
+  {% trans "Découvrez mon savoir-faire et l'histoire de Leather Work In Traveling DB. Créations uniques alliant tradition et modernité." %}
+{% endblock %}
+{% block title %}
+  {% trans "À propos - L’histoire et le savoir-faire de Leather Work In Traveling DB" %}
+{% endblock %}
 {% block head %}
-    <!-- Balises hreflang pour la page actuelle -->
-    {% get_current_language as current_language %}
-    <link rel="alternate" href="https://leatherworkintravelingdb.com{{ request.path }}" hreflang="{{ current_language }}" />
-    {% if current_language == "fr" %}
-        <link rel="alternate" href="https://leatherworkintravelingdb.com/en/about/" hreflang="en" />
-    {% elif current_language == "en" %}
-        <link rel="alternate" href="https://leatherworkintravelingdb.com/fr/a_propos/" hreflang="fr" />
-    {% endif %}
+  <!-- Balises hreflang pour la page actuelle -->
+  {% get_current_language as current_language %}
+  <link rel="alternate"
+        href="https://leatherworkintravelingdb.com{{ request.path }}"
+        hreflang="{{ current_language }}" />
+  {% if current_language == "fr" %}
+    <link rel="alternate"
+          href="https://leatherworkintravelingdb.com/en/about/"
+          hreflang="en" />
+  {% elif current_language == "en" %}
+    <link rel="alternate"
+          href="https://leatherworkintravelingdb.com/fr/a_propos/"
+          hreflang="fr" />
+  {% endif %}
 {% endblock %}
 {% block header %}
-    <h1 id="title_about">{% trans "Mon histoire et mon savoir-faire en maroquinerie et macramé" %}</h1>
+  <h1 id="title_about">{% trans "Mon histoire et mon savoir-faire en maroquinerie et macramé" %}</h1>
 {% endblock %}
-
 {% block description %}
-    <p class ="text-center" id="description_about">{% trans "Bienvenue dans l'espace A Propos." %}</p>
+  <p class ="text-center" id="description_about">{% trans "Bienvenue dans l'espace A Propos." %}</p>
 {% endblock %}
-{% block content %}
-    
-{% endblock %}
+{% block content %}{% endblock %}

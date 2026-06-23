@@ -2,57 +2,75 @@
 {% load i18n %}
 <!-- navbar.html -->
 <nav class="menu">
-    <ul class="menu-content">
-        <li class="display-mobile">
-            <button id="menu_button">☰
-            </button>
+  <ul class="menu-content">
+    <li class="display-mobile">
+      <button id="menu_button">☰</button>
+    </li>
+    <li class="display-tablet-laptop">
+      <ul class="menu-content2">
+        <li><a href="{% url 'core:index' %}">{% trans "ACCUEIL" %}</a></li>
+        <li id="shop">
+          <a href="{% url 'catalog:product_list' %}">
+            <span>{% trans "BOUTIQUE" %}</span>
+            <img id="arrow-down"
+                 src="{% static 'core/icons/arrow-down-solid.svg' %}"
+                 alt="icon arrow down">
+          </a>
+          <ul class="menu-content-produit">
+            <li><a href="{% url 'catalog:leather_list' %}">{% trans "MAROQUINERIE" %}</a></li>
+            <li><a href="{% url 'catalog:macrame_list' %}">{% trans "MACRAMÉ" %}</a></li>
+            <li><a href="{% url 'catalog:hybrid_list' %}">{% trans "HYBRIDE" %}</a></li>
+          </ul>
         </li>
-        <li class="display-tablet-laptop">
-            <ul class="menu-content2">
-                <li><a href="{% url 'core:index' %}">{% trans "ACCUEIL" %}</a></li>
-                <li id="shop">
-                    <a href="{% url 'catalog:product_list' %}">
-                        <span>{% trans "BOUTIQUE" %}</span>
-                        <img id="arrow-down" src="{% static 'core/icons/arrow-down-solid.svg' %}" alt="icon arrow down">
-                    </a>
-                    <ul class="menu-content-produit">
-                        <li><a href="{% url 'catalog:leather_list' %}">{% trans "MAROQUINERIE" %}</a></li>
-                        <li><a href="{% url 'catalog:macrame_list' %}">{% trans "MACRAMÉ" %}</a></li>
-                        <li><a href="{% url 'catalog:hybrid_list' %}">{% trans "HYBRIDE" %}</a></li>
-                    </ul>
-                </li>
-                <li id="custom-creation"><a href="{% url 'core:custom_creation' %}">{% trans "CRÉATION SUR MESURE" %}</a></li>
-            </ul>
-        </li>
-        <li>
-            <button class="text-center align-items-center page-button" id="contact_button">
-                <img class="flex_item_cart_button" id="phone-icon" alt="phone" src="{% static 'core/icons/phone.png' %}">
-            </button>
-        </li>
-        <li>
-            <a class="text-center align-items-center page-button" href="{% url 'cart:cart' %}" id="cart-button">
-                <img class="flex_item_cart_button" id="cart-icon" alt="cart" src="{% static 'core/icons/cart-shopping-solid.svg' %}">
-                <p id="text-cart-button" class="flex_item_cart_button" hx-get="{% url 'cart:cart_count' %}" hx-trigger="load, cartUpdated from:body">{{ count }}</p>
-            </a>
-        </li>
-        <li class="align-items-center language-selector">
-            <form action="{% url 'set_language' %}" method="post">
-                {% csrf_token %}
-                <input name="next" type="hidden" value="{{ request.path }}">
-                <input name="language" type="hidden" value="en">
-                <button type="submit" class="flag-button">
-                    <img src="{% static 'core/images/flag/UK.webp' %}" alt="English" class="flag" data-lang="en">
-                </button>
-            </form>
-            <form action="{% url 'set_language' %}" method="post">
-                {% csrf_token %}
-                <input name="next" type="hidden" value="{{ request.path }}">
-                <input name="language" type="hidden" value="fr">
-                <button type="submit" class="flag-button">
-                    <img src="{% static 'core/images/flag/FR.jpeg' %}" alt="French active" class="flag" data-lang="fr">
-                </button>
-            </form>
-        </li>
-    </ul>
+        <li id="custom-creation"><a href="{% url 'core:custom_creation' %}">{% trans "CRÉATION SUR MESURE" %}</a></li>
+      </ul>
+    </li>
+    <li>
+      <button class="text-center align-items-center page-button"
+              id="contact_button">
+        <img class="flex_item_cart_button"
+             id="phone-icon"
+             alt="phone"
+             src="{% static 'core/icons/phone.png' %}">
+      </button>
+    </li>
+    <li>
+      <a class="text-center align-items-center page-button"
+         href="{% url 'cart:cart' %}"
+         id="cart-button">
+        <img class="flex_item_cart_button"
+             id="cart-icon"
+             alt="cart"
+             src="{% static 'core/icons/cart-shopping-solid.svg' %}">
+        <p id="text-cart-button"
+           class="flex_item_cart_button"
+           hx-get="{% url 'cart:cart_count' %}"
+           hx-trigger="load, cartUpdated from:body">{{ count }}</p>
+      </a>
+    </li>
+    <li class="align-items-center language-selector">
+      <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        <input name="language" type="hidden" value="en">
+        <button type="submit" class="flag-button">
+          <img src="{% static 'core/images/flag/UK.webp' %}"
+               alt="English"
+               class="flag"
+               data-lang="en">
+        </button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        <input name="language" type="hidden" value="fr">
+        <button type="submit" class="flag-button">
+          <img src="{% static 'core/images/flag/FR.jpeg' %}"
+               alt="French active"
+               class="flag"
+               data-lang="fr">
+        </button>
+      </form>
+    </li>
+  </ul>
 </nav>
-
