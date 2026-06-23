@@ -783,7 +783,7 @@ section select {
 }
 .two-col-layout__main {
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   align-items: stretch;
   align-content: start;
   margin: auto 0px;
@@ -1302,8 +1302,7 @@ h2.product-name {
     font-size: 14px;
   }
   .two-col-layout__main {
-    grid-template-columns: repeat(2, 1fr);
-    margin: 15px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 1rem;
   }
   .filter {
@@ -1590,7 +1589,7 @@ h2.product-name {
   }
   .two-col-layout__main {
     grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
+    gap: 0.5rem;
   }
   .click-hint {
     padding: 2px 4px;
@@ -1795,16 +1794,16 @@ h2.product-name {
     padding: 5px 10px;
   }
   .two-col-layout__main {
-    gap: 0px;
-    margin: 10px 3px;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 
   h2.product-name {
     height: 90px;
   }
   .two-col-layout__main img {
-    width: 5em;
-    height: 6em;
+    width: 12rem;
+    height: 12rem;
   }
   #modal h3 {
     top: 35px;
