@@ -8,7 +8,7 @@
   {% else %}
     1
   {% endif %}
-{% endblock %}
+{% endblock meta-description %}
 {% block title %}
   {% trans "Accessoires, maroquinerie & macramé faits main | Créations originales" %} | Page
   {% if products.has_other_pages %}
@@ -16,18 +16,18 @@
   {% else %}
     1
   {% endif %}
-{% endblock %}
+{% endblock title %}
 {% block header %}
   <h1 id="title_all_products">{% trans "Explorez Nos Créations - Trouvez votre style unique" %}</h1>
-{% endblock %}
-{% block description %}
+{% endblock header %}
+{% block catalog-description %}
   <p class ="text-center"><em>{% trans "Intro produits" %}</em></p>
   <button class="align-items-center page-button font-size-17"
           id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-{% endblock %}
+{% endblock catalog-description %}
 {% block outro %}
   <p class ="text-center"><em>{% trans "outro produits" %}</em></p>
   <a href="{% url 'core:custom_creation' %}"
      class="align-items-center page-button font-size-17"
      id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
-{% endblock %}
+{% endblock outro %}

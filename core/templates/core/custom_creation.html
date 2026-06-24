@@ -3,13 +3,13 @@
 {% load i18n %}
 {% block meta-description %}
   {% trans "Offrez-vous une création sur mesure ! Personnalisez vos articles de maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre service pour réaliser des pièces uniques et personnalisées." %}
-{% endblock %}
+{% endblock meta-description %}
 {% block title %}
   {% trans "Accessoires cuir & macramé personnalisés | Création sur mesure" %}
-{% endblock %}
+{% endblock title %}
 {% block header %}
   <h1 id="title_custom">{% trans "Création sur mesure de maroquinerie et macramé - Personnalisez vos accessoires" %}</h1>
-{% endblock %}
+{% endblock header %}
 {% block content %}
   <div class="section-custom">
     <h2 id="title_custom_creation">{% trans "title_custom_creation" %}</h2>
@@ -78,4 +78,4 @@
       <p><span id="contact_phone">{% trans "Numéro de téléphone :" %}</span><a id="contact_phone" href="tel:{{ CLIENT_PHONE_NUMBER }}">{{ CLIENT_PHONE_NUMBER }}</a></p>
     </div>
   </div>
-{% endblock %}
+{% endblock content %}
