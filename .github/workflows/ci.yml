@@ -45,6 +45,9 @@ jobs:
       - name: Run djLint check
         run: djlint . --check
 
+      - name: Run djLint lint
+        run: djlint . --lint
+
   test:
     runs-on: ubuntu-latest
     strategy:
