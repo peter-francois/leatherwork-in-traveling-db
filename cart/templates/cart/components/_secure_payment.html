@@ -64,7 +64,7 @@
   <input type="checkbox" id="accept-cgv">
   <label id="label-for-accept-cgv" for="accept-cgv">
     <span id="accept-cgv-label">{% trans "J'accepte les" %}
-      <a href="/cgv" target="_blank">{% trans "conditions générales de vente" %}</a>.
+      <a href="{% url 'legal:terms' %}" target="_blank">{% trans "conditions générales de vente" %}</a>.
     </span>({{ latest_cgv.version }})
   </label>
 </p>
@@ -72,5 +72,5 @@
 <br>
 <em class="font-size-17">{% trans "Relay point" %}</em>
 <br>
-<em class="font-size-17 hidden" id="insurance_info">**{% trans "Insurances information" %} <a href="/cgv" target="_blank">CGV</a> </em>
+<em class="font-size-17 hidden" id="insurance_info">**{% trans "Insurances information" %} <a href="{% url 'legal:terms' %}" target="_blank">CGV</a> </em>
 <p id="error-message" class="error hidden">{% trans "Vous devez accepter les CGV pour continuer." %}</p>
