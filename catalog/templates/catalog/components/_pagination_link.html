@@ -1,11 +1,11 @@
 {% load i18n %}
 {% if products.has_previous %}
-  <a class="pagination-button first-button" href="{{ request.path }}">&laquo; {% trans "Premier" %}</a>
+  <a class="pagination-button first-button" href="{{ request.path }}">« {% trans "Premier" %}</a>
   <a class="pagination-button prev-button"
      href="{% if products.previous_page_number == 1 %}{{ request.path }}{% else %}{{ request.path }}?page={{ products.previous_page_number }}{% endif %}">{% trans "Précédent" %}</a>
 {% else %}
   <a class="pagination-button first-button disabled"
-     href="{{ request.path }}">&laquo; {% trans "Premier" %}</a>
+     href="{{ request.path }}">« {% trans "Premier" %}</a>
   <a class="pagination-button prev-button disabled"
      href="{{ request.path }}">{% trans "Précédent" %}</a>
 {% endif %}
@@ -14,7 +14,7 @@
   <a class="pagination-button next-button"
      href="{{ request.path }}?page={{ products.next_page_number }}">{% trans "Suivant" %}</a>
   <a class="pagination-button last-button"
-     href="{{ request.path }}?page={{ products.paginator.num_pages }}">{% trans "Dernier" %} &raquo;</a>
+     href="{{ request.path }}?page={{ products.paginator.num_pages }}">{% trans "Dernier" %} »</a>
 {% endif %}
 <span class="current-page">
   Page {{ products.number }} <span id="of">{% trans "of" %}</span> {{ products.paginator.num_pages }}
