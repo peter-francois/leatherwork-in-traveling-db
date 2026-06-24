@@ -45,4 +45,4 @@ indent = 2
 extension = "html"
 exclude = "venv,.venv,staticfiles,media,node_modules"
 max_line_length = 120
-ignore = "T002,H006"
+ignore = "T002,H006,H031"
