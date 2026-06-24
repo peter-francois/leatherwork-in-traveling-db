@@ -6,7 +6,7 @@
           hx-target="#cart-content"
           hx-swap="innerHTML">{% trans "Vider le panier" %}</button>
   {% if expiration_date %}
-    <p><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %}</span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
+    <p><span id="expiration_date">⚠️ {% trans "Votre panier expirera le" %} </span>{{ expiration_date|date:"d/m/Y H:i" }}.</p>
   {% else %}
     <p id="expiration_soon">⚠️ {% trans "Votre panier expirera bientôt." %}</p>
   {% endif %}
