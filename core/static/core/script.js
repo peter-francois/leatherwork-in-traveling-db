@@ -206,32 +206,6 @@ window.onload = function () {
   }
 };
 
-// Fonction pour vider le panier
-function clearCart() {
-  fetch("/api/cart/empty_cart/", {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        // Réinitialise le localStorage
-        localStorage.removeItem("cart");
-        const addInsurance = document.getElementById("add-insurance");
-        addInsurance.checked = false;
-        alert(data.message);
-        const formattedZero = currentLanguage === "en" ? "0.00" : "0,00";
-        document.getElementById("order-total").textContent = formattedZero;
-        document.getElementById("total-amount").textContent = formattedZero;
-        document.body.dispatchEvent(new Event("cartUpdated"));
-      } else {
-        alert("Erreur lors de la suppression du panier.");
-      }
-    });
-}
 
 // Fonction pour nettoyer le filtre
 function cleanFilter() {
@@ -560,12 +534,6 @@ if (document.getElementById("contact_button")) {
     .addEventListener("click", function () {
       displayContact();
     });
-}
-
-if (document.getElementById("clear_cart")) {
-  document.getElementById("clear_cart").addEventListener("click", function () {
-    clearCart();
-  });
 }
 
 if (document.getElementById("add-insurance")) {
