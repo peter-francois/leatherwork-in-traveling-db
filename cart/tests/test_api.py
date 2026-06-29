@@ -1,6 +1,5 @@
 import json
 import uuid
-from datetime import timedelta
 from unittest.mock import patch
 
 import stripe
@@ -8,7 +7,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from cart.models import Cart, CartItem
-from cart.tests.helpers import make_product, make_session, make_stripe_checkout_event
+from cart.tests.helpers import make_product, make_stripe_checkout_event
 from legal.choices import DocumentType
 from legal.models import LegalDocument
 from legal.tests import make_terms_document
@@ -19,48 +18,73 @@ class AddToCartTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.session = make_session(expire_delta=timedelta(hours=24))
-        self.product = make_product()
+        self.product = make_product(available=True)
 
-    def test_returns_success_when_product_available(self):
-        """Should return success when product is available"""
+    def test_rejects_non_post_requests(self):
+        """Should reject GET requests with a 405"""
+        response = self.client.get(
+            reverse("cart_api:add_to_cart", args=[self.product.id])
+        )
+        self.assertEqual(response.status_code, 405)
+
+    def test_adds_product_and_renders_card_when_available(self):
+        """Should add the product and render the updated product card"""
         response = self.client.post(
             reverse("cart_api:add_to_cart", args=[self.product.id])
         )
         self.assertEqual(response.status_code, 200)
-        data = response.json()
-        self.assertTrue(data["success"])
+        self.assertTemplateUsed(response, "catalog/components/_product_card.html")
+        self.assertEqual(CartItem.objects.count(), 1)
 
-    def test_returns_error_when_product_unavailable(self):
-        """Should return 400 when product is not available"""
+    def test_marks_product_pending_on_success(self):
+        """Should mark the product as pending in cart after adding it"""
+        self.client.post(reverse("cart_api:add_to_cart", args=[self.product.id]))
+
+        self.product.refresh_from_db()
+        self.assertTrue(self.product.pending_in_cart)
+
+    def test_returns_error_partial_when_product_unavailable(self):
+        """Should render the error partial when the product isn't available"""
         self.product.available = False
         self.product.save()
+
         response = self.client.post(
             reverse("cart_api:add_to_cart", args=[self.product.id])
         )
-        self.assertEqual(response.status_code, 400)
-        self.assertFalse(response.json()["success"])
+        self.assertTemplateUsed(response, "core/components/_error.html")
 
-    def test_returns_error_when_product_pending(self):
-        """Should return 400 when product is pending in cart"""
+    def test_returns_error_partial_when_product_pending(self):
+        """Should render the error partial when the product is already pending"""
         self.product.pending_in_cart = True
         self.product.save()
+
         response = self.client.post(
             reverse("cart_api:add_to_cart", args=[self.product.id])
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(response, "core/components/_error.html")
 
-    def test_returns_cart_uuid(self):
-        """Should return cart UUID in response"""
+    def test_triggers_cart_updated_event_on_success(self):
+        """Should set the HX-Trigger header so the navbar count refreshes"""
         response = self.client.post(
             reverse("cart_api:add_to_cart", args=[self.product.id])
         )
-        self.assertIn("cart_uuid", response.json())
+        self.assertEqual(response.headers.get("HX-Trigger"), "cartUpdated")
 
-    def test_returns_404_when_product_not_found(self):
-        """Should return 404 when product does not exist"""
+    def test_does_not_trigger_cart_updated_on_error(self):
+        """Should not set HX-Trigger when the product couldn't be added"""
+        self.product.pending_in_cart = True
+        self.product.save()
+
+        response = self.client.post(
+            reverse("cart_api:add_to_cart", args=[self.product.id])
+        )
+        self.assertIsNone(response.headers.get("HX-Trigger"))
+
+    def test_returns_error_partial_when_product_not_found(self):
+        """Should render the error partial when the product doesn't exist"""
         response = self.client.post(reverse("cart_api:add_to_cart", args=[9999]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/components/_error.html")
 
 
 class EmptyCartTest(TestCase):
