@@ -4,7 +4,7 @@ import stripe
 from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -47,9 +47,8 @@ def add_to_cart(request, product_id):
 
     cart = get_or_create_active_cart(request)
 
-    product = get_object_or_404(Product, id=product_id)
-    result = add_product_to_cart(cart, product)
-    if not result:
+    product = Product.objects.filter(id=product_id).first()
+    if not product:
         return render(
             request,
             "core/components/_error.html",
@@ -59,6 +58,19 @@ def add_to_cart(request, product_id):
                 "status_code": 404,
             },
         )
+
+    result = add_product_to_cart(cart, product)
+    if not result:
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Product not available or already pending in cart",
+                "status_code": 400,
+            },
+        )
+
     product.refresh_from_db()  # reload pending_in_cart updated by add_product_to_cart()
     response = render(
         request,
