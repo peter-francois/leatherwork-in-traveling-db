@@ -42,24 +42,31 @@ endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 
 def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-
-    if not product.available or product.pending_in_cart:
-        return JsonResponse(
-            {"success": False, "message": "Product not available or pending in cart"},
-            status=400,
-        )
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
 
     cart = get_or_create_active_cart(request)
-    add_product_to_cart(cart, product)
 
-    return JsonResponse(
-        {
-            "success": True,
-            "message": f"{product.name} ajouté au panier",
-            "cart_uuid": str(cart.uuid),
-        }
+    product = get_object_or_404(Product, id=product_id)
+    result = add_product_to_cart(cart, product)
+    if not result:
+        return render(
+            request,
+            "core/components/_error.html",
+            {
+                "debug": settings.DEBUG,
+                "error": "Product not found",
+                "status_code": 404,
+            },
+        )
+    product.refresh_from_db()  # reload pending_in_cart updated by add_product_to_cart()
+    response = render(
+        request,
+        "catalog/components/_product_card.html",
+        {"product": product, "page": "catalog"},
     )
+    response["HX-Trigger"] = "cartUpdated"
+    return response
 
 
 def empty_cart(request):

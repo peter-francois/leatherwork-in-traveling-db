@@ -15,11 +15,9 @@
         <h3 id="prix-article-h3">{% trans "Prix: " %}</h3>
         <p id="prix-article"></p>
       </div>
-      {% if request.resolver_match.url_name != 'panier' %}
-        <button class="align-items-center page-button add_to_cart_button font-size-17"
-                type="button"
-                id="id_add_to_cart_button">{% trans "Ajouter au panier" %}</button>
-      {% endif %}
+      {% comment %} {% if request.resolver_match.url_name != 'panier' %}
+        <button class="align-items-center page-button add_to_cart_button font-size-17" type="button" id="id_add_to_cart_button">{% trans "Ajouter au panier" %}</button>
+      {% endif %} {% endcomment %}
     </div>
     <div class="image-and-buttons">
       <div class="image-container" id="imageContainer">
