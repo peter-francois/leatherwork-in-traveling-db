@@ -1,6 +1,11 @@
 {% extends 'legal/base.html' %}
 {% load i18n %}
-
-{% block meta-description %}{% trans "En savoir plus sur l’utilisation des cookies sur notre site et comment vous pouvez gérer vos préférences. Nous respectons votre vie privée et vous informons de notre utilisation des cookies." %}{% endblock %}
-{% block title %}{% trans "Gestion des cookies - Leather Work In Traveling DB" %}{% endblock %}
-{% block document_title %}{% trans "Gestion des cookies" %}{% endblock %}
+{% block meta-description %}
+  {% trans "En savoir plus sur l’utilisation des cookies sur notre site et comment vous pouvez gérer vos préférences. Nous respectons votre vie privée et vous informons de notre utilisation des cookies." %}
+{% endblock meta-description %}
+{% block title %}
+  {% trans "Gestion des cookies - Leather Work In Traveling DB" %}
+{% endblock title %}
+{% block document_title %}
+  {% trans "Gestion des cookies" %}
+{% endblock document_title %}

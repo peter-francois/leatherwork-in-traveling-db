@@ -1,67 +1,107 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load i18n %}
-{% block meta-description %}{% trans "Meta description index" %}{% endblock %}
-{% block title %}{% trans "Maroquinerie & macramé faits main - Leather Work In Traveling DB" %}{% endblock %}
-
+{% block meta-description %}
+  {% trans "Meta description index" %}
+{% endblock meta-description %}
+{% block title %}
+  {% trans "Maroquinerie & macramé faits main - Leather Work In Traveling DB" %}
+{% endblock title %}
 {% block header %}
-<h1 id="title_index">{% trans "Bienvenue dans notre boutique de maroquinerie et macramé faits main" %}</h1>
-{% endblock %}
-{% block content%}
-    <section class="category grid-container">
-        <a class="linker product-card " href="{% url 'catalog:leather_list' %}">
-            <h2 class="product-title text-center"><img  class="index-icon" src="{% static 'core/icons/wallet-solid.svg' %}" alt="icon porte_feuille"><span id="maroquinerie_title">{% trans "Espace Maroquinerie" %}</span></h2>
-            <div class="grid-container align-items-center half-grid-width" >
-                
-                <div class="product-title-and-description align-items-center text-center">
-                    <p class="product-description" id="maroquinerie_description" >{% trans "Collection de modèles en " %}<strong>{% trans "Cuir" %}</strong>{% trans ' conçue avec passion et savoir-faire.' %}</p>
-                    <p class="product-description">{% trans 'Chaque pièce – sac en cuir, portefeuille, ceinture ou accessoire – est réalisée avec des matériaux de qualité et un souci du détail.' %}</p>
-                    <p class="product-description">{% trans 'Chaque modèle reflète un travail du cuir authentique, au service de l’originalité et de la qualité.' %}</p>
-                </div>
-                <img class="index-img float-right display-laptop" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1741098138/jmqohudaa4fwhxtll2ly.jpg" alt="Sac en cuir">
-                <img class="index-img float-right display-tablet" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413653/rvykb6eim5alkyzefucu.jpg" alt="Sac en cuir">
-            </div>
-            <p class="product-description text-center"><strong>{% trans '➤ Découvrez toute la collection de créations en cuir' %}</strong></p>
-        </a>
-        <a class="linker product-card " href="{% url 'catalog:macrame_list' %}">
-            <h2 class="product-title text-center" ><img  class="index-icon" src="{% static 'core/icons/feather-pointed-solid.svg' %}" alt="icon macrames"><span id="macrames_title">{% trans "Espace Macramé" %}</span></h2>
-            <div class="grid-container align-items-center half-grid-width" >
-                <div class="product-title-and-description align-items-center text-center">
-                    <p class="product-description" id="macrames_description" >{% trans "Création sur une base de " %}<strong>{% trans "tissage de fils" %}</strong>{%trans ', une technique de tissage de fils qui permet de créer des pièces uniques : suspensions murales, porte-plantes, bijoux, et bien plus encore. Des objets déco bohèmes, doux et authentiques.' %}</p>
-                    <p class="product-description">{% trans 'Chaque bracelet macramé, chaque paire de boucles ou collier tissé est pensé pour sublimer votre style avec douceur et poésie.' %}</p>
-                    <p class="product-description">{% trans 'Des créations inspirées par la nature, façonnées à la main, une à une.' %}</p>
-                </div>
-                <img class="index-img float-right display-laptop" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414823/jaibody0sv1hvvfxttko.jpg" alt="Macramé">
-                <img class="index-img float-right display-tablet" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413653/rn2yl3o6dokg1dln4op9.jpg" alt="Macramé">
-            </div>
-            <p class="product-description text-center"><strong>{% trans '➤ Parcourez les bijoux et accessoires en macramé faits main' %}</strong></p>
-        </a>
-        <a class="linker product-card full-grid-width " href="{% url 'core:custom_creation' %}">
-            <h2 class="product-title text-center" ><img  class="index-icon" src="{% static 'core/icons/pen-ruler-solid.svg' %}" alt="icon creation sur mesure"><span id="creation_sur_mesure_title">{% trans "Création sur Mesure" %}</span></h2>
-            <div class="grid-container align-items-center grid-width_2" >
-                <img class="index-img image-full-span display-laptop" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745415188/yifathbbchds82zzzqj0.jpg" alt="Portefeuille en cuir">
-                <div class="product-title-and-description align-items-center text-center">
-                    <p class="product-description text-center" id="creation_sur_mesure_description" >{% trans "Une idée, un Projet ?" %}</p>
-                    <p>{% trans "Mon plus grand plaisir, c'est de réaliser des créations" %}<strong>{% trans "entièrement personnalisés" %}</strong>{% trans "que ce soit en maroquinerie ou en macramé." %}</p>
-                    <p>{% trans "Mon objectif : transformer votre idée en un" %}{% trans 'qui vous ressemble.' %}</p>
-                </div>
-                <img class="index-img image-full-span " src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413907/h0kmwvlrwyjqqfranysy.jpg" alt="Atelier maroquinerie">
-    
-            </div>
-            <p class="product-description text-center"><strong>{% trans '➤ Créez votre pièce unique avec une commande personnalisée' %}</strong></p>
-            </a>
-        <a class="linker product-card full-grid-width" href="{% url 'catalog:hybrid_list' %}">
-            <h2 class="product-title text-center" ><img  class="index-icon" src="{% static 'core/icons/yin-yang-solid.svg' %}" alt="icon hybride"><span id="hybride_title">{% trans 'Fusion cuir, macramé et pierres décoratives' %}</span></h2>
-            <div class="grid-container align-items-center grid-width_2" >
-                <img class="index-img image-full-span display-laptop" src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745415828/pccr5pkhxx4lnl5fbpi9.jpg" alt="Bracelet hybride">
-                <div class="product-title-and-description align-items-center text-center">
-                    <p class="product-description text-center" id="hybride_description">{% trans "Quand les matières se rencontrent, naissent des créations singulières." %}</p>
-                    <p class="product-description" id="autres_produits_description">{% trans "Certaines de mes créations sont dites" %}<strong>{% trans "hybrides" %}</strong>{% trans "car elles mêlent différentes techniques artisanales, comme le cuir, le macramé, et l'ajout de pierres décoratives naturelles."%}</p>
-                    <p>{% trans "Le résultat ? Des pièces originales, pleines de charme et d’authenticité." %}</p>
-                </div>
-                <img class="index-img image-full-span " src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745416631/vte0foq0xgag3ez2yejl.jpg" alt="Bracelet hybride">
-            </div>
-            <p class="product-description text-center"><strong>{% trans '➤ Découvrir les produits hybrides' %}</strong></p>
-        </a>
-    </section>
-{% endblock %}
+  <h1 id="title_index">{% trans "Bienvenue dans notre boutique de maroquinerie et macramé faits main" %}</h1>
+{% endblock header %}
+{% block content %}
+  <section class="category grid-container">
+    <a class="linker product-card " href="{% url 'catalog:leather_list' %}">
+      <h2 class="product-title text-center">
+        <img class="index-icon"
+             src="{% static 'core/icons/wallet-solid.svg' %}"
+             alt="icon porte_feuille">
+        <span id="maroquinerie_title">{% trans "Espace Maroquinerie" %}</span>
+      </h2>
+      <div class="grid-container align-items-center half-grid-width">
+        <div class="product-title-and-description align-items-center text-center">
+          <p class="product-description" id="maroquinerie_description">{% trans "Collection de modèles en " %}<strong>{% trans "Cuir" %}</strong>{% trans ' conçue avec passion et savoir-faire.' %}</p>
+          <p class="product-description">{% trans 'Chaque pièce – sac en cuir, portefeuille, ceinture ou accessoire – est réalisée avec des matériaux de qualité et un souci du détail.' %}</p>
+          <p class="product-description">{% trans 'Chaque modèle reflète un travail du cuir authentique, au service de l’originalité et de la qualité.' %}</p>
+        </div>
+        <img class="index-img float-right display-laptop"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1741098138/jmqohudaa4fwhxtll2ly.jpg"
+             alt="Sac en cuir">
+        <img class="index-img float-right display-tablet"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413653/rvykb6eim5alkyzefucu.jpg"
+             alt="Sac en cuir">
+      </div>
+      <p class="product-description text-center"><strong>{% trans '➤ Découvrez toute la collection de créations en cuir' %}</strong></p>
+    </a>
+    <a class="linker product-card " href="{% url 'catalog:macrame_list' %}">
+      <h2 class="product-title text-center">
+        <img class="index-icon"
+             src="{% static 'core/icons/feather-pointed-solid.svg' %}"
+             alt="icon macrames">
+        <span id="macrames_title">{% trans "Espace Macramé" %}</span>
+      </h2>
+      <div class="grid-container align-items-center half-grid-width">
+        <div class="product-title-and-description align-items-center text-center">
+          <p class="product-description" id="macrames_description">{% trans "Création sur une base de " %}<strong>{% trans "tissage de fils" %}</strong>{% trans ', une technique de tissage de fils qui permet de créer des pièces uniques : suspensions murales, porte-plantes, bijoux, et bien plus encore. Des objets déco bohèmes, doux et authentiques.' %}</p>
+          <p class="product-description">{% trans 'Chaque bracelet macramé, chaque paire de boucles ou collier tissé est pensé pour sublimer votre style avec douceur et poésie.' %}</p>
+          <p class="product-description">{% trans 'Des créations inspirées par la nature, façonnées à la main, une à une.' %}</p>
+        </div>
+        <img class="index-img float-right display-laptop"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414823/jaibody0sv1hvvfxttko.jpg"
+             alt="Macramé">
+        <img class="index-img float-right display-tablet"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413653/rn2yl3o6dokg1dln4op9.jpg"
+             alt="Macramé">
+      </div>
+      <p class="product-description text-center"><strong>{% trans '➤ Parcourez les bijoux et accessoires en macramé faits main' %}</strong></p>
+    </a>
+    <a class="linker product-card full-grid-width "
+       href="{% url 'core:custom_creation' %}">
+      <h2 class="product-title text-center">
+        <img class="index-icon"
+             src="{% static 'core/icons/pen-ruler-solid.svg' %}"
+             alt="icon creation sur mesure">
+        <span id="creation_sur_mesure_title">{% trans "Création sur Mesure" %}</span>
+      </h2>
+      <div class="grid-container align-items-center grid-width_2">
+        <img class="index-img image-full-span display-laptop"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745415188/yifathbbchds82zzzqj0.jpg"
+             alt="Portefeuille en cuir">
+        <div class="product-title-and-description align-items-center text-center">
+          <p class="product-description text-center"
+             id="creation_sur_mesure_description">{% trans "Une idée, un Projet ?" %}</p>
+          <p>{% trans "Mon plus grand plaisir, c'est de réaliser des créations" %}<strong>{% trans "entièrement personnalisés" %}</strong>{% trans "que ce soit en maroquinerie ou en macramé." %}</p>
+          <p>{% trans "Mon objectif : transformer votre idée en un" %}{% trans 'qui vous ressemble.' %}</p>
+        </div>
+        <img class="index-img image-full-span "
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745413907/h0kmwvlrwyjqqfranysy.jpg"
+             alt="Atelier maroquinerie">
+      </div>
+      <p class="product-description text-center"><strong>{% trans '➤ Créez votre pièce unique avec une commande personnalisée' %}</strong></p>
+    </a>
+    <a class="linker product-card full-grid-width"
+       href="{% url 'catalog:hybrid_list' %}">
+      <h2 class="product-title text-center">
+        <img class="index-icon"
+             src="{% static 'core/icons/yin-yang-solid.svg' %}"
+             alt="icon hybride">
+        <span id="hybride_title">{% trans 'Fusion cuir, macramé et pierres décoratives' %}</span>
+      </h2>
+      <div class="grid-container align-items-center grid-width_2">
+        <img class="index-img image-full-span display-laptop"
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745415828/pccr5pkhxx4lnl5fbpi9.jpg"
+             alt="Bracelet hybride">
+        <div class="product-title-and-description align-items-center text-center">
+          <p class="product-description text-center" id="hybride_description">{% trans "Quand les matières se rencontrent, naissent des créations singulières." %}</p>
+          <p class="product-description" id="autres_produits_description">{% trans "Certaines de mes créations sont dites" %}<strong>{% trans "hybrides" %}</strong>{% trans "car elles mêlent différentes techniques artisanales, comme le cuir, le macramé, et l'ajout de pierres décoratives naturelles." %}</p>
+          <p>{% trans "Le résultat ? Des pièces originales, pleines de charme et d’authenticité." %}</p>
+        </div>
+        <img class="index-img image-full-span "
+             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745416631/vte0foq0xgag3ez2yejl.jpg"
+             alt="Bracelet hybride">
+      </div>
+      <p class="product-description text-center"><strong>{% trans '➤ Découvrir les produits hybrides' %}</strong></p>
+    </a>
+  </section>
+{% endblock content %}

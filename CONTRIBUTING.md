@@ -106,36 +106,53 @@ Write commit messages and code comments in English. French is used only for `ver
 - Reusable template partials live in the `components/` folder of the app that owns the data they display (e.g. a product card lives in `catalog/components/`, even if it's reused in the cart page)
 
 ## Linting and formatting
- 
+
+### Python
+
 We use [Ruff](https://docs.astral.sh/ruff/) for both linting and formatting Python code. It's already in `requirements/dev.txt`, so it's installed once you've followed the setup above.
- 
+
+```bash
+ruff check . --fix    # auto-fix lint issues where possible
+ruff format .          # apply consistent formatting
+ruff check .           # check what's left manually
+```
+
+### Django templates
+
+We use [djLint](https://djlint.com/docs/) for both linting and formatting Django templates. It's already in `requirements/dev.txt`.
+
+djLint has two independent commands, and they don't overlap the way you might expect:
+
+```bash
+djlint . --reformat    # auto-fix formatting (indentation, spacing, line length)
+djlint . --lint        # reports quality issues (missing alt text, malformed tags, etc.)
+```
+
+Unlike `ruff check --fix`, `djlint --lint` has no autofix — issues it reports (e.g. an `<img>` missing `alt`, a duplicated attribute) require a judgment call, so they need to be fixed by hand. Run `--reformat` first to clear out anything mechanical, then go through what `--lint` reports.
+
 ### Pre-commit hook (recommended)
- 
-This repo ships a [pre-commit](https://pre-commit.com/) config that runs Ruff automatically on every commit. Set it up once after cloning:
- 
+
+This repo ships a [pre-commit](https://pre-commit.com/) config that runs Ruff and djLint automatically on every commit. Set it up once after cloning:
+
 ```bash
 pip install pre-commit
 pre-commit install
 ```
- 
-From then on, `git commit` will automatically lint and format staged Python files. If a hook modifies a file, the commit is aborted so you can review the changes and re-stage them. This is expected, just run `git add` and commit again.
- 
+
+From then on, `git commit` will automatically lint and format staged Python files and Django templates. If a hook modifies a file, the commit is aborted so you can review the changes and re-stage them. This is expected, just run `git add` and commit again.
+
 ### Manual run
- 
-You can also run the checks manually at any time:
- 
-```bash
-ruff check . --fix    # auto-fix lint issues where possible
-ruff format .          # apply consistent formatting
-```
- 
-Then check what's left manually:
- 
-```bash
-ruff check .
-```
- 
-CI runs `ruff check .` and `ruff format --check .` on every PR — both must pass for the PR to be mergeable. The pre-commit hook catches most issues before you even push, saving you a round-trip through CI.
+
+You can also run all the checks manually at any time — see the commands above for Python and templates respectively.
+
+### CI
+
+CI runs the following on every PR, all of which must pass for the PR to be mergeable:
+
+- `ruff check .` and `ruff format --check .`
+- `djlint . --lint` and `djlint . --check`
+
+The pre-commit hook catches most issues before you even push, saving you a round-trip through CI.
 
 ## Frontend
  

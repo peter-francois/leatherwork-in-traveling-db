@@ -1,19 +1,33 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
 {% load i18n %}
-{% block meta-description %}{% trans "Sublimez votre style avec nos bijoux en macramé faits main : chaînes de corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une touche d'élégance unique." %} Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-{% block title %}{% trans "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets" %} | Page {% if products.has_other_pages %}{{ products.number }}{% else %}1{% endif %}{% endblock %}
-
+{% block meta-description %}
+  {% trans "Sublimez votre style avec nos bijoux en macramé faits main : chaînes de corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une touche d'élégance unique." %} Page
+  {% if products.has_other_pages %}
+    {{ products.number }}
+  {% else %}
+    1
+  {% endif %}
+{% endblock meta-description %}
+{% block title %}
+  {% trans "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets" %} | Page
+  {% if products.has_other_pages %}
+    {{ products.number }}
+  {% else %}
+    1
+  {% endif %}
+{% endblock title %}
 {% block header %}
-    <h1 id="title_macrame">{% trans "Bijoux et accessoires en macramé faits main – Originalité et style" %}</h1>
-{% endblock %}
-
-{% block description %}
-    <p class ="text-center"><em>{% trans "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits disponibles." %}</em></p>
-    <button class="align-items-center page-button font-size-17" id="see_products_button">{% trans "Voir les créations ↓" %}</button>
-{% endblock %}
-
+  <h1 id="title_macrame">{% trans "Bijoux et accessoires en macramé faits main – Originalité et style" %}</h1>
+{% endblock header %}
+{% block catalog-description %}
+  <p class="text-center"><em>{% trans "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits disponibles." %}</em></p>
+  <button class="align-items-center page-button font-size-17"
+          id="see_products_button">{% trans "Voir les créations ↓" %}</button>
+{% endblock catalog-description %}
 {% block outro %}
-    <p class ="text-center"><em>{% trans "outro macrames" %}</em></p>
-    <a href="{% url 'core:custom_creation' %}" class="align-items-center page-button font-size-17" id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
-{% endblock %}
+  <p class="text-center"><em>{% trans "outro macrames" %}</em></p>
+  <a href="{% url 'core:custom_creation' %}"
+     class="align-items-center page-button font-size-17"
+     id="custom_creation_button">{% trans "Créations sur mesure" %}</a>
+{% endblock outro %}

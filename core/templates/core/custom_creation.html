@@ -1,68 +1,81 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load i18n %}
-{% block meta-description %}{% trans "Offrez-vous une création sur mesure ! Personnalisez vos articles de maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre service pour réaliser des pièces uniques et personnalisées." %}{% endblock %}
-{% block title %}{% trans "Accessoires cuir & macramé personnalisés | Création sur mesure" %}{% endblock %}
-
+{% block meta-description %}
+  {% trans "Offrez-vous une création sur mesure ! Personnalisez vos articles de maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre service pour réaliser des pièces uniques et personnalisées." %}
+{% endblock meta-description %}
+{% block title %}
+  {% trans "Accessoires cuir & macramé personnalisés | Création sur mesure" %}
+{% endblock title %}
 {% block header %}
-    <h1 id="title_custom">{% trans "Création sur mesure de maroquinerie et macramé - Personnalisez vos accessoires" %}</h1>
-{% endblock %}
-
+  <h1 id="title_custom">{% trans "Création sur mesure de maroquinerie et macramé - Personnalisez vos accessoires" %}</h1>
+{% endblock header %}
 {% block content %}
-
-    <div class="section-custom">
-        <h2 id="title_custom_creation">{% trans "title_custom_creation" %}</h2>
-            <p class="content-custom" id="text_custom_creation">{% trans "text_custom_creation" %}</p>
+  <div class="section-custom">
+    <h2 id="title_custom_creation">{% trans "title_custom_creation" %}</h2>
+    <p class="content-custom" id="text_custom_creation">{% trans "text_custom_creation" %}</p>
+  </div>
+  <div class="section-custom">
+    <h2 id="title_creation_step">{% trans "Votre création sur mesure, étape par étape" %}</h2>
+    <div class="content-custom">
+      <p id="text_creation_step">{% trans "Vous souhaitez un accessoire en cuir ou une décoration en macramé entièrement personnalisé ? Voici comment nous créons ensemble une pièce unique :" %}</p>
+      <ol class="custom-ol font-size-19">
+        <li id="list_creation_step1"><strong>1. {% trans "Échange initial :" %}</strong> {% trans "Contactez-moi par e-mail ou téléphone pour discuter de votre projet et obtenir une première estimation." %}</li>
+        <li id="list_creation_step2"><strong>2. {% trans "Conception :" %}</strong> {% trans "Réalisation d’un croquis détaillé et établissement d’un devis précis." %}</li>
+        <li id="list_creation_step3"><strong>3. {% trans "Début de la fabrication :" %}</strong> {% trans "Un acompte de 1/3 du prix est demandé pour lancer la production." %}</li>
+        <li id="list_creation_step4"><strong>4. {% trans "Validation :" %}</strong> {% trans "Je vous envoie des visuels pour finaliser les motifs et ajuster les détails si nécessaire." %}</li>
+        <li id="list_creation_step5"><strong>5. {% trans "Livraison :" %}</strong> {% trans "Une fois le paiement final effectué, votre création est expédiée en toute sécurité avec assurance." %}</li>
+      </ol>
     </div>
-    <div class="section-custom">
-        <h2 id="title_creation_step">{% trans "Votre création sur mesure, étape par étape" %}</h2>
-        <div class="content-custom">
-            <p id="text_creation_step">{% trans "Vous souhaitez un accessoire en cuir ou une décoration en macramé entièrement personnalisé ? Voici comment nous créons ensemble une pièce unique :" %}</p>
-            <ol class="custom-ol font-size-19" >
-                <li id="list_creation_step1"><strong>1. {% trans "Échange initial :" %}</strong> {% trans "Contactez-moi par e-mail ou téléphone pour discuter de votre projet et obtenir une première estimation." %}</li>
-                <li id="list_creation_step2"><strong>2. {% trans "Conception :" %}</strong> {% trans "Réalisation d’un croquis détaillé et établissement d’un devis précis." %}</li>
-                <li id="list_creation_step3"><strong>3. {% trans "Début de la fabrication :" %}</strong> {% trans "Un acompte de 1/3 du prix est demandé pour lancer la production." %}</li>
-                <li id="list_creation_step4"><strong>4. {% trans "Validation :" %}</strong> {% trans "Je vous envoie des visuels pour finaliser les motifs et ajuster les détails si nécessaire." %}</li>
-                <li id="list_creation_step5"><strong>5. {% trans "Livraison :" %}</strong> {% trans "Une fois le paiement final effectué, votre création est expédiée en toute sécurité avec assurance." %}</li>
-            </ol>
-        </div>
+  </div>
+  <div class="section-custom">
+    <h2 id="title_discover_realizations">{% trans "Découvrez mes réalisations" %}</h2>
+    <div class="custom-pictures content-custom">
+      <img id="custom-picture-round"
+           src="{% static 'core/images/punk_wallet.jpg' %}"
+           alt="portefeuille cuir personnalisé">
+      <img id="custom-picture-1"
+           src="{% static 'core/images/sac-personnalise.jpg' %}"
+           alt="sac personnalisé">
+      <img id="custom-picture-2"
+           src="{% static 'core/images/dog_necklace.jpeg' %}"
+           alt="collier cuir pour chien personnalisé">
+      <img id="custom-picture-3"
+           src="{% static 'core/images/pirate_wallet.jpg' %}"
+           alt="portefeuille fait main">
+      <img id="custom-picture-4"
+           src="{% static 'core/images/wallet.jpeg' %}"
+           alt="portefeuille personnalisé">
     </div>
-    <div class="section-custom">
-        <h2 id="title_discover_realizations">{% trans "Découvrez mes réalisations" %}</h2>
-        <div class="custom-pictures content-custom">
-            <img id="custom-picture-round" src="{% static 'core/images/punk_wallet.jpg' %}" alt="portefeuille cuir personnalisé">
-            <img id ="custom-picture-1"src="{% static 'core/images/sac-personnalise.jpg' %}" alt="sac personnalisé">
-            <img id ="custom-picture-2"  src="{% static 'core/images/dog_necklace.jpeg' %}" alt="collier cuir pour chien personnalisé">
-            <img id ="custom-picture-3"  src="{% static 'core/images/pirate_wallet.jpg' %}" alt="portefeuille fait main">
-            <img id ="custom-picture-4" src="{% static 'core/images/wallet.jpeg' %}" alt="portefeuille personnalisé">
-        </div>  
+  </div>
+  <div class="section-custom hidden">
+    <h2 id="title_creation_step">{% trans "Le travail du cuir : repoussage, découpe et finitions à la main" %}</h2>
+    <div class="content-custom">
+      <p id="text_creation_step">{% trans "Intro creation step" %}</p>
     </div>
-    <div class="section-custom hidden">
-        <h2 id="title_creation_step">{% trans "Le travail du cuir : repoussage, découpe et finitions à la main" %}</h2>
-        <div class="content-custom">
-            <p id="text_creation_step">{% trans "Intro creation step" %}</p>
-        </div>
+  </div>
+  <div class="section-custom">
+    <h2 id="title_why_choose_my_creations">{% trans "Pourquoi choisir mes créations unique?" %}</h2>
+    <div class="content-custom">
+      <ul class="custom-li font-size-19">
+        <li id="list_why_choose_my_creations_1">{% trans "Fabrication " %}100% {% trans "à la main avec des matériaux soigneusement sélectionnés lors de mes voyages." %}</li>
+        <li id="list_why_choose_my_creations_2">{% trans "Un savoir-faire enrichi par des échanges avec des créateurs et spécialistes européens." %}</li>
+        <li id="list_why_choose_my_creations_3">{% trans "Chaque pièce porte l’empreinte du voyage et de la culture qui l’a inspirée." %}</li>
+        <li id="list_why_choose_my_creations_4">{% trans "Des créations personnalisées, façonnées avec passion et souci du détail." %}</li>
+      </ul>
     </div>
-    <div class="section-custom">
-        <h2 id="title_why_choose_my_creations">{% trans "Pourquoi choisir mes créations unique?" %}</h2>
-        <div class="content-custom">
-            <ul class="custom-li font-size-19">
-                <li  id="list_why_choose_my_creations_1">{% trans "Fabrication "%}100% {% trans "à la main avec des matériaux soigneusement sélectionnés lors de mes voyages." %}</li>
-                <li  id="list_why_choose_my_creations_2">{% trans "Un savoir-faire enrichi par des échanges avec des créateurs et spécialistes européens." %}</li>
-                <li  id="list_why_choose_my_creations_3">{% trans "Chaque pièce porte l’empreinte du voyage et de la culture qui l’a inspirée." %}</li>
-                <li  id="list_why_choose_my_creations_4">{% trans "Des créations personnalisées, façonnées avec passion et souci du détail." %}</li>
-            </ul>
-        </div>
+  </div>
+  <div class="section-custom">
+    <h2 id="title_contact">{% trans "Contactez-moi" %}</h2>
+    <div class="content-custom">
+      <p id="text_contact">{% trans "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie nomades ? Écrivez-moi !" %}</p>
+      <p>Email : <a id="contact_email"
+    href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com">{{ CLIENT_EMAIL }}</a></p>
+      <p>Instagram : <a id="contact_instagram"
+    href="https://www.instagram.com/{{ CLIENT_INSTAGRAM }}/{{ CLIENT_INSTAGRAM }}/"></a></p>
+      <p>Facebook : <a id="contact_facebook"
+    href="https://www.facebook.com/{{ CLIENT_FACEBOOK }}/">{{ CLIENT_FACEBOOK }}</a></p>
+      <p><span id="contact_phone">{% trans "Numéro de téléphone :" %}</span><a id="contact_phone" href="tel:{{ CLIENT_PHONE_NUMBER }}">{{ CLIENT_PHONE_NUMBER }}</a></p>
     </div>
-    <div class="section-custom">
-        <h2 id="title_contact">{% trans "Contactez-moi" %}</h2>
-        <div class="content-custom">
-            <p id="text_contact">{% trans "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie nomades ? Écrivez-moi !" %}</p>
-            <p>Email : <a id="contact_email" href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com">{{ CLIENT_EMAIL }}</a></p>
-            <p>Instagram : <a id="contact_instagram" href="https://www.instagram.com/{{ CLIENT_INSTAGRAM }}/{{ CLIENT_INSTAGRAM }}/"></a></p>
-            <p>Facebook : <a id="contact_facebook" href="https://www.facebook.com/{{ CLIENT_FACEBOOK }}/">{{ CLIENT_FACEBOOK }}</a></p>
-            <p ><span id="contact_phone">{% trans "Numéro de téléphone :" %}</span><a id="contact_phone" href="tel:{{ CLIENT_PHONE_NUMBER }}">{{ CLIENT_PHONE_NUMBER }}</a></p>
-        </div>
-    </div>
-    
-{% endblock %}
+  </div>
+{% endblock content %}

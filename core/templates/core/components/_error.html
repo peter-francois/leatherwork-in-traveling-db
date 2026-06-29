@@ -1,10 +1,10 @@
 {% load i18n %}
 {% if debug %}
-    <div class="error error--debug">
-        <p>🐛 <strong>{{ status_code }}</strong> — {{ error }}</p>
-    </div>
+  <div class="error error--debug">
+    <p>🐛 <strong>{{ status_code }}</strong> — {{ error }}</p>
+  </div>
 {% else %}
-    <div class="error">
-        <p>{% trans "Une erreur est survenue, veuillez réessayer." %}</p>
-    </div>
+  <div class="error">
+    <p>{% trans "Une erreur est survenue, veuillez réessayer." %}</p>
+  </div>
 {% endif %}
