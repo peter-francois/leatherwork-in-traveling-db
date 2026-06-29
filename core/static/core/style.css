@@ -811,6 +811,11 @@ h2.product-name {
 .unavailable {
   background: #e7e7e7;
 }
+.produit button,
+.produit a,
+.on-order-button {
+  margin-top: 10px;
+}
 #modal {
   background-color: #fff;
   border: 2px solid var(--color2);
@@ -1320,11 +1325,6 @@ h2.product-name {
 
   .produit {
     padding: 10px;
-  }
-  .produit button,
-  .produit a,
-  .on-order-button {
-    margin-top: 10px;
   }
   #current-image {
     max-height: 70%;
