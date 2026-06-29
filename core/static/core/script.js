@@ -228,6 +228,25 @@ function changeImage(direction) {
   document.getElementById("zoomImage").src = images[currentImageIndex]; // Mettre à jour l'image affichée dans le zoom
 }
 
+function initProductDetailCarousel() {
+  const imageContainer = document.getElementById("imageContainer");
+  if (!imageContainer) return;
+
+  const dataElement = document.getElementById("product-images-data");
+  if (!dataElement) return;
+
+  images = JSON.parse(dataElement.textContent);
+  currentImageIndex = 0;
+
+  document.getElementById("prev-button")?.addEventListener("click", () => changeImage(-1));
+  document.getElementById("next-button")?.addEventListener("click", () => changeImage(1));
+  document.getElementById("current-image")?.addEventListener("click", () => changeImage(1));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initProductDetailCarousel();
+});
+
 // Fonction pour mettre à jour les frais de port
 function updateShippingCost() {
   const shippingOption = document.getElementById("add-shipping");
@@ -489,56 +508,6 @@ if (document.getElementById("see_products_button")) {
     });
 }
 
-// Zoom dans modal
-if (document.getElementById("imageContainer")) {
-  document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("imageContainer");
-    const baseImage = document.getElementById("current-image");
-    const loupe = document.getElementById("loupe");
-    const zoomImage = document.getElementById("zoomImage");
-    const zoom = 2; // facteur de zoom
-
-    container.addEventListener("mousemove", function (e) {
-      const rect = baseImage.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      if (
-        x < 0 ||
-        y < 0 ||
-        x > rect.width ||
-        y > rect.height ||
-        window.innerWidth < 768
-      ) {
-        loupe.style.display = "none";
-        return;
-      }
-      loupe.style.display = "block";
-
-      // Positionner la loupe
-      const loupeWidth = loupe.offsetWidth;
-      const loupeHeight = loupe.offsetHeight;
-      loupe.style.left = `${x - loupeWidth / 2}px`;
-      loupe.style.top = `${y - loupeHeight / 2}px`;
-
-      // Synchroniser la taille de l'image de zoom
-      zoomImage.src = baseImage.src;
-      zoomImage.style.width = `${baseImage.offsetWidth * zoom}px`;
-      zoomImage.style.height = `${baseImage.offsetHeight * zoom}px`;
-
-      // Positionner l'image zoomée à l'intérieur de la loupe
-      const zoomX = -x * zoom + loupeWidth / 2;
-      const zoomY = -y * zoom + loupeHeight / 2;
-
-      zoomImage.style.left = `${zoomX}px`;
-      zoomImage.style.top = `${zoomY}px`;
-    });
-
-    container.addEventListener("mouseleave", function () {
-      loupe.style.display = "none";
-    });
-  });
-}
 
 /* ============================================
    EVENT LISTENERS
