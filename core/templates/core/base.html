@@ -58,7 +58,8 @@
       {% endblock title %}
     </title>
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
-    {% block extra_css %}{% endblock extra_css %}
+    {% block extra_css %}
+    {% endblock extra_css %}
     <link rel="preload"
           href="{% static 'core/fonts/UncialAntiqua-Regular.woff2' %}"
           as="font"
@@ -78,11 +79,13 @@
         <img class="logo"
              src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414122/cwmtpsig7dz8czn6ka6p.png"
              alt="Logo Leather Work In Traveling DB">
-        {% block header %}{% endblock header %}
+        {% block header %}
+        {% endblock header %}
       </div>
     </header>
     <main>
-      {% block content %}{% endblock content %}
+      {% block content %}
+      {% endblock content %}
     </main>
     <footer class="font-size-19 site-footer">
       {% include 'core/components/_contact.html' %}
@@ -91,6 +94,7 @@
     <div id="overlay" class="hidden"></div>
     <script src="{% static 'core/js/htmx.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/script.js'%}"></script>
-    {% block extra_js %}{% endblock extra_js %}
+    {% block extra_js %}
+    {% endblock extra_js %}
   </body>
 </html>
