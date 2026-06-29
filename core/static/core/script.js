@@ -133,11 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Fonction pour récupérer le token CSRF depuis le meta tag
-function getCSRFTokenFromMeta() {
-  const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-  return csrfTokenMeta ? csrfTokenMeta.getAttribute("content") : "";
-}
 function initCart() {
   const cartContent = document.getElementById("cart-content");
   if (!cartContent) return;
@@ -150,21 +145,6 @@ function initCart() {
   updateShippingCost();
   initCartListeners();
 }
-
-// Au chargement de la page, vérifier si l'UUID du panier est dans localStorage
-window.onload = function () {
-  const cart_uuid = localStorage.getItem("cart_uuid"); // Récupère l'UUID depuis localStorage
-  if (cart_uuid) {
-    window.cart_uuid = cart_uuid; // Assigner à la variable globale pour usage ultérieur
-    console.log(
-      "UUID du panier récupéré depuis localStorage:",
-      window.cart_uuid,
-    );
-  } else {
-    console.log("Aucun UUID trouvé dans localStorage.");
-  }
-};
-
 
 // Fonction pour nettoyer le filtre
 function cleanFilter() {
@@ -520,16 +500,6 @@ if (document.getElementById("clean_filter")) {
       cleanFilter();
     });
 }
-
-document.addEventListener("languageChanged", function () {
-  if (
-    window.location.pathname.includes("panier") ||
-    window.location.pathname.includes("cart")
-  ) {
-    updateInsurance();
-    updateTotal();
-  }
-});
 
 if (document.getElementById("see_products_button")) {
   document
