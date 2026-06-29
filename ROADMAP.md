@@ -13,7 +13,8 @@ We're progressively moving dynamic interactions away from custom `fetch` + manua
 | Remove item from cart | ✅ Done | Returns `_cart_content.html` partial, triggers `cartUpdated` via `HX-Trigger` |
 | Cart item count (navbar) | ✅ Done | Listens for `cartUpdated from:body` |
 | Clear cart | ✅ Done | Same pattern as remove item |
-| Add to cart (from catalog) | 🚧 In progress | Being worked on in `refactor/js` |
+| Add to cart (from catalog) | ✅ Done |  Returns `_product_card.html` partial, triggers `cartUpdated`; product modal's button removed |
+| From product modal to product template | ⏳ Not started | Lot of gain here, also for SEO |
 | Catalog filtering | ⏳ Not started | Still relies on the legacy approach |
 
 ### Pattern to follow for new HTMX work
