@@ -85,12 +85,11 @@ function hideContact() {
   ContactDiv.style.display = "none";
 }
 
-// Fonction pour fermer le contact et le modal si on clique sur l'overlay
+// Fonction pour fermer le contact si on clique sur l'overlay
 document.addEventListener("click", function (event) {
   const overlay = document.querySelector("#overlay");
   if (overlay.contains(event.target)) {
     hideContact();
-    closeModal();
   }
 });
 
@@ -211,10 +210,6 @@ function displayProductImages(articleId) {
         document.getElementById("current-image").src = images[0];
         document.getElementById("zoomImage").src = images[0];
       }
-
-      // --- Modal ---
-      document.getElementById("overlay").style.display = "block";
-      document.getElementById("modal").style.display = "block";
     })
     .catch((error) => {
       console.error("Fetch error:", error);
@@ -231,14 +226,6 @@ function changeImage(direction) {
   }
   document.getElementById("current-image").src = images[currentImageIndex]; // Mettre à jour l'image affichée
   document.getElementById("zoomImage").src = images[currentImageIndex]; // Mettre à jour l'image affichée dans le zoom
-}
-
-// Fonction pour fermer la modale
-function closeModal() {
-  const modal = document.getElementById("modal");
-  const overlay = document.getElementById("overlay");
-  overlay.style.display = "none"; // Masque l'overlay
-  modal.style.display = "none";
 }
 
 // Fonction pour mettre à jour les frais de port
@@ -473,13 +460,6 @@ if (document.getElementById("checkout")) {
   });
 }
 
-if (document.getElementById("close-button")) {
-  document
-    .getElementById("close-button")
-    .addEventListener("click", function () {
-      closeModal();
-    });
-}
 
 if (document.getElementById("prev-button")) {
   document.getElementById("prev-button").addEventListener("click", function () {
