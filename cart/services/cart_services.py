@@ -51,13 +51,14 @@ def get_or_create_active_cart(request) -> Cart:
     return cart
 
 
-def add_product_to_cart(cart, product) -> None:
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
+def add_product_to_cart(cart, product) -> bool:
+    if not product.available or product.on_demand or product.pending_in_cart:
+        return False
+
+    CartItem.objects.create(cart=cart, product=product, quantity=1)
     product.pending_in_cart = True
     product.save()
+    return True
 
 
 def empty_cart_and_release_products(cart) -> bool:

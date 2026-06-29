@@ -1,6 +1,7 @@
 {% load i18n %}
 <li class="grid-container produit{% if page == 'catalog' %}{% if product.pending_in_cart or product.on_demand %} unavailable{% endif %}{% endif %}"
-    data-product-id="{{ product.id }}">
+    data-product-id="{{ product.id }}"
+    id="product-{{ product.id }}">
   <h2 class="product-name">{{ product.name }}</h2>
   {% if product.image1 or product.image2 or product.image3 or product.image4 or product.image5 or product.image6 %}
     {% if product.image1 %}
@@ -29,7 +30,13 @@
   {% endif %}
   {% if page == 'catalog' %}
     {% if not product.pending_in_cart and not product.on_demand %}
-      <button class="align-items-center page-button add_to_cart_button"
+      <button hx-post="{% url 'cart_api:add_to_cart' product.id %}"
+              hx-target="#product-{{ product.id }}"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              hx-swap="outerHTML"
+              hx-confirm="{% trans 'Voulez-vous ajouter ce produit au panier ?' %}"
+              class="align-items-center page-button"
+              type="button"
               data-product-id="{{ product.id }}">{% trans "Ajouter au panier" %}</button>
     {% else %}
       <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>
