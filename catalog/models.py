@@ -1,5 +1,6 @@
 from cloudinary.models import CloudinaryField
 from django.db import models
+from django.utils.text import slugify
 
 from .choices import Category, ProductType
 
@@ -30,6 +31,7 @@ class Product(models.Model):
     )
     on_demand = models.BooleanField(default=False, verbose_name="Sur commande")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Mis à jour le")
+    slug = models.SlugField(max_length=150, blank=True)
 
     class Meta:
         verbose_name = "Produit"
@@ -37,3 +39,8 @@ class Product(models.Model):
 
     def __str__(self):
         return f"Product {self.id}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
