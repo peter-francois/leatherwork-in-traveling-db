@@ -44,3 +44,18 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    @property
+    def image_urls(self):
+        return [
+            img.url
+            for img in [
+                self.image1,
+                self.image2,
+                self.image3,
+                self.image4,
+                self.image5,
+                self.image6,
+            ]
+            if img
+        ]
