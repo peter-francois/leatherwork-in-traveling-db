@@ -176,6 +176,7 @@ CD — automatic deployment to PythonAnywhere
 ### CI — What it does
 
 - Runs on every push and pull request to `main`
+- Run linting and formatting tools (more detail in `CONTRIBUTING.md` file)
 - Tests on Python 3.10 (production) and 3.13 (local dev)
 - Uses a minimal environment
 

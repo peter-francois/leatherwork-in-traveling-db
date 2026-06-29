@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="description"
-          content="{% block meta-description %}{% trans 'Sacs, accessoires et décorations en cuir et macramé conçus avec passion. Des créations uniques pour sublimer votre quotidien. Commandez en ligne, expédition rapide.' %}{% endblock %}">
+          content="{% block meta-description %}{% trans 'Sacs, accessoires et décorations en cuir et macramé conçus avec passion. Des créations uniques pour sublimer votre quotidien. Commandez en ligne, expédition rapide.' %}{% endblock meta-description %}">
     <meta name="author" content="Leather Work In Traveling DB">
     {% block head %}
       {% language "fr" %}
@@ -30,8 +30,8 @@
             hreflang="x-default">
       {% block robots %}
         <meta name="robots" content="index, follow">
-      {% endblock %}
-    {% endblock %}
+      {% endblock robots %}
+    {% endblock head %}
     <meta property="og:title"
           content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
     <meta property="og:description"
@@ -55,10 +55,10 @@
     <title>
       {% block title %}
         {% trans "Créations en maroquinerie et macramé - Leather Work In Traveling DB" %}
-      {% endblock %}
+      {% endblock title %}
     </title>
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}{% endblock extra_css %}
     <link rel="preload"
           href="{% static 'core/fonts/UncialAntiqua-Regular.woff2' %}"
           as="font"
@@ -78,11 +78,11 @@
         <img class="logo"
              src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414122/cwmtpsig7dz8czn6ka6p.png"
              alt="Logo Leather Work In Traveling DB">
-        {% block header %}{% endblock %}
+        {% block header %}{% endblock header %}
       </div>
     </header>
     <main>
-      {% block content %}{% endblock %}
+      {% block content %}{% endblock content %}
     </main>
     <footer class="font-size-19 site-footer">
       {% include 'core/components/_contact.html' %}
@@ -91,6 +91,6 @@
     <div id="overlay" class="hidden"></div>
     <script src="{% static 'core/js/htmx.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/script.js'%}"></script>
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}{% endblock extra_js %}
   </body>
 </html>

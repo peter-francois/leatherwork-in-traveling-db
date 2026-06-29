@@ -3,10 +3,10 @@
 {% load i18n %}
 {% block meta-description %}
   {% trans "Découvrez mon savoir-faire et l'histoire de Leather Work In Traveling DB. Créations uniques alliant tradition et modernité." %}
-{% endblock %}
+{% endblock meta-description %}
 {% block title %}
   {% trans "À propos - L’histoire et le savoir-faire de Leather Work In Traveling DB" %}
-{% endblock %}
+{% endblock title %}
 {% block head %}
   <!-- Balises hreflang pour la page actuelle -->
   {% get_current_language as current_language %}
@@ -22,11 +22,8 @@
           href="https://leatherworkintravelingdb.com/fr/a_propos/"
           hreflang="fr" />
   {% endif %}
-{% endblock %}
+{% endblock head %}
 {% block header %}
   <h1 id="title_about">{% trans "Mon histoire et mon savoir-faire en maroquinerie et macramé" %}</h1>
-{% endblock %}
-{% block description %}
-  <p class ="text-center" id="description_about">{% trans "Bienvenue dans l'espace A Propos." %}</p>
-{% endblock %}
-{% block content %}{% endblock %}
+{% endblock header %}
+{% block content %}{% endblock content %}

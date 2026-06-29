@@ -11,17 +11,17 @@
     <link rel="next"
           href="https://www.leatherworkintravelingdb.com{{ request.path }}?page={{ products.next_page_number }}">
   {% endif %}
-{% endblock %}
+{% endblock head %}
 {% block robots %}
   {% if products.number != 1 %}
     <meta name="robots" content="noindex, follow">
   {% else %}
     <meta name="robots" content="index, follow">
   {% endif %}
-{% endblock %}
+{% endblock robots %}
 {% block content %}
   <header class="intro-outro intro-outro--intro">
-    {% block description %}{% endblock %}
+    {% block catalog-description %}{% endblock catalog-description %}
   </header>
   <!--Pagination Links-->
   <nav aria-label="{% trans 'Pagination' %}"
@@ -50,7 +50,7 @@
   </nav>
   <footer class="intro-outro intro-outro--outro">
     {% block outro %}
-    {% endblock %}
+    {% endblock outro %}
   </footer>
   {% include 'catalog/components/_modal.html' %}
-{% endblock %}
+{% endblock content %}

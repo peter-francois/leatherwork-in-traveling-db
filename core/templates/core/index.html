@@ -3,13 +3,13 @@
 {% load i18n %}
 {% block meta-description %}
   {% trans "Meta description index" %}
-{% endblock %}
+{% endblock meta-description %}
 {% block title %}
   {% trans "Maroquinerie & macramé faits main - Leather Work In Traveling DB" %}
-{% endblock %}
+{% endblock title %}
 {% block header %}
   <h1 id="title_index">{% trans "Bienvenue dans notre boutique de maroquinerie et macramé faits main" %}</h1>
-{% endblock %}
+{% endblock header %}
 {% block content %}
   <section class="category grid-container">
     <a class="linker product-card " href="{% url 'catalog:leather_list' %}">
@@ -104,4 +104,4 @@
       <p class="product-description text-center"><strong>{% trans '➤ Découvrir les produits hybrides' %}</strong></p>
     </a>
   </section>
-{% endblock %}
+{% endblock content %}

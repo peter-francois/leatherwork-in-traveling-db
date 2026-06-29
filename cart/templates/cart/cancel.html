@@ -2,16 +2,16 @@
 {% load i18n %}
 {% block meta-description %}
   {% trans "Votre paiement a été annulé. Vous pouvez réessayer ou modifier votre commande en toute sécurité." %}
-{% endblock %}
+{% endblock meta-description %}
 {% block title %}
   {% trans "Paiement annulé | Leather Work In Traveling DB" %}
-{% endblock %}
+{% endblock title %}
 {% block head %}
   <meta name="robots" content="noindex, follow">
-{% endblock %}
+{% endblock head %}
 {% block header %}
   <h1 id="title_payment_cancel">{% trans "Paiement Annulé" %}</h1>
-{% endblock %}
+{% endblock header %}
 {% block content %}
   <section id="payment-cancel">
     <p id="payment-cancel-description">{% trans "Votre paiement a été annulé. Si cela est une erreur, vous pouvez réessayer." %}</p>
@@ -19,4 +19,4 @@
       <a href="{% url 'core:index' %}" id="payment-cancel-button">{% trans "Retour à l'accueil" %}</a>
     </div>
   </section>
-{% endblock %}
+{% endblock content %}
