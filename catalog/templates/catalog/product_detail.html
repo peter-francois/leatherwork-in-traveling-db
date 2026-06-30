@@ -1,5 +1,25 @@
 {% extends 'core/base.html' %}
 {% load i18n %}
+{% block head %}
+  {% language "fr" %}
+    {% url 'catalog:product_detail' category=product.category|lower slug=product.name_fr|slugify product_id=product.id as url_fr %}
+  {% endlanguage %}
+  {% language "en" %}
+    {% url 'catalog:product_detail' category=product.category|lower slug=product.name_en|slugify product_id=product.id as url_en %}
+  {% endlanguage %}
+  <link rel="alternate"
+        href="https://www.leatherworkintravelingdb.com{{ url_fr }}"
+        hreflang="fr">
+  <link rel="alternate"
+        href="https://www.leatherworkintravelingdb.com{{ url_en }}"
+        hreflang="en">
+  <link rel="canonical"
+        href="https://www.leatherworkintravelingdb.com{{ request.path }}">
+  <link rel="alternate"
+        href="https://www.leatherworkintravelingdb.com{{ url_fr }}"
+        hreflang="x-default">
+  <meta name="robots" content="index, follow">
+{% endblock head %}
 {% load static %}
 {% block meta-description %}{{ product.description|default:product.name }}{% endblock meta-description %}
 {% block title %}{{ product.name }} - Leather Work In Traveling DB{% endblock title %}
