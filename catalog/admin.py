@@ -3,6 +3,7 @@ from django.contrib import admin, messages
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin
 
 from .models import Product
 
@@ -58,7 +59,7 @@ def _make_thumbnail(i):
     return thumbnail
 
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslationAdmin):
     actions = ["make_available", "make_unavailable", "remove_from_cart"]
     list_display = (
         "name",
