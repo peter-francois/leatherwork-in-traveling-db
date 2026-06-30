@@ -1,25 +1,31 @@
 {% load i18n %}
 <li class="grid-container produit{% if page == 'catalog' %}{% if product.pending_in_cart or product.on_demand %} unavailable{% endif %}{% endif %}"
-    data-product-id="{{ product.id }}">
+    data-product-id="{{ product.id }}"
+    id="product-{{ product.id }}">
   <h2 class="product-name">{{ product.name }}</h2>
-  {% if product.image1 or product.image2 or product.image3 or product.image4 or product.image5 or product.image6 %}
-    {% if product.image1 %}
-      <img src="{{ product.image1.url }}" alt="{{ product.name }}">
-    {% elif product.image2 %}
-      <img src="{{ product.image2.url }}" alt="{{ product.name }}">
-    {% elif product.image3 %}
-      <img src="{{ product.image3.url }}" alt="{{ product.name }}">
-    {% elif product.image4 %}
-      <img src="{{ product.image4.url }}" alt="{{ product.name }}">
-    {% elif product.image5 %}
-      <img src="{{ product.image5.url }}" alt="{{ product.name }}">
-    {% elif product.image6 %}
-      <img src="{{ product.image6.url }}" alt="{{ product.name }}">
+  <a href="{% url 'catalog:product_detail' category=product.category slug=product.name|slugify product_id=product.id %}">
+    {% if product.image1 or product.image2 or product.image3 or product.image4 or product.image5 or product.image6 %}
+      {% if product.image1 %}
+        <img src="{{ product.image1.url }}" alt="{{ product.name }}">
+      {% elif product.image2 %}
+        <img src="{{ product.image2.url }}" alt="{{ product.name }}">
+      {% elif product.image3 %}
+        <img src="{{ product.image3.url }}" alt="{{ product.name }}">
+      {% elif product.image4 %}
+        <img src="{{ product.image4.url }}" alt="{{ product.name }}">
+      {% elif product.image5 %}
+        <img src="{{ product.image5.url }}" alt="{{ product.name }}">
+      {% elif product.image6 %}
+        <img src="{{ product.image6.url }}" alt="{{ product.name }}">
+      {% endif %}
+      <a class="click-hint"
+         href="{% url 'catalog:product_detail' category=product.category slug=product.name|slugify product_id=product.id %}">
+        👆 {% trans 'Cliquez' %}
+      </a>
+    {% else %}
+      <p>{% trans "Aucune image disponible" %}</p>
     {% endif %}
-    <p class="click-hint">👆 {% trans 'Cliquez' %}</p>
-  {% else %}
-    <p>{% trans "Aucune image disponible" %}</p>
-  {% endif %}
+  </a>
   {% if product.discount != 0.0 %}
     <p class="promo-widget">Promo</p>
     <p class="text-center new-price">Nouveau prix: {{ product.final_price | floatformat:2 }}€</p>
@@ -29,7 +35,13 @@
   {% endif %}
   {% if page == 'catalog' %}
     {% if not product.pending_in_cart and not product.on_demand %}
-      <button class="align-items-center page-button add_to_cart_button"
+      <button hx-post="{% url 'cart_api:add_to_cart' product.id %}"
+              hx-target="#product-{{ product.id }}"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              hx-swap="outerHTML"
+              hx-confirm="{% trans 'Voulez-vous ajouter ce produit au panier ?' %}"
+              class="align-items-center page-button"
+              type="button"
               data-product-id="{{ product.id }}">{% trans "Ajouter au panier" %}</button>
     {% else %}
       <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>

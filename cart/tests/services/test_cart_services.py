@@ -151,7 +151,7 @@ class AddProductToCartTest(TestCase):
 
     def setUp(self):
         self.session = make_session(expire_delta=timedelta(hours=24))
-        self.product = make_product(available=True, pending_in_cart=True)
+        self.product = make_product(available=True)
         self.cart = make_cart(self.session)
 
     def test_adds_product_to_cart(self):
@@ -164,6 +164,41 @@ class AddProductToCartTest(TestCase):
         add_product_to_cart(self.cart, self.product)
         self.product.refresh_from_db()
         self.assertTrue(self.product.pending_in_cart)
+
+    def test_returns_true_on_success(self):
+        """Should return True when the product was added"""
+        result = add_product_to_cart(self.cart, self.product)
+        self.assertTrue(result)
+
+    def test_returns_false_when_product_unavailable(self):
+        """Should return False and not add the product when it's unavailable"""
+        self.product.available = False
+        self.product.save()
+
+        result = add_product_to_cart(self.cart, self.product)
+
+        self.assertFalse(result)
+        self.assertEqual(CartItem.objects.filter(cart=self.cart).count(), 0)
+
+    def test_returns_false_when_product_on_demand(self):
+        """Should return False and not add the product when it's on demand"""
+        self.product.on_demand = True
+        self.product.save()
+
+        result = add_product_to_cart(self.cart, self.product)
+
+        self.assertFalse(result)
+        self.assertEqual(CartItem.objects.filter(cart=self.cart).count(), 0)
+
+    def test_returns_false_when_product_already_pending(self):
+        """Should return False when the product is already pending in another cart"""
+        self.product.pending_in_cart = True
+        self.product.save()
+
+        result = add_product_to_cart(self.cart, self.product)
+
+        self.assertFalse(result)
+        self.assertEqual(CartItem.objects.filter(cart=self.cart).count(), 0)
 
 
 class EmptyCartAndReleaseProductsTest(TestCase):

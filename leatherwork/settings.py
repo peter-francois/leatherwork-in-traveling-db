@@ -43,6 +43,7 @@ ALLOWED_HOSTS = (
 # Application definition
 
 DJANGO_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -164,6 +165,9 @@ LANGUAGE_CODE = "fr"
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = "fr"
+MODELTRANSLATION_LANGUAGES = ("fr", "en")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

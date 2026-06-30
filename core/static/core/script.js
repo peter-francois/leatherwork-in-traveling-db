@@ -85,12 +85,11 @@ function hideContact() {
   ContactDiv.style.display = "none";
 }
 
-// Fonction pour fermer le contact et le modal si on clique sur l'overlay
+// Fonction pour fermer le contact si on clique sur l'overlay
 document.addEventListener("click", function (event) {
   const overlay = document.querySelector("#overlay");
   if (overlay.contains(event.target)) {
     hideContact();
-    closeModal();
   }
 });
 
@@ -133,11 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Fonction pour récupérer le token CSRF depuis le meta tag
-function getCSRFTokenFromMeta() {
-  const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-  return csrfTokenMeta ? csrfTokenMeta.getAttribute("content") : "";
-}
 function initCart() {
   const cartContent = document.getElementById("cart-content");
   if (!cartContent) return;
@@ -149,88 +143,6 @@ function initCart() {
   updateTotal();
   updateShippingCost();
   initCartListeners();
-}
-
-// Ajouter un produit au panier
-function addToCart(articleId) {
-  fetch(`/api/cart/add_to_cart/${articleId}/`, {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        // Sauvegarde dans le localStorage pour qu'il persiste entre les sessions
-        localStorage.setItem("cart_uuid", data.cart_uuid);
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.push({ id: articleId });
-        localStorage.setItem("cart", JSON.stringify(cart));
-        alert(data.message);
-        updateProductList(articleId); // Met à jour la liste des produits en retirant celui qui a été ajouté
-        closeModal();
-        document.body.dispatchEvent(new Event("cartUpdated"));
-      } else {
-        alert("Erreur : " + data.message);
-      }
-    })
-    .catch((error) => {
-      console.error("Erreur lors de l'ajout au panier:", error);
-    });
-}
-function updateProductList(articleId) {
-  // Trouver l'élément HTML représentant cet article et le supprimer
-  const allProducts = Array.from(document.querySelectorAll(".produit"));
-  const productElement = allProducts.find(
-    (product) => product.getAttribute("data-product-id") === articleId,
-  );
-
-  if (productElement) {
-    productElement.style.display = "none"; // Masquer l'élément du DOM
-  }
-}
-
-// Au chargement de la page, vérifier si l'UUID du panier est dans localStorage
-window.onload = function () {
-  const cart_uuid = localStorage.getItem("cart_uuid"); // Récupère l'UUID depuis localStorage
-  if (cart_uuid) {
-    window.cart_uuid = cart_uuid; // Assigner à la variable globale pour usage ultérieur
-    console.log(
-      "UUID du panier récupéré depuis localStorage:",
-      window.cart_uuid,
-    );
-  } else {
-    console.log("Aucun UUID trouvé dans localStorage.");
-  }
-};
-
-// Fonction pour vider le panier
-function clearCart() {
-  fetch("/api/cart/empty_cart/", {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFTokenFromMeta(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        // Réinitialise le localStorage
-        localStorage.removeItem("cart");
-        const addInsurance = document.getElementById("add-insurance");
-        addInsurance.checked = false;
-        alert(data.message);
-        const formattedZero = currentLanguage === "en" ? "0.00" : "0,00";
-        document.getElementById("order-total").textContent = formattedZero;
-        document.getElementById("total-amount").textContent = formattedZero;
-        document.body.dispatchEvent(new Event("cartUpdated"));
-      } else {
-        alert("Erreur lors de la suppression du panier.");
-      }
-    });
 }
 
 // Fonction pour nettoyer le filtre
@@ -289,22 +201,6 @@ function displayProductImages(articleId) {
         newPriceH3El.style.display = "none";
       }
 
-      // --- Bouton panier ---
-      const addToCartButton = document.getElementById("id_add_to_cart_button");
-      if (addToCartButton) {
-        if (
-          window.location.pathname.includes("panier") ||
-          window.location.pathname.includes("cart") ||
-          data.en_attente_dans_panier ||
-          data.sur_commande
-        ) {
-          addToCartButton.style.display = "none";
-        } else {
-          addToCartButton.style.display = "block";
-          addToCartButton.style.width = "fit-content";
-          addToCartButton.dataset.productId = articleId;
-        }
-      }
 
       // --- Images ---
       images = data.images || [];
@@ -314,10 +210,6 @@ function displayProductImages(articleId) {
         document.getElementById("current-image").src = images[0];
         document.getElementById("zoomImage").src = images[0];
       }
-
-      // --- Modal ---
-      document.getElementById("overlay").style.display = "block";
-      document.getElementById("modal").style.display = "block";
     })
     .catch((error) => {
       console.error("Fetch error:", error);
@@ -336,13 +228,24 @@ function changeImage(direction) {
   document.getElementById("zoomImage").src = images[currentImageIndex]; // Mettre à jour l'image affichée dans le zoom
 }
 
-// Fonction pour fermer la modale
-function closeModal() {
-  const modal = document.getElementById("modal");
-  const overlay = document.getElementById("overlay");
-  overlay.style.display = "none"; // Masque l'overlay
-  modal.style.display = "none";
+function initProductDetailCarousel() {
+  const imageContainer = document.getElementById("imageContainer");
+  if (!imageContainer) return;
+
+  const dataElement = document.getElementById("product-images-data");
+  if (!dataElement) return;
+
+  images = JSON.parse(dataElement.textContent);
+  currentImageIndex = 0;
+
+  document.getElementById("prev-button")?.addEventListener("click", () => changeImage(-1));
+  document.getElementById("next-button")?.addEventListener("click", () => changeImage(1));
+  document.getElementById("current-image")?.addEventListener("click", () => changeImage(1));
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  initProductDetailCarousel();
+});
 
 // Fonction pour mettre à jour les frais de port
 function updateShippingCost() {
@@ -562,12 +465,6 @@ if (document.getElementById("contact_button")) {
     });
 }
 
-if (document.getElementById("clear_cart")) {
-  document.getElementById("clear_cart").addEventListener("click", function () {
-    clearCart();
-  });
-}
-
 if (document.getElementById("add-insurance")) {
   document
     .getElementById("add-insurance")
@@ -582,13 +479,6 @@ if (document.getElementById("checkout")) {
   });
 }
 
-if (document.getElementById("close-button")) {
-  document
-    .getElementById("close-button")
-    .addEventListener("click", function () {
-      closeModal();
-    });
-}
 
 if (document.getElementById("prev-button")) {
   document.getElementById("prev-button").addEventListener("click", function () {
@@ -610,24 +500,6 @@ if (document.getElementById("clean_filter")) {
     });
 }
 
-document.addEventListener("click", function (event) {
-  if (event.target && event.target.matches(".add_to_cart_button")) {
-    const articleId = event.target.getAttribute("data-product-id");
-    if (!articleId) return;
-    addToCart(articleId);
-  }
-});
-
-document.addEventListener("languageChanged", function () {
-  if (
-    window.location.pathname.includes("panier") ||
-    window.location.pathname.includes("cart")
-  ) {
-    updateInsurance();
-    updateTotal();
-  }
-});
-
 if (document.getElementById("see_products_button")) {
   document
     .getElementById("see_products_button")
@@ -636,56 +508,6 @@ if (document.getElementById("see_products_button")) {
     });
 }
 
-// Zoom dans modal
-if (document.getElementById("imageContainer")) {
-  document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("imageContainer");
-    const baseImage = document.getElementById("current-image");
-    const loupe = document.getElementById("loupe");
-    const zoomImage = document.getElementById("zoomImage");
-    const zoom = 2; // facteur de zoom
-
-    container.addEventListener("mousemove", function (e) {
-      const rect = baseImage.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      if (
-        x < 0 ||
-        y < 0 ||
-        x > rect.width ||
-        y > rect.height ||
-        window.innerWidth < 768
-      ) {
-        loupe.style.display = "none";
-        return;
-      }
-      loupe.style.display = "block";
-
-      // Positionner la loupe
-      const loupeWidth = loupe.offsetWidth;
-      const loupeHeight = loupe.offsetHeight;
-      loupe.style.left = `${x - loupeWidth / 2}px`;
-      loupe.style.top = `${y - loupeHeight / 2}px`;
-
-      // Synchroniser la taille de l'image de zoom
-      zoomImage.src = baseImage.src;
-      zoomImage.style.width = `${baseImage.offsetWidth * zoom}px`;
-      zoomImage.style.height = `${baseImage.offsetHeight * zoom}px`;
-
-      // Positionner l'image zoomée à l'intérieur de la loupe
-      const zoomX = -x * zoom + loupeWidth / 2;
-      const zoomY = -y * zoom + loupeHeight / 2;
-
-      zoomImage.style.left = `${zoomX}px`;
-      zoomImage.style.top = `${zoomY}px`;
-    });
-
-    container.addEventListener("mouseleave", function () {
-      loupe.style.display = "none";
-    });
-  });
-}
 
 /* ============================================
    EVENT LISTENERS

@@ -41,6 +41,7 @@ class CartViewTest(TestCase):
         session.save()
         product = Product.objects.create(
             name="Test Product",
+            category="Maroquinerie",
             price=100,
             discount=10,
             available=True,
