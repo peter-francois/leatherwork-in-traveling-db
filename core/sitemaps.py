@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from django.utils import translation
+from django.utils import timezone, translation
 
 
 class StaticSitemap(Sitemap):
@@ -14,6 +14,9 @@ class StaticSitemap(Sitemap):
             "custom-creation": "core:custom_creation",
             # 'a_propos': 'boutique:a_propos',
         }
+
+    def lastmod(self, item):
+        return timezone.now()
 
     def items(self):
         return list(self.static_urls.keys())
