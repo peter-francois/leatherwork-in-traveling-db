@@ -1,6 +1,7 @@
 # Django
 Django==5.2
 django-extensions==3.2.3
+django-modeltranslation==0.20.3
 
 # Cloudinary
 cloudinary==1.42.2

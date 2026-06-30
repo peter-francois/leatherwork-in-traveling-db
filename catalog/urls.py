@@ -11,4 +11,9 @@ urlpatterns = [
     path(_("produits/maroquinerie/"), views.leatherwork, name="leather_list"),
     path(_("produits/hybride/"), views.hybrid, name="hybrid_list"),
     path(_("produits/"), views.product, name="product_list"),
+    path(
+        _("produits/<str:category>/<slug:slug>-<int:product_id>/"),
+        views.product_detail,
+        name="product_detail",
+    ),
 ]
