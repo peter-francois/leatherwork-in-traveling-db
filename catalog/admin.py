@@ -63,12 +63,12 @@ class ProductAdmin(TranslationAdmin):
     actions = ["make_available", "make_unavailable", "remove_from_cart"]
     list_display = (
         "name",
+        "description",
         "category",
         "available",
         "pending_in_cart",
         "on_demand",
         "product_type",
-        "description",
         "price",
     )
     search_fields = ["name", "category", "product_type"]
@@ -82,9 +82,10 @@ class ProductAdmin(TranslationAdmin):
             {
                 "fields": (
                     "name",
+                    "meta_description",
+                    "description",
                     "category",
                     "product_type",
-                    "description",
                     "price",
                     "discount",
                     "available",
