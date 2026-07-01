@@ -21,11 +21,8 @@ class ProductDetailSitemap(Sitemap):
 
     def location(self, obj):
         with translation.override(self.language):
-            category = slugify(obj.category)
-            slug = obj.slug or slugify(obj.name)
-
-            if not category or not slug:
-                return None
+            category = obj.category.lower()
+            slug = slugify(obj.name)
 
             return reverse(
                 "catalog:product_detail",
