@@ -5,7 +5,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from core.sitemaps import StaticSitemap
 from core.sitemaps_category import CategorySitemap
-from core.sitemaps_product_detail import ProductDetailSitemap
 
 from .services import generate_sitemap_index
 
@@ -31,7 +30,7 @@ def sitemap_lang(request, lang):
     sitemaps = {
         "static": StaticSitemap(lang),
         "categories": CategorySitemap(lang),
-        "products": ProductDetailSitemap(lang),
+        # "products": ProductDetailSitemap(lang),
     }
     return django_sitemap(request, sitemaps)
 
