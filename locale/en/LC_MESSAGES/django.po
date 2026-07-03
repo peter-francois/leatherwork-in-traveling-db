@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 12:19+0200\n"
+"POT-Creation-Date: 2026-07-03 13:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -890,82 +890,88 @@ msgstr ""
 msgid "Maroquinerie & macramé faits main - Leather Work In Traveling DB"
 msgstr "Handmade leatherwork & macrame - Leather Work In Traveling DB"
 
-#: .\core\templates\core\index.html:11
+#: .\core\templates\core\index.html:12
 msgid "Bienvenue dans notre boutique de maroquinerie et macramé faits main"
 msgstr ""
 "Handmade leather bags & macramé creations – Authentic leatherwork and weaving"
 
-#: .\core\templates\core\index.html:20
+#: .\core\templates\core\index.html:13
+#, fuzzy
+#| msgid "➤ Parcourez les bijoux et accessoires en macramé faits main"
+msgid "Bijoux et accessoires faits main,"
+msgstr "➤ Explore our handmade macramé jewelry and accessories"
+
+#: .\core\templates\core\index.html:23
 msgid "Espace Maroquinerie"
 msgstr "Leather Workshop – Handmade Bags, Wallets & Accessories"
 
-#: .\core\templates\core\index.html:24
+#: .\core\templates\core\index.html:27
 msgid "Collection de modèles en "
 msgstr "Explore our exclusive collection of "
 
-#: .\core\templates\core\index.html:25
+#: .\core\templates\core\index.html:28
 msgid "Chaque pièce – sac en cuir,"
 msgstr ""
 
-#: .\core\templates\core\index.html:26
+#: .\core\templates\core\index.html:29
 msgid "Un cadeau artisanal en cuir qui traverse le temps."
 msgstr ""
 
-#: .\core\templates\core\index.html:35
+#: .\core\templates\core\index.html:38
 msgid "➤ Découvrez toute la collection de créations en cuir"
 msgstr "➤ Discover the entire collection of leather creations"
 
-#: .\core\templates\core\index.html:42
+#: .\core\templates\core\index.html:45
 msgid "Espace Macramé"
 msgstr "Macrame Studio – Handwoven jewelry and more"
 
-#: .\core\templates\core\index.html:46
+#: .\core\templates\core\index.html:49
 msgid "Création sur une base de "
 msgstr "Discover the beauty of "
 
-#: .\core\templates\core\index.html:47
+#: .\core\templates\core\index.html:50
 msgid "Chaque bracelet macramé, chaque paire "
 msgstr ""
 
-#: .\core\templates\core\index.html:48
+#: .\core\templates\core\index.html:51
 msgid "Des créations inspirées par la nature, façonnées à la main, une à une."
 msgstr "Inspired by nature, each piece is handcrafted, one by one."
 
-#: .\core\templates\core\index.html:57
+#: .\core\templates\core\index.html:60
 msgid "➤ Parcourez les bijoux et accessoires en macramé faits main"
 msgstr "➤ Explore our handmade macramé jewelry and accessories"
 
-#: .\core\templates\core\index.html:65
+#: .\core\templates\core\index.html:68
 msgid "Création sur Mesure"
 msgstr "Custom Creations – Bring Your Vision to Life"
 
-#: .\core\templates\core\index.html:73
+#: .\core\templates\core\index.html:76
 msgid "Une idée, un Projet ?"
 msgstr ""
 "Are you dreaming of a personalized bag, a unique leather dog collar, or a "
 "finely tooled leather piece?"
 
-#: .\core\templates\core\index.html:74
+#: .\core\templates\core\index.html:77
 msgid "Mon plus grand plaisir, c'est de réaliser des créations"
 msgstr "I offer a service of "
 
-#: .\core\templates\core\index.html:80
+#: .\core\templates\core\index.html:83
 msgid "➤ Créez votre pièce unique avec une commande personnalisée"
 msgstr "➤ Design your unique piece with a custom request"
 
-#: .\core\templates\core\index.html:88
+#: .\core\templates\core\index.html:91
 msgid "Fusion cuir, macramé et pierres décoratives"
 msgstr "A Blend of Leather, Macrame & Decorative Stones"
 
-#: .\core\templates\core\index.html:95
+#: .\core\templates\core\index.html:98
 msgid "Quand les matières se rencontrent, naissent des créations singulières."
 msgstr "When materials meet, unique creations are born."
 
-#: .\core\templates\core\index.html:96
+#: .\core\templates\core\index.html:99
 msgid "Certaines de mes créations sont dites"
 msgstr "My "
 
-#: .\core\templates\core\index.html:102
+#: .\core\templates\core\index.html:105
 msgid "➤ Découvrir les produits hybrides"
 msgstr "➤ Discover the hybrid creations"
 
