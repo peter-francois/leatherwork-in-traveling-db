@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 10:31+0200\n"
+"POT-Creation-Date: 2026-07-03 12:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -484,9 +484,9 @@ msgstr "Product images"
 #, fuzzy
 #| msgid "Meta description index"
 msgid "Description"
-msgstr "Description"
-"Discover handcrafted bags and wallets, along with boho jewelry in leather "
-"and macramé. Each piece is designed with passion and originality."
+msgstr ""
+"DescriptionDiscover handcrafted bags and wallets, along with boho jewelry in "
+"leather and macramé. Each piece is designed with passion and originality."
 
 #: .\catalog\templates\catalog\product_detail.html:66
 #, fuzzy
@@ -903,29 +903,13 @@ msgstr "Leather Workshop – Handmade Bags, Wallets & Accessories"
 msgid "Collection de modèles en "
 msgstr "Explore our exclusive collection of "
 
-#: .\core\templates\core\index.html:24
-msgid "Cuir"
-msgstr "handcrafted leather goods"
-
-#: .\core\templates\core\index.html:24
-msgid " conçue avec passion et savoir-faire."
-msgstr ", made with care and precision."
-
 #: .\core\templates\core\index.html:25
-msgid ""
-"Chaque pièce – sac en cuir, portefeuille, ceinture ou accessoire – est "
-"réalisée avec des matériaux de qualité et un souci du détail."
+msgid "Chaque pièce – sac en cuir,"
 msgstr ""
-"From leather bags and wallets to belts and accessories, each item is "
-"carefully designed using high-quality leather and traditional techniques."
 
 #: .\core\templates\core\index.html:26
-msgid ""
-"Chaque modèle reflète un travail du cuir authentique, au service de "
-"l’originalité et de la qualité."
+msgid "Un cadeau artisanal en cuir qui traverse le temps."
 msgstr ""
-"Each model reflects an authentic leatherwork, serving originality and "
-"quality."
 
 #: .\core\templates\core\index.html:35
 msgid "➤ Découvrez toute la collection de créations en cuir"
@@ -939,25 +923,9 @@ msgstr "Macrame Studio – Handwoven jewelry and more"
 msgid "Création sur une base de "
 msgstr "Discover the beauty of "
 
-#: .\core\templates\core\index.html:46
-msgid "tissage de fils"
-msgstr "macrame art"
-
-#: .\core\templates\core\index.html:46
-msgid ""
-", une technique de tissage de fils qui permet de créer des pièces uniques : "
-"suspensions murales, porte-plantes, bijoux, et bien plus encore. Des objets "
-"déco bohèmes, doux et authentiques."
-msgstr ""
-" – a delicate knotting technique used to create elegant and unique pieces. "
-
 #: .\core\templates\core\index.html:47
-msgid ""
-"Chaque bracelet macramé, chaque paire de boucles ou collier tissé est pensé "
-"pour sublimer votre style avec douceur et poésie."
+msgid "Chaque bracelet macramé, chaque paire "
 msgstr ""
-"Each macrame bracelet, pair of earrings or necklace is carefully designed "
-"with love to enhance your style with grace and poetry."
 
 #: .\core\templates\core\index.html:48
 msgid "Des créations inspirées par la nature, façonnées à la main, une à une."
@@ -981,59 +949,23 @@ msgstr ""
 msgid "Mon plus grand plaisir, c'est de réaliser des créations"
 msgstr "I offer a service of "
 
-#: .\core\templates\core\index.html:74
-msgid "entièrement personnalisés"
-msgstr "fully custom-made creations "
-
-#: .\core\templates\core\index.html:74
-msgid "que ce soit en maroquinerie ou en macramé."
-msgstr "to bring your ideas to life, whether it's leather goods or macramé."
-
-#: .\core\templates\core\index.html:75
-msgid "Mon objectif : transformer votre idée en un"
-msgstr "Together, we design a piece that reflects who you are: "
-
-#: .\core\templates\core\index.html:75
-msgid "qui vous ressemble."
-msgstr "entirely handcrafted, built to last, and born from your own idea."
-
-#: .\core\templates\core\index.html:81
+#: .\core\templates\core\index.html:80
 msgid "➤ Créez votre pièce unique avec une commande personnalisée"
 msgstr "➤ Design your unique piece with a custom request"
 
-#: .\core\templates\core\index.html:89
+#: .\core\templates\core\index.html:88
 msgid "Fusion cuir, macramé et pierres décoratives"
 msgstr "A Blend of Leather, Macrame & Decorative Stones"
 
-#: .\core\templates\core\index.html:96
+#: .\core\templates\core\index.html:95
 msgid "Quand les matières se rencontrent, naissent des créations singulières."
 msgstr "When materials meet, unique creations are born."
 
-#: .\core\templates\core\index.html:97
+#: .\core\templates\core\index.html:96
 msgid "Certaines de mes créations sont dites"
 msgstr "My "
 
-#: .\core\templates\core\index.html:97
-msgid "hybrides"
-msgstr "hybrid "
-
-#: .\core\templates\core\index.html:97
-msgid ""
-"car elles mêlent différentes techniques artisanales, comme le cuir, le "
-"macramé, et l'ajout de pierres décoratives naturelles."
-msgstr ""
-"pieces combine leather, macramé weaving, and decorative stones to bring to "
-"life one-of-a-kind macramé jewelry, sometimes enhanced with finely crafted "
-"leather accessories."
-
-#: .\core\templates\core\index.html:98
-msgid ""
-"Le résultat ? Des pièces originales, pleines de charme et d’authenticité."
-msgstr ""
-"It’s a world where textures, craftsmanship, and love come together to reveal "
-"soulful creations."
-
-#: .\core\templates\core\index.html:104
+#: .\core\templates\core\index.html:102
 msgid "➤ Découvrir les produits hybrides"
 msgstr "➤ Discover the hybrid creations"
 
@@ -1127,6 +1059,73 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid ""
+#~ "Le résultat ? Des pièces originales, pleines de charme et d’authenticité."
+#~ msgstr ""
+#~ "It’s a world where textures, craftsmanship, and love come together to "
+#~ "reveal soulful creations."
+
+#~ msgid "hybrides"
+#~ msgstr "hybrid "
+
+#~ msgid ""
+#~ "car elles mêlent différentes techniques artisanales, comme le cuir, le "
+#~ "macramé, et l'ajout de pierres décoratives naturelles."
+#~ msgstr ""
+#~ "pieces combine leather, macramé weaving, and decorative stones to bring "
+#~ "to life one-of-a-kind macramé jewelry, sometimes enhanced with finely "
+#~ "crafted leather accessories."
+
+#~ msgid "Mon objectif : transformer votre idée en un"
+#~ msgstr "Together, we design a piece that reflects who you are: "
+
+#~ msgid "entièrement personnalisés"
+#~ msgstr "fully custom-made creations "
+
+#~ msgid "que ce soit en maroquinerie ou en macramé."
+#~ msgstr "to bring your ideas to life, whether it's leather goods or macramé."
+
+#~ msgid "qui vous ressemble."
+#~ msgstr "entirely handcrafted, built to last, and born from your own idea."
+
+#~ msgid "tissage de fils"
+#~ msgstr "macrame art"
+
+#~ msgid ""
+#~ ", une technique de tissage de fils qui permet de créer des pièces "
+#~ "uniques : suspensions murales, porte-plantes, bijoux, et bien plus "
+#~ "encore. Des objets déco bohèmes, doux et authentiques."
+#~ msgstr ""
+#~ " – a delicate knotting technique used to create elegant and unique "
+#~ "pieces. "
+
+#~ msgid ""
+#~ "Chaque bracelet macramé, chaque paire de boucles ou collier tissé est "
+#~ "pensé pour sublimer votre style avec douceur et poésie."
+#~ msgstr ""
+#~ "Each macrame bracelet, pair of earrings or necklace is carefully designed "
+#~ "with love to enhance your style with grace and poetry."
+
+#~ msgid "Cuir"
+#~ msgstr "handcrafted leather goods"
+
+#~ msgid " conçue avec passion et savoir-faire."
+#~ msgstr ", made with care and precision."
+
+#~ msgid ""
+#~ "Chaque pièce – sac en cuir, portefeuille, ceinture ou accessoire – est "
+#~ "réalisée avec des matériaux de qualité et un souci du détail."
+#~ msgstr ""
+#~ "From leather bags and wallets to belts and accessories, each item is "
+#~ "carefully designed using high-quality leather and traditional techniques."
+
+#~ msgid ""
+#~ "Chaque modèle reflète un travail du cuir authentique, au service de "
+#~ "l’originalité et de la qualité."
+#~ msgstr ""
+#~ "Each model reflects an authentic leatherwork, serving originality and "
+#~ "quality."
 
 #~ msgid "Le fichier est trop volumineux. La taille maximale est de 10 Mo."
 #~ msgstr "The file is too large. The maximum size is 10 MB."
