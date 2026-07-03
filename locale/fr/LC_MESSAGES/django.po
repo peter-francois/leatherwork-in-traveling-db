@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 12:19+0200\n"
+"POT-Creation-Date: 2026-07-03 13:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -911,90 +911,94 @@ msgstr ""
 msgid "Maroquinerie & macramé faits main - Leather Work In Traveling DB"
 msgstr "Artisan maroquinier & bijoux macramé faits main"
 
-#: .\core\templates\core\index.html:11
+#: .\core\templates\core\index.html:12
 msgid "Bienvenue dans notre boutique de maroquinerie et macramé faits main"
-msgstr ""
-"Artisan maroquinier & créateur macramé – Bijoux et accessoires faits main "
+msgstr "Artisan maroquinier & créateur macramé"
 
-#: .\core\templates\core\index.html:20
+#: .\core\templates\core\index.html:13
+msgid "Bijoux et accessoires faits main,"
+msgstr ""
+"Bijoux et accessoires faits main, réalisés avec soin dans notre atelier."
+
+#: .\core\templates\core\index.html:23
 msgid "Espace Maroquinerie"
 msgstr "Maroquinerie artisanale – Cuir repoussé, ciselé & façonné à la main"
 
-#: .\core\templates\core\index.html:24
+#: .\core\templates\core\index.html:27
 msgid "Collection de modèles en "
 msgstr ""
 "Sacs, ceintures et accessoires en cuir repoussé travaillés selon des "
 "techniques artisanales de repoussage cuir et de ciselage. "
 
-#: .\core\templates\core\index.html:25
+#: .\core\templates\core\index.html:28
 msgid "Chaque pièce – sac en cuir,"
 msgstr "Chaque pièce est unique, pensée pour durer."
 
-#: .\core\templates\core\index.html:26
+#: .\core\templates\core\index.html:29
 msgid "Un cadeau artisanal en cuir qui traverse le temps."
 msgstr "Un cadeau artisanal en cuir qui traverse le temps."
 
-#: .\core\templates\core\index.html:35
+#: .\core\templates\core\index.html:38
 msgid "➤ Découvrez toute la collection de créations en cuir"
 msgstr "➤ Découvrir les créations en cuir repoussé"
 
-#: .\core\templates\core\index.html:42
+#: .\core\templates\core\index.html:45
 msgid "Espace Macramé"
 msgstr "Bijoux macramé & bracelet bohème – Créations tissées à la main"
 
-#: .\core\templates\core\index.html:46
+#: .\core\templates\core\index.html:49
 msgid "Création sur une base de "
 msgstr ""
-"Bracelet macramé, collier, bracelet bohème et autres bijoux macramé imaginés comme des "
-"pièces libres."
+"Bracelet macramé, collier, bracelet bohème et autres bijoux macramé imaginés "
+"comme des pièces libres."
 
-#: .\core\templates\core\index.html:47
+#: .\core\templates\core\index.html:50
 msgid "Chaque bracelet macramé, chaque paire "
 msgstr ""
 "Chaque création est tissée à la main, inspirée par la nature et les voyages."
 
-#: .\core\templates\core\index.html:48
+#: .\core\templates\core\index.html:51
 msgid "Des créations inspirées par la nature, façonnées à la main, une à une."
 msgstr "Un cadeau artisanal original et unique."
 
-#: .\core\templates\core\index.html:57
+#: .\core\templates\core\index.html:60
 msgid "➤ Parcourez les bijoux et accessoires en macramé faits main"
 msgstr "➤ Parcourir les bijoux et accessoires macramé"
 
-#: .\core\templates\core\index.html:65
+#: .\core\templates\core\index.html:68
 msgid "Création sur Mesure"
 msgstr "Création sur mesure – Votre pièce unique en cuir ou macramé"
 
-#: .\core\templates\core\index.html:73
+#: .\core\templates\core\index.html:76
 msgid "Une idée, un Projet ?"
 msgstr "Vous cherchez un cadeau artisanal vraiment unique ?"
 
-#: .\core\templates\core\index.html:74
+#: .\core\templates\core\index.html:77
 msgid "Mon plus grand plaisir, c'est de réaliser des créations"
 msgstr ""
 "Je crée sur mesure sacs en cuir, pièces en repoussage cuir et créations "
 "macramé entièrement façonnées à la main selon vos envies."
 
-#: .\core\templates\core\index.html:80
+#: .\core\templates\core\index.html:83
 msgid "➤ Créez votre pièce unique avec une commande personnalisée"
 msgstr "➤ Lancer votre projet sur mesure"
 
-#: .\core\templates\core\index.html:88
+#: .\core\templates\core\index.html:91
 msgid "Fusion cuir, macramé et pierres décoratives"
 msgstr "Créations hybrides – Cuir ciselé, macramé & pierres naturelles"
 
-#: .\core\templates\core\index.html:95
+#: .\core\templates\core\index.html:98
 msgid "Quand les matières se rencontrent, naissent des créations singulières."
 msgstr ""
 "Quand le cuir ciselé rencontre le tissage macramé et les pierres "
 "décoratives, naissent des bijoux macramé uniques aux textures singulières."
 
-#: .\core\templates\core\index.html:96
+#: .\core\templates\core\index.html:99
 msgid "Certaines de mes créations sont dites"
 msgstr ""
 "Des pièces pleines d'âme, entre artisan maroquinier et créateur macramé."
 
-#: .\core\templates\core\index.html:102
+#: .\core\templates\core\index.html:105
 msgid "➤ Découvrir les produits hybrides"
 msgstr "➤ Découvrir les créations hybrides"
 
