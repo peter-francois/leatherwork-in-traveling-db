@@ -129,7 +129,7 @@ class ProductAdmin(TranslationAdmin):
             if deleted_count > 0:
                 messages.success(
                     request,
-                    _("{count} article(s) retiré(s) du panier.").format(
+                    "{count} article(s) retiré(s) du panier.".format(
                         count=deleted_count
                     ),
                 )
