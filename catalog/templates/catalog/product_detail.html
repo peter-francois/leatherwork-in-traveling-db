@@ -18,11 +18,13 @@
   <link rel="alternate"
         href="https://www.leatherworkintravelingdb.com{{ url_fr }}"
         hreflang="x-default">
-  <meta name="robots" content="index, follow">
+  {% block robots %}
+    <meta name="robots" content="noindex, follow">
+  {% endblock robots %}
 {% endblock head %}
 {% load static %}
-{% block meta-description %}{{ product.description|default:product.name }}{% endblock meta-description %}
-{% block title %}{{ product.name }} - Leather Work In Traveling DB{% endblock title %}
+{% block meta-description %}{{ product.meta_description|default:product.name }}{% endblock meta-description %}
+{% block title %}{{ product.name }} - Leather Work{% endblock title %}
 {% block header %}
   <h1 id="nom-article">{{ product.name }}</h1>
 {% endblock header %}

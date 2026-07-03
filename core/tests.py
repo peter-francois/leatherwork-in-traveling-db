@@ -1,7 +1,12 @@
 from django.contrib.sessions.backends.db import SessionStore
 from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
+
+from catalog.models import Product
+from catalog.tests import make_product
+from core.sitemaps_category import CategorySitemap
+from core.sitemaps_product_detail import ProductDetailSitemap
 
 from .services import generate_sitemap_index, get_session_expiration
 
@@ -136,3 +141,104 @@ class GetSessionExpirationTest(TestCase):
 
         result = get_session_expiration(request)
         self.assertIsNone(result)
+
+
+class ProductDetailSitemapTest(TestCase):
+    """Tests for ProductDetailSitemap"""
+
+    def setUp(self):
+        self.product = make_product(available=True)
+        setattr(self.product, "name_fr", "Bracelet tressage magique")
+        setattr(self.product, "name_en", "Magic braided bracket")
+        self.product.save()
+
+        self.sitemap_fr = ProductDetailSitemap(language="fr")
+        self.sitemap_en = ProductDetailSitemap(language="en")
+
+    def test_items_returns_all_products(self):
+        """Should return all products"""
+        self.assertEqual(
+            list(self.sitemap_fr.items()),
+            list(Product.objects.all()),
+        )
+
+    def test_lastmod_returns_updated_at(self):
+        """Should return the product's updated_at date"""
+        self.assertEqual(
+            self.sitemap_fr.lastmod(self.product),
+            self.product.updated_at,
+        )
+
+    def test_location_fr_uses_french_slug(self):
+        """Should generate URL with French slug"""
+        url = self.sitemap_fr.location(self.product)
+        self.assertIn("bracelet-tressage-magique", url)
+        self.assertIn(str(self.product.id), url)
+        self.assertIn("maroquinerie", url)
+
+    def test_location_en_uses_english_slug(self):
+        """Should generate URL with English slug"""
+        url = self.sitemap_en.location(self.product)
+        self.assertIn("magic-braided-bracket", url)
+        self.assertIn(str(self.product.id), url)
+
+    def test_location_uses_lowercase_category(self):
+        """Should use lowercase category in URL"""
+        url = self.sitemap_fr.location(self.product)
+        self.assertNotIn("Maroquinerie", url)
+        self.assertIn("maroquinerie", url)
+
+    def test_priority(self):
+        """Should have priority 0.9"""
+        self.assertEqual(self.sitemap_fr.priority, 0.9)
+
+    def test_changefreq(self):
+        """Should have weekly changefreq"""
+        self.assertEqual(self.sitemap_fr.changefreq, "weekly")
+
+
+class CategorySitemapTest(TestCase):
+    """Tests for CategorySitemap"""
+
+    def setUp(self):
+        self.sitemap_fr = CategorySitemap(language="fr")
+        self.sitemap_en = CategorySitemap(language="en")
+
+    def test_items_returns_all_category_urls(self):
+        """Should return all four category URL names"""
+        items = self.sitemap_fr.items()
+        self.assertIn("catalog:product_list", items)
+        self.assertIn("catalog:leather_list", items)
+        self.assertIn("catalog:macrame_list", items)
+        self.assertIn("catalog:hybrid_list", items)
+        self.assertEqual(len(items), 4)
+
+    def test_location_fr_returns_french_url(self):
+        """Should return French URL for product_list"""
+        with translation.override("fr"):
+            url = self.sitemap_fr.location("catalog:product_list")
+        self.assertIn("/fr/", url)
+
+    def test_location_en_returns_english_url(self):
+        """Should return English URL for product_list"""
+        with translation.override("en"):
+            url = self.sitemap_en.location("catalog:product_list")
+        self.assertIn("/en/", url)
+
+    def test_priority(self):
+        """Should have priority 0.8"""
+        self.assertEqual(self.sitemap_fr.priority, 0.8)
+
+    def test_changefreq(self):
+        """Should have weekly changefreq"""
+        self.assertEqual(self.sitemap_fr.changefreq, "weekly")
+
+    def test_lastmod_returns_current_time(self):
+        """Should return a recent datetime for lastmod"""
+        from django.utils import timezone
+
+        before = timezone.now()
+        lastmod = self.sitemap_fr.lastmod("catalog:product_list")
+        after = timezone.now()
+        self.assertGreaterEqual(lastmod, before)
+        self.assertLessEqual(lastmod, after)
