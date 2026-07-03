@@ -63,12 +63,12 @@ class ProductAdmin(TranslationAdmin):
     actions = ["make_available", "make_unavailable", "remove_from_cart"]
     list_display = (
         "name",
+        "description",
         "category",
         "available",
         "pending_in_cart",
         "on_demand",
         "product_type",
-        "description",
         "price",
     )
     search_fields = ["name", "category", "product_type"]
@@ -82,9 +82,10 @@ class ProductAdmin(TranslationAdmin):
             {
                 "fields": (
                     "name",
+                    "meta_description",
+                    "description",
                     "category",
                     "product_type",
-                    "description",
                     "price",
                     "discount",
                     "available",
@@ -128,7 +129,7 @@ class ProductAdmin(TranslationAdmin):
             if deleted_count > 0:
                 messages.success(
                     request,
-                    _("{count} article(s) retiré(s) du panier.").format(
+                    "{count} article(s) retiré(s) du panier.".format(
                         count=deleted_count
                     ),
                 )

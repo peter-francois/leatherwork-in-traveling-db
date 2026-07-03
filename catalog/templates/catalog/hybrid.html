@@ -2,20 +2,10 @@
 {% load static %}
 {% load i18n %}
 {% block meta-description %}
-  {% trans "Découvrez nos créations uniques mêlant maroquinerie et macramé. Accessoires et bijoux alliant l’élégance du cuir à la finesse du tissage." %} Page
-  {% if products.has_other_pages %}
-    {{ products.number }}
-  {% else %}
-    1
-  {% endif %}
+  {% trans "Découvrez nos créations uniques mêlant maroquinerie et macramé. Accessoires et bijoux alliant l'élégance du cuir à la finesse du tissage." %}
 {% endblock meta-description %}
 {% block title %}
-  {% trans "Créations hybrides maroquinerie & macramé - Accessoires uniques" %} | Page
-  {% if products.has_other_pages %}
-    {{ products.number }}
-  {% else %}
-    1
-  {% endif %}
+  {% trans "Créations hybrides maroquinerie & macramé - Accessoires uniques" %}
 {% endblock title %}
 {% block header %}
   <h1 id="title_hybride">{% trans "Accessoires uniques alliant maroquinerie et macramé" %}</h1>
