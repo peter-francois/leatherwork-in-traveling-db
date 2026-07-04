@@ -888,17 +888,17 @@ msgstr ""
 
 #: .\core\templates\core\index.html:8
 msgid "Maroquinerie & macramé faits main - Leather Work In Traveling DB"
-msgstr "Handmade Leather Goods & Macramé Jewelry | Independent Maker"
+msgstr "Handmade Leather Goods & Macrame Jewelry"
 
 #: .\core\templates\core\index.html:12
 msgid "Bienvenue dans notre boutique de maroquinerie et macramé faits main"
 msgstr ""
-"Handmade Leather Goods & Macramé Jewelry"
+"Handmade Leather Goods & Macrame Jewelry"
 
 #: .\core\templates\core\index.html:13
 msgid "Bijoux et accessoires faits main,"
 msgstr ""
-"Handmade leather wallets, boho earrings and macramé bracelets, crafted "
+"Handmade leather wallets, boho earrings and macrame bracelets, crafted "
 "one by one."
 
 #: .\core\templates\core\index.html:23
