@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 13:05+0200\n"
+"POT-Creation-Date: 2026-07-04 07:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -740,96 +740,91 @@ msgid ""
 "maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre "
 "service pour réaliser des pièces uniques et personnalisées."
 msgstr ""
-"Offrez-vous un sac personnalisé ou un accessoire unique grâce à nos "
-"créations sur mesure. Chaque pièce est conçue selon vos envies et vos "
-"besoins."
+"Commandez votre création sur mesure : sac cuir sur mesure, repoussage cuir, "
+"ceinture western ou macramé personnalisé. Cadeau cuir homme ou femme fait "
+"main."
 
 #: .\core\templates\core\custom_creation.html:8
 msgid "Accessoires cuir & macramé personnalisés | Création sur mesure"
-msgstr "Créations sur mesure - Sac personnalisé et accessoires"
+msgstr "Création sur mesure cuir & macramé – Cadeau artisanal unique"
 
-#: .\core\templates\core\custom_creation.html:11
+#: .\core\templates\core\custom_creation.html:12
 msgid ""
 "Création sur mesure de maroquinerie et macramé - Personnalisez vos "
 "accessoires"
-msgstr ""
-"Créez votre sac personnalisé ou vos accessoires sur mesure - Découvrez notre "
-"processus de création"
+msgstr "Créez votre pièce unique – Création sur mesure cuir & macramé"
 
-#: .\core\templates\core\custom_creation.html:15
+#: .\core\templates\core\custom_creation.html:13
+msgid "Sac cuir sur mesure, repoussage cuir,"
+msgstr ""
+"Sac cuir sur mesure, repoussage cuir ou création macramé personnalisée, "
+"offrez-vous un cadeau artisanal qui vous ressemble."
+
+#: .\core\templates\core\custom_creation.html:18
 msgid "title_custom_creation"
 msgstr "Un projet en tête ? C'est ici que tout commence"
 
-#: .\core\templates\core\custom_creation.html:16
+#: .\core\templates\core\custom_creation.html:19
 msgid "text_custom_creation"
 msgstr ""
-"Vous rêvez d’un sac personnalisé, d’un collier cuir pour chien unique ou "
-"d’un accessoire qui vous ressemble ? La création sur mesure vous permet de "
-"donner vie à vos idées. Couleurs, formes, finitions : chaque détail est "
-"pensé avec vous, pour créer une pièce véritablement personnelle. Lancez "
-"votre projet, tout commence ici."
+"Vous rêvez d'un sac cuir sur mesure, d'une ceinture western unique, d'une "
+"sacoche moto cuir artisanale ou d'une création macramé personnalisée ? Que "
+"ce soit pour vous faire plaisir ou offrir un cadeau , je donne vie à vos "
+"idées en cuir repoussé, ciselé ou tissé macramé. Entièrement fait main, de A "
+"à Z."
 
-#: .\core\templates\core\custom_creation.html:19
+#: .\core\templates\core\custom_creation.html:22
 msgid "Votre création sur mesure, étape par étape"
 msgstr "Votre création sur mesure, étape par étape"
 
-#: .\core\templates\core\custom_creation.html:21
-msgid ""
-"Vous souhaitez un accessoire en cuir ou une décoration en macramé "
-"entièrement personnalisé ? Voici comment nous créons ensemble une pièce "
-"unique :"
-msgstr ""
-"Une fois votre projet défini, voici comment nous créons ensemble votre pièce "
-"unique :"
-
-#: .\core\templates\core\custom_creation.html:23
+#: .\core\templates\core\custom_creation.html:25
 msgid "Échange initial :"
 msgstr "Premier échange :"
 
-#: .\core\templates\core\custom_creation.html:23
+#: .\core\templates\core\custom_creation.html:25
 msgid ""
 "Contactez-moi par e-mail ou téléphone pour discuter de votre projet et "
 "obtenir une première estimation."
 msgstr ""
-"Par e-mail ou téléphone, nous discutons de votre projet pour bien cerner vos "
-"attentes et je vous propose une première estimation."
+"Par e-mail ou téléphone, nous discutons de votre projet sur mesure pour "
+"cerner vos attentes et je vous propose une première estimation."
 
-#: .\core\templates\core\custom_creation.html:24
+#: .\core\templates\core\custom_creation.html:26
 msgid "Conception :"
 msgstr "Conception personnalisée :"
 
-#: .\core\templates\core\custom_creation.html:24
+#: .\core\templates\core\custom_creation.html:26
 msgid "Réalisation d’un croquis détaillé et établissement d’un devis précis."
 msgstr ""
 "Je réalise un croquis détaillé et vous fournis un devis précis en fonction "
 "des matériaux, du format et des finitions souhaitées."
 
-#: .\core\templates\core\custom_creation.html:25
+#: .\core\templates\core\custom_creation.html:27
 msgid "Début de la fabrication :"
 msgstr "Lancement de la fabrication :"
 
-#: .\core\templates\core\custom_creation.html:25
+#: .\core\templates\core\custom_creation.html:27
 msgid "Un acompte de 1/3 du prix est demandé pour lancer la production."
 msgstr ""
 "Une fois l’acompte de 1/3 versé, je commence la fabrication dans mon atelier."
 
-#: .\core\templates\core\custom_creation.html:26
+#: .\core\templates\core\custom_creation.html:28
 msgid "Validation :"
 msgstr "Ajustements & validation :"
 
-#: .\core\templates\core\custom_creation.html:26
+#: .\core\templates\core\custom_creation.html:28
 msgid ""
 "Je vous envoie des visuels pour finaliser les motifs et ajuster les détails "
 "si nécessaire."
 msgstr ""
 "Je vous envoie des visuels pour finaliser les motifs et ajuster les détails "
-"si nécessaire."
+"de votre pièce sur mesure."
 
-#: .\core\templates\core\custom_creation.html:27
+#: .\core\templates\core\custom_creation.html:29
 msgid "Livraison :"
 msgstr "Livraison soignée :"
 
-#: .\core\templates\core\custom_creation.html:27
+#: .\core\templates\core\custom_creation.html:29
 msgid ""
 "Une fois le paiement final effectué, votre création est expédiée en toute "
 "sécurité avec assurance."
@@ -837,67 +832,56 @@ msgstr ""
 "Une fois le solde réglé, votre création sur mesure est expédiée avec soin et "
 "assurance, prête à rejoindre votre quotidien."
 
-#: .\core\templates\core\custom_creation.html:32
+#: .\core\templates\core\custom_creation.html:34
 msgid "Découvrez mes réalisations"
 msgstr ""
 "Exemples de créations : portefeuilles cuir personnalisé, colliers pour chien…"
 
-#: .\core\templates\core\custom_creation.html:52
-msgid "Le travail du cuir : repoussage, découpe et finitions à la main"
-msgstr "Le travail du cuir : repoussage, découpe et finitions à la main"
-
 #: .\core\templates\core\custom_creation.html:54
-msgid "Intro creation step"
+msgid "Pourquoi choisir mes créations unique?"
+msgstr "Pourquoi choisir mes créations sur mesure?"
+
+#: .\core\templates\core\custom_creation.html:57
+#, fuzzy, python-format
+#| msgid "Fabrication 100%% fait main"
+msgid "Fabrication 100%% fait main"
 msgstr ""
+"Fabrication 100% fait main avec des matériaux sélectionnés lors de mes "
+"voyages à travers l'Europe."
 
 #: .\core\templates\core\custom_creation.html:58
-msgid "Pourquoi choisir mes créations unique?"
-msgstr "Pourquoi choisir mes créations unique?"
-
-#: .\core\templates\core\custom_creation.html:61
-msgid "Fabrication "
-msgstr "Fabrication "
-
-#: .\core\templates\core\custom_creation.html:61
-msgid ""
-"à la main avec des matériaux soigneusement sélectionnés lors de mes voyages."
-msgstr ""
-"à la main avec des matériaux soigneusement sélectionnés lors de mes voyages."
-
-#: .\core\templates\core\custom_creation.html:62
 msgid ""
 "Un savoir-faire enrichi par des échanges avec des créateurs et spécialistes "
 "européens."
 msgstr ""
-"Un savoir-faire enrichi par des échanges avec des créateurs et spécialistes "
-"européens."
+"Techniques de repoussage cuir et de création macramé enrichies par des "
+"échanges avec des créateurs européens."
 
-#: .\core\templates\core\custom_creation.html:63
+#: .\core\templates\core\custom_creation.html:59
 msgid ""
 "Chaque pièce porte l’empreinte du voyage et de la culture qui l’a inspirée."
 msgstr ""
 "Chaque pièce porte l’empreinte du voyage et de la culture qui l’a inspirée."
 
-#: .\core\templates\core\custom_creation.html:64
+#: .\core\templates\core\custom_creation.html:60
 msgid ""
 "Des créations personnalisées, façonnées avec passion et souci du détail."
-msgstr ""
-"Des créations personnalisées, façonnées avec passion et souci du détail."
+msgstr "Un cadeau artisanal façonné avec passion et souci du détail."
 
-#: .\core\templates\core\custom_creation.html:69
+#: .\core\templates\core\custom_creation.html:65
 msgid "Contactez-moi"
-msgstr "Contactez-moi pour votre projet sur mesure"
+msgstr "Lancez votre projet sur mesure"
 
-#: .\core\templates\core\custom_creation.html:71
+#: .\core\templates\core\custom_creation.html:67
 msgid ""
 "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie "
 "nomades ? Écrivez-moi !"
 msgstr ""
-"Envie de créer quelque chose de personnel ou d’offrir un cadeau fait main "
-"qui a du sens ? Je vous accompagne dans chaque étape de votre création sur "
-"mesure."
+"Envie d'un cadeau cuir homme ou femme vraiment unique ? D'une pièce en cuir "
+"repoussé ou d'une création macramé personnalisée qui a du sens ? Contactez-"
+"moi — je vous accompagne à chaque étape."
 
-#: .\core\templates\core\custom_creation.html:78
+#: .\core\templates\core\custom_creation.html:74
 msgid "Numéro de téléphone :"
 msgstr "Numéro de téléphone :"
 
@@ -1093,6 +1077,37 @@ msgstr "informations-legales"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "politique-de-confidentialite"
+
+#~ msgid "Offrez-vous un cadeau artisanal"
+#~ msgstr "Offrez-vous un cadeau artisanal fait main qui vous ressemble."
+
+#~ msgid ""
+#~ "à la main avec des matériaux soigneusement sélectionnés lors de mes "
+#~ "voyages."
+#~ msgstr ""
+#~ "à la main avec des matériaux soigneusement sélectionnés lors de mes "
+#~ "voyages."
+
+#~ msgid "Le travail du cuir : repoussage, découpe et finitions à la main"
+#~ msgstr "Le travail du cuir : repoussage, découpe et finitions à la main"
+
+#~ msgid ""
+#~ "Vous souhaitez un accessoire en cuir ou une décoration en macramé "
+#~ "entièrement personnalisé ? Voici comment nous créons ensemble une pièce "
+#~ "unique :"
+#~ msgstr ""
+#~ "Une fois votre projet défini, voici comment nous créons ensemble votre "
+#~ "pièce unique :"
+
+#, fuzzy
+#~| msgid "text_custom_creation"
+#~ msgid "text_custom_creation2"
+#~ msgstr ""
+#~ "Vous rêvez d’un sac personnalisé, d’un collier cuir pour chien unique ou "
+#~ "d’un accessoire qui vous ressemble ? La création sur mesure vous permet "
+#~ "de donner vie à vos idées. Couleurs, formes, finitions : chaque détail "
+#~ "est pensé avec vous, pour créer une pièce véritablement personnelle. "
+#~ "Lancez votre projet, tout commence ici."
 
 #~ msgid ""
 #~ "Le résultat ? Des pièces originales, pleines de charme et d’authenticité."
