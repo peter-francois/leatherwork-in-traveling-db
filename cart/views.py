@@ -2,6 +2,7 @@ import logging
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext_lazy as _
 
 from cart.services import convert_centimes_to_euros, get_stripe_session
 from core.services import get_session_expiration
@@ -29,15 +30,23 @@ def cart(request):
     )
     expiration_date = get_session_expiration(request)
 
+    context = {
+        "breadcrumbs": [
+            {
+                "label": _("Panier"),
+                "url": None,
+            }
+        ],
+        "expiration_date": expiration_date,
+        "items": items,
+        "total": total,
+        "latest_cgv": latest_cgv,
+    }
+
     return render(
         request,
         "cart/cart.html",
-        {
-            "expiration_date": expiration_date,
-            "items": items,
-            "total": total,
-            "latest_cgv": latest_cgv,
-        },
+        context,
     )
 
 
@@ -52,14 +61,22 @@ def success_view(request):
         cart = get_object_or_404(Cart, uuid=cart_uuid)
         total_verified_euros = convert_centimes_to_euros(session.amount_total)
 
+        context = {
+            "breadcrumbs": [
+                {
+                    "label": _("Paiement reussi"),
+                    "url": None,
+                }
+            ],
+            "order_id": cart.id,
+            "total_amount": total_verified_euros,
+            "payment_date": cart.paid_at if cart.paid_at else "Non disponible",
+        }
+
         return render(
             request,
             "cart/success.html",
-            {
-                "order_id": cart.id,
-                "total_amount": total_verified_euros,
-                "payment_date": cart.paid_at if cart.paid_at else "Non disponible",
-            },
+            context,
         )
 
     except ValueError as e:
@@ -68,7 +85,15 @@ def success_view(request):
 
 
 def cancel_view(request):
-    return render(request, "cart/cancel.html")
+    context = {
+        "breadcrumbs": [
+            {
+                "label": _("Paiement annulé"),
+                "url": None,
+            }
+        ]
+    }
+    return render(request, "cart/cancel.html", context)
 
 
 def cart_count(request):

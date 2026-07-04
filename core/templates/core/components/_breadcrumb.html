@@ -1,10 +1,10 @@
 {% load i18n %}
-<nav aria-label="{% trans 'Fil d’Ariane' %}" class="breadcrumb">
-  <ol>
-    <li>
-      <a href="{% url 'core:index' %}">{% trans "Accueil" %}</a>
-    </li>
-    {% if breadcrumbs %}
+{% if breadcrumbs %}
+  <nav aria-label="{% trans 'Fil d’Ariane' %}" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="{% url 'core:index' %}">{% trans "Accueil" %}</a>
+      </li>
       {% for crumb in breadcrumbs %}
         <li {% if forloop.last %}aria-current="page"{% endif %}>
           {% if crumb.url and not forloop.last %}
@@ -14,6 +14,6 @@
           {% endif %}
         </li>
       {% endfor %}
-    {% endif %}
-  </ol>
-</nav>
+    </ol>
+  </nav>
+{% endif %}

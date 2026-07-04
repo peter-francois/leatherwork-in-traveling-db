@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 08:42+0200\n"
+"POT-Creation-Date: 2026-07-04 09:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,6 +207,18 @@ msgstr "payment-successful/"
 #: .\cart\urls.py:12
 msgid "paiement_annule/"
 msgstr "payment-cancelled/"
+
+#: .\cart\views.py:36
+msgid "Panier"
+msgstr "Cart"
+
+#: .\cart\views.py:67
+msgid "Paiement reussi"
+msgstr "Payment successful"
+
+#: .\cart\views.py:91
+msgid "Paiement annulé"
+msgstr "Payment Cancelled"
 
 #: .\catalog\constants.py:20
 #, fuzzy
@@ -600,11 +612,11 @@ msgid ""
 "Découvrez des produits authentiques en maroquinerie et macramé faits main."
 msgstr "Discover authentic handmade leather and macrame products."
 
-#: .\core\templates\core\components\_breadcrumb.html:4
+#: .\core\templates\core\components\_breadcrumb.html:3
 msgid "Fil d’Ariane"
 msgstr "Breadcrumb trail"
 
-#: .\core\templates\core\components\_breadcrumb.html:8
+#: .\core\templates\core\components\_breadcrumb.html:6
 msgid "Accueil"
 msgstr "Home"
 
@@ -984,7 +996,7 @@ msgstr "➤ Discover the hybrid creations"
 msgid "creation-sur-mesure/"
 msgstr "custom-creation/"
 
-#: .\core\views.py:29
+#: .\core\views.py:31
 msgid "Creation sur mesure"
 msgstr "Custom creation"
 
