@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 09:02+0200\n"
+"POT-Creation-Date: 2026-07-04 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,23 +222,17 @@ msgstr "Paiement reussi"
 msgid "Paiement annulé"
 msgstr "Paiement annulé"
 
-#: .\catalog\constants.py:20
-#, fuzzy
-#| msgid "hybrides"
+#: .\catalog\choices.py:6
 msgid "Hybride"
-msgstr "hybrides "
+msgstr "hybride"
 
-#: .\catalog\constants.py:21
-#, fuzzy
-#| msgid "Espace Macramé"
-msgid "Macramés"
-msgstr "Bijoux bohèmes & accessoires macramé – L’art du fil tissé à la main"
+#: .\catalog\choices.py:7
+msgid "Macramé"
+msgstr "Macramé"
 
-#: .\catalog\constants.py:22
-#, fuzzy
-#| msgid "Espace Maroquinerie"
+#: .\catalog\choices.py:8
 msgid "Maroquinerie"
-msgstr "Espace Maroquinerie – Sacs, portefeuilles & accessoires en cuir"
+msgstr "Maroquinerie"
 
 #: .\catalog\forms.py:10
 msgid "Recherche"
@@ -577,11 +571,9 @@ msgstr "produits/"
 msgid "produits/<str:category>/<slug:slug>-<int:product_id>/"
 msgstr "produits/<str:category>/<slug:slug>-<int:product_id>/"
 
-#: .\catalog\views.py:85
-#, fuzzy
-#| msgid "produits/"
+#: .\catalog\views.py:17 .\catalog\views.py:95
 msgid "Produits"
-msgstr "produits/"
+msgstr "Produits"
 
 #: .\core\templates\core\about.html:5
 msgid ""

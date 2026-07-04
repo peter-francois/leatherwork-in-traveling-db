@@ -1,10 +1,19 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.TextChoices):
-    HYBRIDE = "Hybride", "Hybride"
-    MACRAME = "Macrame", "Macrame"
-    MAROQUINERIE = "Maroquinerie", "Maroquinerie"
+    HYBRIDE = "Hybride", _("Hybride")
+    MACRAME = "Macrame", _("Macramé")
+    MAROQUINERIE = "Maroquinerie", _("Maroquinerie")
+
+    @classmethod
+    def get_category_url_name(cls, category):
+        return {
+            cls.HYBRIDE: "catalog:hybrid_list",
+            cls.MACRAME: "catalog:macrame_list",
+            cls.MAROQUINERIE: "catalog:leather_list",
+        }[category]
 
 
 class ProductType(models.TextChoices):
