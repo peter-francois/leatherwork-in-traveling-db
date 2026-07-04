@@ -877,9 +877,7 @@ msgid ""
 "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie "
 "nomades ? Écrivez-moi !"
 msgstr ""
-"Envie d'un cadeau cuir homme ou femme vraiment unique ? D'une pièce en cuir "
-"repoussé ou d'une création macramé personnalisée qui a du sens ? Contactez-"
-"moi — je vous accompagne à chaque étape."
+"Vous avez un projet en tête ? Contactez-moi — je vous accompagne à chaque étape."
 
 #: .\core\templates\core\custom_creation.html:74
 msgid "Numéro de téléphone :"
