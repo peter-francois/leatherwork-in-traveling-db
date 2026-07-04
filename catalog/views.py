@@ -5,7 +5,6 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from .choices import Category
-from .constants import CATEGORY_SLUG_TO_VALUE
 from .models import Product
 from .services import pagination, use_filter
 
@@ -19,7 +18,7 @@ def product_list(request, category=None, template="catalog/product_list.html"):
         }
     ]
     if category:
-        real_category = CATEGORY_SLUG_TO_VALUE.get(category.lower())
+        real_category = Category.from_slug(category)
         if not real_category:
             raise Http404
         products = products.filter(category=real_category)
@@ -75,7 +74,7 @@ def hybrid(request):
 
 
 def product_detail(request, category, slug, product_id):
-    real_category = CATEGORY_SLUG_TO_VALUE.get(category.lower())
+    real_category = Category.from_slug(category)
     if not real_category:
         raise Http404
 

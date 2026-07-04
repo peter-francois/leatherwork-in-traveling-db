@@ -8,6 +8,14 @@ class Category(models.TextChoices):
     MAROQUINERIE = "Maroquinerie", _("Maroquinerie")
 
     @classmethod
+    def from_slug(cls, slug):
+        """Resolve a lowercase URL slug to a Category value."""
+        try:
+            return cls(slug.capitalize())
+        except ValueError:
+            return None
+
+    @classmethod
     def get_category_url_name(cls, category):
         return {
             cls.HYBRIDE: "catalog:hybrid_list",
