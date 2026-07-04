@@ -1545,6 +1545,10 @@ h2.product-name {
     height: 11em;
     width: 11em;
   }
+  .sub-title{
+    width: 70%;
+    margin: auto;
+  }
   /*Index*/
   .category {
     grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));

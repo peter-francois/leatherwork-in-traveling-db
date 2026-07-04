@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 13:05+0200\n"
+"POT-Creation-Date: 2026-07-04 07:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -727,156 +727,146 @@ msgid ""
 "maroquinerie ou macramé selon vos goûts. Je met mon savoir-faire à votre "
 "service pour réaliser des pièces uniques et personnalisées."
 msgstr ""
-"Treat yourself to a custom leather bag or macrame accessory. Unique, "
-"handmade pieces tailored to your style and needs. Made to order with care."
+"Order your custom leather wallet, bag or western leather belt — handmade tooled "
+"leather goods and macrame pieces made to order. A unique leather gift for men or women."
 
 #: .\core\templates\core\custom_creation.html:8
 msgid "Accessoires cuir & macramé personnalisés | Création sur mesure"
-msgstr "Custom Creations – Personalized Bags & Accessories"
+msgstr "Custom Leather Wallet, Bag & Macrame – Handmade to Order"
 
-#: .\core\templates\core\custom_creation.html:11
+#: .\core\templates\core\custom_creation.html:12
 msgid ""
 "Création sur mesure de maroquinerie et macramé - Personnalisez vos "
 "accessoires"
 msgstr ""
-"Personalized Bags & Custom Accessories – See How We Bring Your Ideas to Life"
+"Custom Leather & Macramé Creations – Your Unique Piece, Made to Order"
 
-#: .\core\templates\core\custom_creation.html:15
+#: .\core\templates\core\custom_creation.html:13
+msgid "Sac cuir sur mesure, repoussage cuir,"
+msgstr ""
+"Custom leather wallet, handmade leather bag, western leather belt "
+"or macrame body chain — a handmade leather gift that truly means something."
+
+#: .\core\templates\core\custom_creation.html:18
 msgid "title_custom_creation"
 msgstr "Thinking about a custom piece? It all starts right here."
 
-#: .\core\templates\core\custom_creation.html:16
+#: .\core\templates\core\custom_creation.html:19
 msgid "text_custom_creation"
 msgstr ""
-"Dreaming of a personalized bag, a unique leather dog collar, or an accessory "
-"that reflects your style? Custom creation brings your ideas to life. Colors, "
-"shapes, finishes — every detail is designed with you to craft a truly "
-"personal piece. Start your project today — this is where it all begins."
+"Looking for a custom leather wallet, a handmade leather bag, or a western leather "
+"belt made just for you? Whether it's a leather gift for a man or a woman who "
+"loves beautiful materials, or a one-of-a-kind macrame piece, I bring your vision "
+"to life — entirely handmade, from tooled leather goods to woven macrame creations."
 
-#: .\core\templates\core\custom_creation.html:19
+#: .\core\templates\core\custom_creation.html:22
 msgid "Votre création sur mesure, étape par étape"
-msgstr "Your custom creation, step by step"
+msgstr "Your Custom Piece, Step by Step"
 
-#: .\core\templates\core\custom_creation.html:21
-msgid ""
-"Vous souhaitez un accessoire en cuir ou une décoration en macramé "
-"entièrement personnalisé ? Voici comment nous créons ensemble une pièce "
-"unique :"
-msgstr ""
-"Once your project is defined, here’s how we create your unique piece "
-"together:"
-
-#: .\core\templates\core\custom_creation.html:23
+#: .\core\templates\core\custom_creation.html:25
 msgid "Échange initial :"
-msgstr "First meeting :"
+msgstr "First conversation :"
 
-#: .\core\templates\core\custom_creation.html:23
+#: .\core\templates\core\custom_creation.html:25
 msgid ""
 "Contactez-moi par e-mail ou téléphone pour discuter de votre projet et "
 "obtenir une première estimation."
 msgstr ""
-"Contact me by email or phone to discuss your project and get an initial "
-"estimate."
+"We discuss your project by email or phone to understand your vision and I "
+"provide an initial estimate for your custom leather or macrame piece."
 
-#: .\core\templates\core\custom_creation.html:24
+#: .\core\templates\core\custom_creation.html:26
 msgid "Conception :"
-msgstr "Design :"
+msgstr "Personalised design :"
 
-#: .\core\templates\core\custom_creation.html:24
+#: .\core\templates\core\custom_creation.html:26
 msgid "Réalisation d’un croquis détaillé et établissement d’un devis précis."
-msgstr "Realization of a detailed sketch and establishment of a precise quote."
+msgstr ""
+"I sketch your piece and provide a detailed quote based on materials, "
+"format and finishing"
 
-#: .\core\templates\core\custom_creation.html:25
+#: .\core\templates\core\custom_creation.html:27
 msgid "Début de la fabrication :"
-msgstr "Start of production:"
+msgstr "Production starts :"
 
-#: .\core\templates\core\custom_creation.html:25
+#: .\core\templates\core\custom_creation.html:27
 msgid "Un acompte de 1/3 du prix est demandé pour lancer la production."
 msgstr ""
-"A deposit of one-third of the price is requested to start the production."
+"Once the deposit (one third) is received, I start crafting your piece "
+"in my travelling workshop, wherever I am in Europe."
 
-#: .\core\templates\core\custom_creation.html:26
+#: .\core\templates\core\custom_creation.html:28
 msgid "Validation :"
-msgstr "Approval:"
+msgstr "Adjustments & approval :"
 
-#: .\core\templates\core\custom_creation.html:26
+#: .\core\templates\core\custom_creation.html:28
 msgid ""
 "Je vous envoie des visuels pour finaliser les motifs et ajuster les détails "
 "si nécessaire."
 msgstr ""
-"I send you visuals to finalize the designs and adjust the details if "
-"necessary."
+"I send you visuals to validate the tooled leather patterns and adjust "
+"any details before completion."
 
-#: .\core\templates\core\custom_creation.html:27
+#: .\core\templates\core\custom_creation.html:29
 msgid "Livraison :"
-msgstr "Delivery :"
+msgstr "Careful delivery :"
 
-#: .\core\templates\core\custom_creation.html:27
+#: .\core\templates\core\custom_creation.html:29
 msgid ""
 "Une fois le paiement final effectué, votre création est expédiée en toute "
 "sécurité avec assurance."
 msgstr ""
-"Once the final payment is received, your creation is carefully packaged and "
-"shipped with insurance for a safe delivery"
+"Once the balance is settled, your custom leather or macramé creation "
+"is shipped with care and insurance, ready to find its place in your life."
 
-#: .\core\templates\core\custom_creation.html:32
+#: .\core\templates\core\custom_creation.html:34
 msgid "Découvrez mes réalisations"
-msgstr "Examples of creations: personalized leather wallets, dog collars…"
-
-#: .\core\templates\core\custom_creation.html:52
-msgid "Le travail du cuir : repoussage, découpe et finitions à la main"
-msgstr "Leatherwork: tooling, cutting, and hand finishing"
+msgstr "Custom Creation Examples"
 
 #: .\core\templates\core\custom_creation.html:54
-msgid "Intro creation step"
+msgid "Pourquoi choisir mes créations unique?"
+msgstr "Why Choose a Handmade Custom Piece?"
+
+#: .\core\templates\core\custom_creation.html:57
+msgid "Fabrication 100%% fait main"
 msgstr ""
+"100% handmade using materials carefully sourced during my "
+"travels across Europe."
 
 #: .\core\templates\core\custom_creation.html:58
-msgid "Pourquoi choisir mes créations unique?"
-msgstr "Why choose my unique creations?"
-
-#: .\core\templates\core\custom_creation.html:61
-msgid "Fabrication "
-msgstr "Production "
-
-#: .\core\templates\core\custom_creation.html:61
-msgid ""
-"à la main avec des matériaux soigneusement sélectionnés lors de mes voyages."
-msgstr "Handcrafted with materials carefully selected during my travels."
-
-#: .\core\templates\core\custom_creation.html:62
 msgid ""
 "Un savoir-faire enrichi par des échanges avec des créateurs et spécialistes "
 "européens."
 msgstr ""
-"An enriched know-how through exchanges with creators and European "
-"specialists."
+"Tooled leather and macramé techniques refined through exchanges with "
+"European craftspeople."
 
-#: .\core\templates\core\custom_creation.html:63
+#: .\core\templates\core\custom_creation.html:59
 msgid ""
 "Chaque pièce porte l’empreinte du voyage et de la culture qui l’a inspirée."
 msgstr ""
 "Each of my creations carries the mark of the journey and the culture that "
 "inspired it."
 
-#: .\core\templates\core\custom_creation.html:64
+#: .\core\templates\core\custom_creation.html:60
 msgid ""
 "Des créations personnalisées, façonnées avec passion et souci du détail."
-msgstr "Personalized creations, made with passion and attention to detail."
+msgstr ""
+"A genuine handmade leather gift or macrame creation, shaped with passion "
+"and attention to detail."
 
-#: .\core\templates\core\custom_creation.html:69
+#: .\core\templates\core\custom_creation.html:65
 msgid "Contactez-moi"
-msgstr "Contact me"
+msgstr "Start Your Custom Project"
 
-#: .\core\templates\core\custom_creation.html:71
+#: .\core\templates\core\custom_creation.html:67
 msgid ""
 "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie "
 "nomades ? Écrivez-moi !"
 msgstr ""
-"A project, an idea, a desire to exchange on my creations or on the nomadic "
-"life ? Write me !"
+"Have a project in mind? Get in touch — I'll guide you through every step."
 
-#: .\core\templates\core\custom_creation.html:78
+#: .\core\templates\core\custom_creation.html:74
 msgid "Numéro de téléphone :"
 msgstr "Phone number :"
 
@@ -888,18 +878,17 @@ msgstr ""
 
 #: .\core\templates\core\index.html:8
 msgid "Maroquinerie & macramé faits main - Leather Work In Traveling DB"
-msgstr "Handmade Leather Goods & Macramé Jewelry | Independent Maker"
+msgstr "Handmade Leather Goods & Macrame Jewelry"
 
 #: .\core\templates\core\index.html:12
 msgid "Bienvenue dans notre boutique de maroquinerie et macramé faits main"
-msgstr ""
-"Handmade Leather Goods & Macramé Jewelry"
+msgstr "Handmade Leather Goods & Macrame Jewelry"
 
 #: .\core\templates\core\index.html:13
 msgid "Bijoux et accessoires faits main,"
 msgstr ""
-"Handmade leather wallets, boho earrings and macramé bracelets, crafted "
-"one by one."
+"Handmade leather wallets, boho earrings and macrame bracelets, crafted one "
+"by one."
 
 #: .\core\templates\core\index.html:23
 msgid "Espace Maroquinerie"
@@ -909,8 +898,8 @@ msgstr ""
 #: .\core\templates\core\index.html:27
 msgid "Collection de modèles en "
 msgstr ""
-"Handmade leather wallets, bags and belts crafted using traditional "
-"leather carving and tooled leather techniques."
+"Handmade leather wallets, bags and belts crafted using traditional leather "
+"carving and tooled leather techniques."
 
 #: .\core\templates\core\index.html:28
 msgid "Chaque pièce – sac en cuir,"
@@ -918,8 +907,7 @@ msgstr "Each piece is unique, built to last."
 
 #: .\core\templates\core\index.html:29
 msgid "Un cadeau artisanal en cuir qui traverse le temps."
-msgstr ""
-"A genuine leather gift for men or women that stands the test of time."
+msgstr "A genuine leather gift for men or women that stands the test of time."
 
 #: .\core\templates\core\index.html:38
 msgid "➤ Découvrez toute la collection de créations en cuir"
@@ -956,14 +944,14 @@ msgstr "Custom Leather Goods – Your Unique Piece, Made to Order"
 #: .\core\templates\core\index.html:76
 msgid "Une idée, un Projet ?"
 msgstr ""
-"Looking for a custom leather wallet, a western leather belt, or a "
-"one-of-a-kind tooled leather piece?"
+"Looking for a custom leather wallet, a western leather belt, or a one-of-a-"
+"kind tooled leather piece?"
 
 #: .\core\templates\core\index.html:77
 msgid "Mon plus grand plaisir, c'est de réaliser des créations"
 msgstr ""
-"I bring your vision to life — fully handmade, from leather "
-"goods to macramé creations."
+"I bring your vision to life — fully handmade, from leather goods to macramé "
+"creations."
 
 #: .\core\templates\core\index.html:83
 msgid "➤ Créez votre pièce unique avec une commande personnalisée"
@@ -976,8 +964,8 @@ msgstr "Hybrid Creations – Carved Leather, Macramé & Natural Stones"
 #: .\core\templates\core\index.html:98
 msgid "Quand les matières se rencontrent, naissent des créations singulières."
 msgstr ""
-"When carved leather meets macramé weaving and decorative stones, "
-"singular pieces are born."
+"When carved leather meets macramé weaving and decorative stones, singular "
+"pieces are born."
 
 #: .\core\templates\core\index.html:99
 msgid "Certaines de mes créations sont dites"
@@ -1079,6 +1067,32 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid ""
+#~ "à la main avec des matériaux soigneusement sélectionnés lors de mes "
+#~ "voyages."
+#~ msgstr "Handcrafted with materials carefully selected during my travels."
+
+#~ msgid "Le travail du cuir : repoussage, découpe et finitions à la main"
+#~ msgstr "Leatherwork: tooling, cutting, and hand finishing"
+
+#~ msgid ""
+#~ "Vous souhaitez un accessoire en cuir ou une décoration en macramé "
+#~ "entièrement personnalisé ? Voici comment nous créons ensemble une pièce "
+#~ "unique :"
+#~ msgstr ""
+#~ "Once your project is defined, here’s how we create your unique piece "
+#~ "together:"
+
+#, fuzzy
+#~| msgid "text_custom_creation"
+#~ msgid "text_custom_creation2"
+#~ msgstr ""
+#~ "Dreaming of a personalized bag, a unique leather dog collar, or an "
+#~ "accessory that reflects your style? Custom creation brings your ideas to "
+#~ "life. Colors, shapes, finishes — every detail is designed with you to "
+#~ "craft a truly personal piece. Start your project today — this is where it "
+#~ "all begins."
 
 #~ msgid ""
 #~ "Le résultat ? Des pièces originales, pleines de charme et d’authenticité."
