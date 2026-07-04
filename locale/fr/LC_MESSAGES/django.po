@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 07:27+0200\n"
+"POT-Creation-Date: 2026-07-04 08:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -294,12 +294,12 @@ msgstr "Premier"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:5
 #: .\catalog\templates\catalog\components\_pagination_link.html:10
-#: .\catalog\templates\catalog\product_detail.html:55
+#: .\catalog\templates\catalog\product_detail.html:46
 msgid "Précédent"
 msgstr "Précédent"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:15
-#: .\catalog\templates\catalog\product_detail.html:56
+#: .\catalog\templates\catalog\product_detail.html:47
 msgid "Suivant"
 msgstr "Suivant"
 
@@ -325,22 +325,22 @@ msgid "Prix: "
 msgstr "Prix: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\product_detail.html:83
+#: .\catalog\templates\catalog\product_detail.html:74
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Voulez-vous ajouter ce produit au panier ?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\product_detail.html:86
+#: .\catalog\templates\catalog\product_detail.html:77
 msgid "Ajouter au panier"
 msgstr "Ajouter au panier"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\product_detail.html:89
+#: .\catalog\templates\catalog\product_detail.html:80
 msgid "Produit indisponible pour le moment"
 msgstr "Produit indisponible pour le moment"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\product_detail.html:92
+#: .\catalog\templates\catalog\product_detail.html:83
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Contactez-nous, disponible sur commande"
 
@@ -476,19 +476,11 @@ msgstr ""
 "chaînes de corps, des boucles d’oreilles bohèmes… laissez libre cours à vos "
 "envies de style fait main et de pièces uniques."
 
-#: .\catalog\templates\catalog\product_detail.html:32
-msgid "Fil d Ariane"
-msgstr "Fil d'Ariane"
-
 #: .\catalog\templates\catalog\product_detail.html:34
-msgid "Accueil"
-msgstr "Accueil"
-
-#: .\catalog\templates\catalog\product_detail.html:43
 msgid "Images du produit"
 msgstr "Images du produit"
 
-#: .\catalog\templates\catalog\product_detail.html:61
+#: .\catalog\templates\catalog\product_detail.html:52
 #, fuzzy
 #| msgid "Meta description index"
 msgid "Description"
@@ -496,22 +488,22 @@ msgstr ""
 "Découvrez des sacs et portefeuilles fait main, ainsi que des bijoux bohèmes "
 "en cuir et macramé. Chaque pièce est conçue avec passion et originalité."
 
-#: .\catalog\templates\catalog\product_detail.html:66
+#: .\catalog\templates\catalog\product_detail.html:57
 #, fuzzy
 #| msgid "Aucun produit disponible"
 msgid "Aucune description disponible"
 msgstr "Aucun produit disponible"
 
-#: .\catalog\templates\catalog\product_detail.html:72
+#: .\catalog\templates\catalog\product_detail.html:63
 msgid "Promo"
 msgstr "Promo"
 
-#: .\catalog\templates\catalog\product_detail.html:73
+#: .\catalog\templates\catalog\product_detail.html:64
 msgid "Nouveau prix:"
 msgstr "Nouveau prix:"
 
-#: .\catalog\templates\catalog\product_detail.html:74
-#: .\catalog\templates\catalog\product_detail.html:76
+#: .\catalog\templates\catalog\product_detail.html:65
+#: .\catalog\templates\catalog\product_detail.html:67
 #, fuzzy
 #| msgid "Prix: "
 msgid "Prix:"
@@ -617,6 +609,14 @@ msgid ""
 "Découvrez des produits authentiques en maroquinerie et macramé faits main."
 msgstr ""
 "Découvrez des produits authentiques en maroquinerie et macramé fait main."
+
+#: .\core\templates\core\components\_breadcrumb.html:4
+msgid "Fil d’Ariane"
+msgstr "Fil d'Ariane"
+
+#: .\core\templates\core\components\_breadcrumb.html:8
+msgid "Accueil"
+msgstr "Accueil"
 
 #: .\core\templates\core\components\_contact.html:4
 msgid ""
@@ -877,9 +877,10 @@ msgid ""
 "Un projet, une idée, une envie d’échanger sur mes créations ou sur la vie "
 "nomades ? Écrivez-moi !"
 msgstr ""
-"Vous avez un projet en tête ? Contactez-moi — je vous accompagne à chaque étape."
+"Vous avez un projet en tête ? Contactez-moi — je vous accompagne à chaque "
+"étape."
 
-#: .\core\templates\core\custom_creation.html:74
+#: .\core\templates\core\custom_creation.html:71
 msgid "Numéro de téléphone :"
 msgstr "Numéro de téléphone :"
 
@@ -987,6 +988,10 @@ msgstr "➤ Découvrir les créations hybrides"
 #: .\core\urls.py:10
 msgid "creation-sur-mesure/"
 msgstr "creation-sur-mesure/"
+
+#: .\core\views.py:29
+msgid "Creation sur mesure"
+msgstr "Création sur Mesure"
 
 #: .\leatherwork\settings.py:159
 msgid "Français"
