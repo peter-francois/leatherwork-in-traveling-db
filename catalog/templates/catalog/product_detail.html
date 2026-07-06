@@ -29,15 +29,6 @@
   <h1 id="nom-article">{{ product.name }}</h1>
 {% endblock header %}
 {% block content %}
-  <nav aria-label="{% trans 'Fil d Ariane' %}" class="breadcrumb">
-    <ol>
-      <li><a href="{% url 'core:index' %}">{% trans "Accueil" %}</a></li>
-      <li>
-        <a href="{% url category_url_name %}">{{ category_label }}</a>
-      </li>
-      <li aria-current="page">{{ product.name }}</li>
-    </ol>
-  </nav>
   <article class="product-detail two-col-layout two-col-layout--aside-right">
     <section class="two-col-layout__main product-detail__images">
       <h2 class="sr-only">{% trans "Images du produit" %}</h2>
