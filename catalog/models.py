@@ -7,7 +7,7 @@ from .choices import Category, ProductType
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=58, verbose_name="Nom", default="")
+    name = models.CharField(max_length=50, verbose_name="Nom", default="")
     category = models.CharField(
         max_length=50, choices=Category.choices, verbose_name="Catégorie", default=""
     )
