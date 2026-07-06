@@ -1,6 +1,7 @@
 from django.contrib.sitemaps.views import sitemap as django_sitemap
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from core.sitemaps import StaticSitemap
@@ -23,7 +24,17 @@ def about(request):
 
 
 def custom_creation(request):
-    return render(request, "core/custom_creation.html")
+
+    context = {
+        "breadcrumbs": [
+            {
+                "label": _("Creation sur mesure"),
+                "url": None,
+            }
+        ]
+    }
+
+    return render(request, "core/custom_creation.html", context)
 
 
 def sitemap_lang(request, lang):
