@@ -14,7 +14,7 @@ class ProductDetailSitemap(Sitemap):
         self.language = language
 
     def items(self):
-        return Product.objects.all()
+        return Product.objects.filter(seo_ready=True)
 
     def lastmod(self, obj):
         return obj.updated_at

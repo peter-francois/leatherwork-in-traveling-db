@@ -70,9 +70,10 @@ class ProductAdmin(TranslationAdmin):
         "on_demand",
         "product_type",
         "price",
+        "seo_ready",
     )
     search_fields = ["name", "category", "product_type"]
-    list_filter = ["category", "available"]
+    list_filter = ["category", "available", "seo_ready"]
     form = ProductForm
     list_per_page = 20
     readonly_fields = tuple(f"image{i}_thumbnail" for i in range(1, 7))
@@ -91,6 +92,7 @@ class ProductAdmin(TranslationAdmin):
                     "available",
                     "pending_in_cart",
                     "on_demand",
+                    "seo_ready",
                 )
             },
         ),

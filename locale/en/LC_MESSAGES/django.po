@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 10:18+0200\n"
+"POT-Creation-Date: 2026-07-07 07:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -298,12 +298,12 @@ msgstr "First"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:5
 #: .\catalog\templates\catalog\components\_pagination_link.html:10
-#: .\catalog\templates\catalog\product_detail.html:46
+#: .\catalog\templates\catalog\product_detail.html:50
 msgid "Précédent"
 msgstr "Previous"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:15
-#: .\catalog\templates\catalog\product_detail.html:47
+#: .\catalog\templates\catalog\product_detail.html:51
 msgid "Suivant"
 msgstr "Next"
 
@@ -329,22 +329,22 @@ msgid "Prix: "
 msgstr "Price: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\product_detail.html:74
+#: .\catalog\templates\catalog\product_detail.html:78
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Do you want to add this product to the cart?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\product_detail.html:77
+#: .\catalog\templates\catalog\product_detail.html:81
 msgid "Ajouter au panier"
 msgstr "Add to cart"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\product_detail.html:80
+#: .\catalog\templates\catalog\product_detail.html:84
 msgid "Produit indisponible pour le moment"
 msgstr "Product currently unavailable"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\product_detail.html:83
+#: .\catalog\templates\catalog\product_detail.html:87
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Available on request – Contact us"
 
@@ -386,7 +386,7 @@ msgstr ""
 #: .\catalog\templates\catalog\hybrid.html:16
 #: .\catalog\templates\catalog\leatherwork.html:16
 #: .\catalog\templates\catalog\macrame.html:16
-#: .\catalog\templates\catalog\product_list.html:16
+#: .\catalog\templates\catalog\product_list.html:22
 msgid "Voir les créations ↓"
 msgstr "See the creations ↓"
 
@@ -401,7 +401,7 @@ msgstr ""
 #: .\catalog\templates\catalog\hybrid.html:22
 #: .\catalog\templates\catalog\leatherwork.html:22
 #: .\catalog\templates\catalog\macrame.html:22
-#: .\catalog\templates\catalog\product_list.html:22
+#: .\catalog\templates\catalog\product_list.html:28
 msgid "Créations sur mesure"
 msgstr "Custom Creations"
 
@@ -474,11 +474,11 @@ msgstr ""
 "bracelets, body chains, boho earrings… let your desire for handmade style "
 "and unique pieces run free."
 
-#: .\catalog\templates\catalog\product_detail.html:34
+#: .\catalog\templates\catalog\product_detail.html:38
 msgid "Images du produit"
 msgstr "Product images"
 
-#: .\catalog\templates\catalog\product_detail.html:52
+#: .\catalog\templates\catalog\product_detail.html:56
 #, fuzzy
 #| msgid "Meta description index"
 msgid "Description"
@@ -486,22 +486,22 @@ msgstr ""
 "DescriptionDiscover handcrafted bags and wallets, along with boho jewelry in "
 "leather and macramé. Each piece is designed with passion and originality."
 
-#: .\catalog\templates\catalog\product_detail.html:57
+#: .\catalog\templates\catalog\product_detail.html:61
 #, fuzzy
 #| msgid "Aucun produit disponible"
 msgid "Aucune description disponible"
 msgstr "No products available"
 
-#: .\catalog\templates\catalog\product_detail.html:63
+#: .\catalog\templates\catalog\product_detail.html:67
 msgid "Promo"
 msgstr "Discount"
 
-#: .\catalog\templates\catalog\product_detail.html:64
+#: .\catalog\templates\catalog\product_detail.html:68
 msgid "Nouveau prix:"
 msgstr "New price:"
 
-#: .\catalog\templates\catalog\product_detail.html:65
-#: .\catalog\templates\catalog\product_detail.html:67
+#: .\catalog\templates\catalog\product_detail.html:69
+#: .\catalog\templates\catalog\product_detail.html:71
 #, fuzzy
 #| msgid "Prix: "
 msgid "Prix:"
@@ -514,28 +514,51 @@ msgid ""
 "Trouvez des produits inédits pour sublimer votre style. Livraison rapide et "
 "qualité garantie."
 msgstr ""
-"Explore our personalized bags, handcrafted leather wallets, and macrame "
-"creations. A unique boutique with an authentic style."
+"Hand tooled leather wallets, belts & bags, boho macrame bracelets and "
+"necklaces — crafted by a nomadic artisan travelling Europe. Ships europewide."
 
 #: .\catalog\templates\catalog\product_list.html:8
 msgid "Accessoires, maroquinerie & macramé faits main | Créations originales"
-msgstr "Custom Bags & Unique Creations – Macrame, Leather & More"
+msgstr "Handmade Leather & Macrame Jewelry | Carved Leather Goods"
 
-#: .\catalog\templates\catalog\product_list.html:11
+#: .\catalog\templates\catalog\product_list.html:12
 msgid "Explorez Nos Créations - Trouvez votre style unique"
 msgstr ""
-"Custom Bags, Leather Goods, and Macrame Jewelry: Explore Our Entire "
-"Collection"
+"Handmade leather goods & macrame jewelry"
 
-#: .\catalog\templates\catalog\product_list.html:14
-msgid "Intro produits"
+#: .\catalog\templates\catalog\product_list.html:13
+msgid "Pièces uniques en cuir repoussé et macramé, façonnées"
 msgstr ""
-"Explore the world of our handmade creations: custom bags, leather goods, and "
-"macrame jewelry come together to form a collection of unique pieces. Each "
-"model reflects our passion for craftsmanship and authentic style. Find the "
-"accessory that suits you best in our selection."
+"Hand tooled leather and handcrafted macrame, made one piece "
+"at a time somewhere in Europe."
+
+#: .\catalog\templates\catalog\product_list.html:17
+msgid "Maroquinerie ciselée, bijoux macramé,"
+msgstr ""
+"Every piece here starts with a material and a gesture — "
+"leather carved by hand, macrame knotted with intention."
+
+#: .\catalog\templates\catalog\product_list.html:18
+msgid "Le repoussage cuir est une technique "
+msgstr ""
+"The leather goods are tooled using traditional carving "
+"techniques: each pattern is cut directly into full-grain "
+"leather, one piece at a time."
 
 #: .\catalog\templates\catalog\product_list.html:19
+msgid "Les créations en macramé suivent la même"
+msgstr ""
+"The macrame jewelry follows the same logic: natural "
+"cord, no shortcuts, nothing repeated."
+
+#: .\catalog\templates\catalog\product_list.html:20
+msgid "Que vous cherchiez un cadeau cuir"
+msgstr ""
+"Whether you're looking for a custom leather wallet, a western belt, a "
+"boho necklace or a leather gift for men or women, you'll find objects "
+"built to last."
+
+#: .\catalog\templates\catalog\product_list.html:25
 msgid "outro produits"
 msgstr ""
 "Looking for a personalized bag, a trendy macrame jewelry piece, or a "
@@ -562,7 +585,7 @@ msgstr "products/"
 msgid "produits/<str:category>/<slug:slug>-<int:product_id>/"
 msgstr "products/<str:category>/<slug:slug>-<int:product_id>/"
 
-#: .\catalog\views.py:17 .\catalog\views.py:95
+#: .\catalog\views.py:16 .\catalog\views.py:101
 msgid "Produits"
 msgstr "Products"
 
@@ -988,7 +1011,7 @@ msgstr "➤ Discover the hybrid creations"
 msgid "creation-sur-mesure/"
 msgstr "custom-creation/"
 
-#: .\core\views.py:31
+#: .\core\views.py:32
 msgid "Creation sur mesure"
 msgstr "Custom creation"
 
@@ -1078,6 +1101,13 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid "Intro produits"
+#~ msgstr ""
+#~ "Explore the world of our handmade creations: custom bags, leather goods, "
+#~ "and macrame jewelry come together to form a collection of unique pieces. "
+#~ "Each model reflects our passion for craftsmanship and authentic style. "
+#~ "Find the accessory that suits you best in our selection."
 
 #~ msgid ""
 #~ "à la main avec des matériaux soigneusement sélectionnés lors de mes "

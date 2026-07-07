@@ -35,6 +35,7 @@ class Product(models.Model):
     on_demand = models.BooleanField(default=False, verbose_name="Sur commande")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Mis à jour le")
     slug = models.SlugField(max_length=150, blank=True)
+    seo_ready = models.BooleanField(default=False, verbose_name="Prêt pour le SEO")
 
     class Meta:
         verbose_name = "Produit"
