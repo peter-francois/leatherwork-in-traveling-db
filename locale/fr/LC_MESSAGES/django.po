@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 07:17+0200\n"
+"POT-Creation-Date: 2026-07-07 08:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -386,9 +386,9 @@ msgstr ""
 "intemporelle à votre look. Idéal pour un style authentique."
 
 #: .\catalog\templates\catalog\hybrid.html:16
-#: .\catalog\templates\catalog\leatherwork.html:16
+#: .\catalog\templates\catalog\leatherwork.html:22
 #: .\catalog\templates\catalog\macrame.html:16
-#: .\catalog\templates\catalog\product_list.html:22
+#: .\catalog\templates\catalog\product_list.html:24
 msgid "Voir les créations ↓"
 msgstr "Voir les créations ↓"
 
@@ -402,9 +402,9 @@ msgstr ""
 "collections."
 
 #: .\catalog\templates\catalog\hybrid.html:22
-#: .\catalog\templates\catalog\leatherwork.html:22
+#: .\catalog\templates\catalog\leatherwork.html:28
 #: .\catalog\templates\catalog\macrame.html:22
-#: .\catalog\templates\catalog\product_list.html:28
+#: .\catalog\templates\catalog\product_list.html:30
 msgid "Créations sur mesure"
 msgstr "Création sur Mesure"
 
@@ -414,30 +414,45 @@ msgid ""
 "main. Des pièces uniques, confectionnées avec soin pour une qualité "
 "exceptionnelle."
 msgstr ""
-"Accessoires en cuir, sac fait main et portefeuille cuir personnalisé : des "
-"créations uniques pour un style durable et élégant."
+"Sacs, ceintures et portefeuilles en cuir repoussé ciselé à la main par un "
+"artisan maroquinier nomade. Chaque pièce est unique."
 
 #: .\catalog\templates\catalog\leatherwork.html:8
 msgid "Maroquinerie fait main - Sacs, portefeuilles et accessoires en cuir"
-msgstr "Sac fait main – Maroquinerie cuir & accessoires"
+msgstr "Maroquinerie Artisanale | Cuir Repoussé & Ciselé Fait Main"
 
-#: .\catalog\templates\catalog\leatherwork.html:11
+#: .\catalog\templates\catalog\leatherwork.html:12
 msgid "Maroquinerie fait main – Sacs, portefeuilles et accessoires en cuir"
-msgstr ""
-"Sac fait main et autres accessoires en cuir: explorez notre collection de "
-"maroquinerie"
+msgstr "Maroquinerie en cuir repoussé artisanale"
 
-#: .\catalog\templates\catalog\leatherwork.html:14
-msgid ""
-"Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les produits "
-"disponibles."
+#: .\catalog\templates\catalog\leatherwork.html:13
+msgid "Chaque pièce ciselée à la main, une par une."
+msgstr "Chaque pièce est ciselée à la main, une par une."
+
+#: .\catalog\templates\catalog\leatherwork.html:17
+msgid "Le repoussage cuir est une technique ancienne"
 msgstr ""
-"Trouvez votre sac fait main ainsi que d'autres accessoires en cuir "
-"personnalisables parmi notre collection unique. Conçus avec une attention "
-"particulière aux détails, nos créations allient style et longévité. Explorez "
-"nos modèles et adoptez un look élégant et authentique."
+"Le repoussage cuir est une technique ancienne et exigeante : le motif est "
+"sculpté directement dans le cuir pleine fleur humidifié, à l'aide de "
+"burins et de maillets, sans machine, sans série."
+
+#: .\catalog\templates\catalog\leatherwork.html:18
+msgid "Chaque sac cuir artisanal, ceinture western, sacoche moto"
+msgstr ""
+"Chaque sac cuir artisanal, ceinture western, sacoche moto ou portefeuille "
+"cuir repoussé est une pièce unique qui porte les traces du geste."
 
 #: .\catalog\templates\catalog\leatherwork.html:19
+msgid "Les finitions sont faites à la main"
+msgstr ""
+"Les finitions sont faites à la main — teinture, lustrage, couture sellier."
+
+#: .\catalog\templates\catalog\leatherwork.html:20
+msgid "Si vous cherchez un objet en cuir ciselé qui dure"
+msgstr ""
+"Si vous cherchez un objet en cuir ciselé qui dure, vous êtes au bon endroit."
+
+#: .\catalog\templates\catalog\leatherwork.html:25
 msgid "outro maroquinerie"
 msgstr ""
 "Envie d'un sac en cuir personnalisé ou d'un cadeau fait main unique ? Nous "
@@ -539,32 +554,32 @@ msgstr ""
 "Pièces uniques en cuir repoussé et macramé, façonnées à la main quelque part "
 "en Europe."
 
-#: .\catalog\templates\catalog\product_list.html:17
+#: .\catalog\templates\catalog\product_list.html:18
 msgid "Maroquinerie ciselée, bijoux macramé,"
 msgstr ""
-"Maroquinerie ciselée, bijoux macramé, accessoires western ou biker — "
-"chaque pièce naît d'un geste artisanal précis."
-
-#: .\catalog\templates\catalog\product_list.html:18
-msgid "Le repoussage cuir est une technique "
-msgstr ""
-"Le repoussage cuir est une technique exigeante : chaque motif est sculpté "
-"à la main dans le cuir pleine fleur, une pièce à la fois."
+"Maroquinerie ciselée, bijoux macramé, accessoires western ou biker — chaque "
+"pièce naît d'un geste artisanal précis."
 
 #: .\catalog\templates\catalog\product_list.html:19
-msgid "Les créations en macramé suivent la même"
+msgid "Le repoussage cuir est une technique "
 msgstr ""
-"Les créations en macramé suivent la même logique : du fil naturel, des "
-"nœuds maîtrisés, aucune série."
+"Le repoussage cuir est une technique exigeante : chaque motif est sculpté à "
+"la main dans le cuir pleine fleur, une pièce à la fois."
 
 #: .\catalog\templates\catalog\product_list.html:20
+msgid "Les créations en macramé suivent la même"
+msgstr ""
+"Les créations en macramé suivent la même logique : du fil naturel, des nœuds "
+"maîtrisés, aucune série."
+
+#: .\catalog\templates\catalog\product_list.html:21
 msgid "Que vous cherchiez un cadeau cuir"
 msgstr ""
-"Que vous cherchiez un cadeau cuir original pour homme ou femme, "
-"un collier macramé ou une sacoche moto sur mesure, vous trouverez "
-"ici des objets qui durent."
+"Que vous cherchiez un cadeau cuir original pour homme ou femme, un collier "
+"macramé ou une sacoche moto sur mesure, vous trouverez ici des objets qui "
+"durent."
 
-#: .\catalog\templates\catalog\product_list.html:25
+#: .\catalog\templates\catalog\product_list.html:27
 msgid "outro produits"
 msgstr ""
 "Vous cherchez un sac personnalisé, un bijou macramé tendance ou un cadeau "
@@ -1105,6 +1120,15 @@ msgstr "informations-legales"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "politique-de-confidentialite"
+
+#~ msgid ""
+#~ "Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les "
+#~ "produits disponibles."
+#~ msgstr ""
+#~ "Trouvez votre sac fait main ainsi que d'autres accessoires en cuir "
+#~ "personnalisables parmi notre collection unique. Conçus avec une attention "
+#~ "particulière aux détails, nos créations allient style et longévité. "
+#~ "Explorez nos modèles et adoptez un look élégant et authentique."
 
 #~ msgid "Intro produits"
 #~ msgstr ""
