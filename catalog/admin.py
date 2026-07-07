@@ -63,7 +63,6 @@ class ProductAdmin(TranslationAdmin):
     actions = ["make_available", "make_unavailable", "remove_from_cart"]
     list_display = (
         "name",
-        "description",
         "category",
         "available",
         "pending_in_cart",
@@ -83,7 +82,6 @@ class ProductAdmin(TranslationAdmin):
             {
                 "fields": (
                     "name",
-                    "meta_description",
                     "description",
                     "category",
                     "product_type",
@@ -92,6 +90,9 @@ class ProductAdmin(TranslationAdmin):
                     "available",
                     "pending_in_cart",
                     "on_demand",
+                    "meta_description",
+                    "seo_title",
+                    "seo_h1",
                     "seo_ready",
                 )
             },
