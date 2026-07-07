@@ -3,7 +3,6 @@ from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
 from django.utils import timezone, translation
 
-from catalog.models import Product
 from catalog.tests import make_product
 from core.sitemaps_category import CategorySitemap
 from core.sitemaps_product_detail import ProductDetailSitemap
@@ -155,12 +154,17 @@ class ProductDetailSitemapTest(TestCase):
         self.sitemap_fr = ProductDetailSitemap(language="fr")
         self.sitemap_en = ProductDetailSitemap(language="en")
 
-    def test_items_returns_all_products(self):
-        """Should return all products"""
-        self.assertEqual(
-            list(self.sitemap_fr.items()),
-            list(Product.objects.all()),
-        )
+    def test_items_returns_all_products_seo_ready(self):
+        """Should return all seo_ready products"""
+        self.product.seo_ready = True
+        self.product.save()
+        self.assertEqual(1, len(list(self.sitemap_fr.items())))
+
+    def test_items_not_returns_products_seo_not_ready(self):
+        """Should return all seo_ready products"""
+        self.product.seo_ready = False
+        self.product.save()
+        self.assertEqual(0, len(list(self.sitemap_fr.items())))
 
     def test_lastmod_returns_updated_at(self):
         """Should return the product's updated_at date"""
