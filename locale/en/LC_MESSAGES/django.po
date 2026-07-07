@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 08:01+0200\n"
+"POT-Creation-Date: 2026-07-07 09:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -353,44 +353,61 @@ msgid "Supprimer"
 msgstr "Delete"
 
 #: .\catalog\templates\catalog\hybrid.html:5
-#, fuzzy
-#| msgid ""
-#| "Découvrez nos créations uniques mêlant maroquinerie et macramé. "
-#| "Accessoires et bijoux alliant l’élégance du cuir à la finesse du tissage."
 msgid ""
 "Découvrez nos créations uniques mêlant maroquinerie et macramé. Accessoires "
 "et bijoux alliant l'élégance du cuir à la finesse du tissage."
 msgstr ""
-"Unique macrame jewelry combining leather and thread weaving. Handmade "
-"bracelets and necklaces for an authentic and original style."
+"Hand tooled leather and macrame combined in unique bracelets, necklaces and "
+"accessories by a nomadic artisan. No two pieces alike. European shipping."
 
 #: .\catalog\templates\catalog\hybrid.html:8
 msgid "Créations hybrides maroquinerie & macramé - Accessoires uniques"
-msgstr "Macrame Jewelry & Leather - Original Creations"
+msgstr "Leather & Macrame Hybrid Jewelry - Original Creations"
 
-#: .\catalog\templates\catalog\hybrid.html:11
+#: .\catalog\templates\catalog\hybrid.html:12
 msgid "Accessoires uniques alliant maroquinerie et macramé"
 msgstr ""
-"Explore our original macrame jewelry combining leather and thread weaving "
-"for an unmatched bohemian style."
+"Hand tooled leather & macrame jewelry"
 
-#: .\catalog\templates\catalog\hybrid.html:14
-msgid "Intro hybride"
+#: .\catalog\templates\catalog\hybrid.html:13
+msgid "Deux matières, un seul geste artisanal."
+msgstr "Two materials, one craft."
+
+#: .\catalog\templates\catalog\hybrid.html:17
+msgid "Ces créations n'appartiennent à aucune"
 msgstr ""
-"Let yourself be captivated by our selection of macrame jewelry combining "
-"leather and weaving for a unique bohemian style. Each piece is handmade and "
-"reflects the perfect balance between authenticity and modernity. Discover "
-"original macrame bracelets and necklaces that add an elegant and timeless "
-"touch to your look. Ideal for an authentic style."
+"These pieces don't fit neatly into one category — they combine carved "
+"leather and knotted macrame in a single object, worked together rather "
+"than side by side."
 
-#: .\catalog\templates\catalog\hybrid.html:16
+#: .\catalog\templates\catalog\hybrid.html:18
+msgid "Un bracelet bohème dont"
+msgstr "A boho bracelet with a hand tooled leather centrepiece."
+
+#: .\catalog\templates\catalog\hybrid.html:19
+msgid "Un collier macramé fermé"
+msgstr "A macrame necklace with a carved leather clasp."
+
+#: .\catalog\templates\catalog\hybrid.html:20
+msgid "Des accessoires qui portent les deux"
+msgstr "Accessories that carry both techniques at once."
+
+#: .\catalog\templates\catalog\hybrid.html:21
+msgid "C'est l'angle le plus personnel du travail"
+msgstr ""
+"This is the most personal corner of the workshop — where leather carving and "
+"macrame meet, every piece becomes genuinely one of a kind and impossible to "
+"find anywhere else. If you're looking for a leather gift for women or men "
+"that goes beyond the expected, this is it."
+
+#: .\catalog\templates\catalog\hybrid.html:23
 #: .\catalog\templates\catalog\leatherwork.html:22
-#: .\catalog\templates\catalog\macrame.html:16
+#: .\catalog\templates\catalog\macrame.html:21
 #: .\catalog\templates\catalog\product_list.html:24
 msgid "Voir les créations ↓"
 msgstr "See the creations ↓"
 
-#: .\catalog\templates\catalog\hybrid.html:19
+#: .\catalog\templates\catalog\hybrid.html:26
 msgid "outro hybride"
 msgstr ""
 "Macrame jewelry combining leather and creativity for a truly authentic look. "
@@ -398,9 +415,9 @@ msgstr ""
 "life. Find the macrame bracelet or piece of jewelry that will perfectly "
 "complete your look and be tempted by our other collections."
 
-#: .\catalog\templates\catalog\hybrid.html:22
+#: .\catalog\templates\catalog\hybrid.html:29
 #: .\catalog\templates\catalog\leatherwork.html:28
-#: .\catalog\templates\catalog\macrame.html:22
+#: .\catalog\templates\catalog\macrame.html:27
 #: .\catalog\templates\catalog\product_list.html:30
 msgid "Créations sur mesure"
 msgstr "Custom Creations"
@@ -412,7 +429,7 @@ msgid ""
 "exceptionnelle."
 msgstr ""
 "Hand tooled leather wallets, belts and bags carved by a nomadic leather "
-"artisan. No series, no shortcuts — every piece is unique. Ships europewide."
+"artisan. No series, no shortcuts — every piece is unique. European shipping."
 
 #: .\catalog\templates\catalog\leatherwork.html:8
 msgid "Maroquinerie fait main - Sacs, portefeuilles et accessoires en cuir"
@@ -429,22 +446,22 @@ msgstr "Each piece carved by hand, one at a time."
 #: .\catalog\templates\catalog\leatherwork.html:17
 msgid "Le repoussage cuir est une technique ancienne"
 msgstr ""
-"Leather tooling is a slow, demanding craft — the pattern is carved "
-"directly into dampened full-grain leather using stamps and mallets, "
-"one strike at a time."
+"Leather tooling is a slow, demanding craft — the pattern is carved directly "
+"into dampened full-grain leather using stamps and mallets, one strike at a "
+"time."
 
 #: .\catalog\templates\catalog\leatherwork.html:18
 msgid "Chaque sac cuir artisanal, ceinture western, sacoche moto"
 msgstr ""
-"Every handmade leather wallet, western leather belt, custom leather bag "
-"or biker leather wallet is a unique object that carries the mark of the "
-"hand that made it."
+"Every handmade leather wallet, western leather belt, custom leather bag or "
+"biker leather wallet is a unique object that carries the mark of the hand "
+"that made it."
 
 #: .\catalog\templates\catalog\leatherwork.html:19
 msgid "Les finitions sont faites à la main"
 msgstr ""
-"Edges are hand-finished, stitched with a saddler's technique, and "
-"burnished by hand."
+"Edges are hand-finished, stitched with a saddler's technique, and burnished "
+"by hand."
 
 #: .\catalog\templates\catalog\leatherwork.html:20
 msgid "Si vous cherchez un objet en cuir ciselé qui dure"
@@ -465,28 +482,42 @@ msgid ""
 "corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une "
 "touche d'élégance unique."
 msgstr ""
-"Enhance your style with our handmade macrame jewelry: body chains, earrings, "
-"necklaces and bracelets carefully woven for a unique touch of elegance."
+"Handmade macrame bracelets, boho necklaces and earrings by a nomadic "
+"artisan. Natural cord, no repeats, every piece unique. European shipping."
 
 #: .\catalog\templates\catalog\macrame.html:8
 msgid "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets"
-msgstr "Handmade Macrame Jewelry - Necklaces & Bracelets "
+msgstr "Handmade Macrame Jewelry | Boho Bracelets & Necklaces"
 
-#: .\catalog\templates\catalog\macrame.html:11
+#: .\catalog\templates\catalog\macrame.html:12
 msgid "Bijoux et accessoires en macramé faits main – Originalité et style"
-msgstr "Handmade macrame jewelry and accessories – Originality and style"
+msgstr "Handmade macrame jewelry"
 
-#: .\catalog\templates\catalog\macrame.html:14
-msgid ""
-"Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits "
-"disponibles."
+#: .\catalog\templates\catalog\macrame.html:13
+msgid "Noués à la main, un fil à la fois."
+msgstr "Knotted by hand, one piece at a time."
+
+#: .\catalog\templates\catalog\macrame.html:17
+msgid "Le macramé artisanal, c'est l'art du nœud maîtrisé"
 msgstr ""
-"Discover our world of original macrame jewelry, blending the tradition of "
-"hand-knotting with contemporary design. Colorful macrame bracelets, boho "
-"accessories, and unique creations await you. Handmade, our jewelry embodies "
-"authenticity and natural elegance."
+"Macrame jewelry is built on one principle — the knot. Every macrame "
+"bracelet, boho necklace or pair of macrame earrings starts with natural cord "
+"worked entirely by hand, no machines, no templates."
+
+#: .\catalog\templates\catalog\macrame.html:18
+msgid "Le style est bohème mais la démarche"
+msgstr ""
+"The aesthetic is bohemian but the approach is that of a craftsperson: "
+"nothing is repeated, every piece is its own object."
 
 #: .\catalog\templates\catalog\macrame.html:19
+msgid "Que vous cherchiez un bijou macramé"
+msgstr ""
+"Whether you're looking for a macrame necklace to wear daily, a handmade "
+"bracelet as a gift, or boho earrings that stand out, you'll find pieces here "
+"made with intention and built to last."
+
+#: .\catalog\templates\catalog\macrame.html:24
 msgid "outro macrames"
 msgstr ""
 "Our collection of original macrame jewelry is constantly evolving to bring "
@@ -535,7 +566,8 @@ msgid ""
 "qualité garantie."
 msgstr ""
 "Hand tooled leather wallets, belts & bags, boho macrame bracelets and "
-"necklaces — crafted by a nomadic artisan travelling Europe. Ships europewide."
+"necklaces — crafted by a nomadic artisan travelling Europe. European "
+"shipping."
 
 #: .\catalog\templates\catalog\product_list.html:8
 msgid "Accessoires, maroquinerie & macramé faits main | Créations originales"
@@ -1119,6 +1151,23 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid "Intro hybride"
+#~ msgstr ""
+#~ "Let yourself be captivated by our selection of macrame jewelry combining "
+#~ "leather and weaving for a unique bohemian style. Each piece is handmade "
+#~ "and reflects the perfect balance between authenticity and modernity. "
+#~ "Discover original macrame bracelets and necklaces that add an elegant and "
+#~ "timeless touch to your look. Ideal for an authentic style."
+
+#~ msgid ""
+#~ "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits "
+#~ "disponibles."
+#~ msgstr ""
+#~ "Discover our world of original macrame jewelry, blending the tradition of "
+#~ "hand-knotting with contemporary design. Colorful macrame bracelets, boho "
+#~ "accessories, and unique creations await you. Handmade, our jewelry "
+#~ "embodies authenticity and natural elegance."
 
 #~ msgid ""
 #~ "Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les "
