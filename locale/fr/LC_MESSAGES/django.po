@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 08:01+0200\n"
+"POT-Creation-Date: 2026-07-07 08:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -387,7 +387,7 @@ msgstr ""
 
 #: .\catalog\templates\catalog\hybrid.html:16
 #: .\catalog\templates\catalog\leatherwork.html:22
-#: .\catalog\templates\catalog\macrame.html:16
+#: .\catalog\templates\catalog\macrame.html:21
 #: .\catalog\templates\catalog\product_list.html:24
 msgid "Voir les créations ↓"
 msgstr "Voir les créations ↓"
@@ -403,7 +403,7 @@ msgstr ""
 
 #: .\catalog\templates\catalog\hybrid.html:22
 #: .\catalog\templates\catalog\leatherwork.html:28
-#: .\catalog\templates\catalog\macrame.html:22
+#: .\catalog\templates\catalog\macrame.html:27
 #: .\catalog\templates\catalog\product_list.html:30
 msgid "Créations sur mesure"
 msgstr "Création sur Mesure"
@@ -433,8 +433,8 @@ msgstr "Chaque pièce est ciselée à la main, une par une."
 msgid "Le repoussage cuir est une technique ancienne"
 msgstr ""
 "Le repoussage cuir est une technique ancienne et exigeante : le motif est "
-"sculpté directement dans le cuir pleine fleur humidifié, à l'aide de "
-"burins et de maillets, sans machine, sans série."
+"sculpté directement dans le cuir pleine fleur humidifié, à l'aide de burins "
+"et de maillets, sans machine, sans série."
 
 #: .\catalog\templates\catalog\leatherwork.html:18
 msgid "Chaque sac cuir artisanal, ceinture western, sacoche moto"
@@ -466,30 +466,43 @@ msgid ""
 "corps, boucles d'oreilles, colliers et bracelets tissés avec soin pour une "
 "touche d'élégance unique."
 msgstr ""
-"Explorez notre sélection de bijoux bohème en macramé : bracelet macramé, "
-"accessoires style bohème, design fait main et élégant"
+"Bracelets, colliers et boucles d'oreilles macramé bohème faits main par un "
+"artisan nomade. Chaque pièce est unique. Livraison en Europe"
 
 #: .\catalog\templates\catalog\macrame.html:8
 msgid "Bijoux en macramé faits main - Chaînes de corps, colliers et bracelets"
-msgstr "Bijoux bohème en macramé – Fait main & uniques"
+msgstr "Bijoux Macramé Artisanaux | Bracelets & Colliers Faits Main"
 
-#: .\catalog\templates\catalog\macrame.html:11
+#: .\catalog\templates\catalog\macrame.html:12
 msgid "Bijoux et accessoires en macramé faits main – Originalité et style"
-msgstr ""
-"Bijoux bohème en macramé – Bracelets originaux et accessoires macramé à "
-"découvrir"
+msgstr "Bijoux macramé artisanaux"
 
-#: .\catalog\templates\catalog\macrame.html:14
-msgid ""
-"Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits "
-"disponibles."
+#: .\catalog\templates\catalog\macrame.html:13
+msgid "Noués à la main, un fil à la fois."
+msgstr "Noués à la main, un fil à la fois."
+
+#: .\catalog\templates\catalog\macrame.html:17
+msgid "Le macramé artisanal, c'est l'art du nœud maîtrisé"
 msgstr ""
-"Découvrez notre univers de bijoux bohème en macramé, mêlant tradition du "
-"nouage à la main et design contemporain. Des bracelets macramé colorés, des "
-"accessoires bohèmes et des créations uniques vous attendent. Fait à la main, "
-"nos bijoux incarnent authenticité et élégance naturelle."
+"Le macramé artisanal, c'est l'art du nœud maîtrisé — chaque bracelet "
+"macramé, collier bohème ou paire de boucles d'oreilles macramé naît d'un "
+"assemblage de fils naturels travaillés à la main, sans machine, sans "
+"patron répété."
+
+#: .\catalog\templates\catalog\macrame.html:18
+msgid "Le style est bohème mais la démarche"
+msgstr ""
+"Le style est bohème mais la démarche est celle de l'artisan : rien n'est "
+"en série, chaque création macramé est pensée comme une pièce à part entière."
 
 #: .\catalog\templates\catalog\macrame.html:19
+msgid "Que vous cherchiez un bijou macramé"
+msgstr ""
+"Que vous cherchiez un bijou macramé pour offrir ou pour vous, un accessoire "
+"macramé naturel ou un cadeau artisanal original, vous trouverez ici des "
+"pièces qui ont du caractère."
+
+#: .\catalog\templates\catalog\macrame.html:24
 msgid "outro macrames"
 msgstr ""
 "Notre collection de bijoux macramé évolue constamment pour vous proposer des "
@@ -1120,6 +1133,15 @@ msgstr "informations-legales"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "politique-de-confidentialite"
+
+#~ msgid ""
+#~ "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits "
+#~ "disponibles."
+#~ msgstr ""
+#~ "Découvrez notre univers de bijoux bohème en macramé, mêlant tradition du "
+#~ "nouage à la main et design contemporain. Des bracelets macramé colorés, "
+#~ "des accessoires bohèmes et des créations uniques vous attendent. Fait à "
+#~ "la main, nos bijoux incarnent authenticité et élégance naturelle."
 
 #~ msgid ""
 #~ "Bienvenue dans l'espace maroquinerie. Retrouvez ci-dessous tous les "
