@@ -64,11 +64,12 @@
       </section>
       <section class="product-detail__pricing">
         {% if product.discount != 0.0 %}
-          <p id="promo-widget" class="promo-widget">{% trans "Promo" %}</p>
-          <p class="text-center new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
+          <h2 id="promo-widget" class="promo-widget">{% trans "Promo" %}</h2>
+          <p class="new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
           <p class="old-price">{% trans "Prix:" %} {{ product.price|floatformat:2 }}€</p>
         {% else %}
-          <p>{% trans "Prix:" %} {{ product.price|floatformat:2 }}€</p>
+          <h2>{% trans "Prix:" %}</h2>
+          <p>{{ product.price|floatformat:2 }}€</p>
         {% endif %}
       </section>
       {% if not product.pending_in_cart and not product.on_demand %}
