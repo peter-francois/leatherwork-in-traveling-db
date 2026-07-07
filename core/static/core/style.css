@@ -607,6 +607,11 @@ section select {
 .two-col-layout--aside-right .two-col-layout__aside { order: 2; }
 .two-col-layout--aside-right .two-col-layout__main  { order: 1; }
 
+.product-detail.two-col-layout--aside-right.two-col-layout {
+    grid-template-columns: 1fr  40%;
+    gap: 1.5rem;
+  }
+
 .filter {
   position: sticky;
   top: 80px;
@@ -1075,19 +1080,7 @@ h2.product-name {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: #fcf6dc;
-  border: 1px solid #8c6b4f;
-  border-radius: 8px;
   padding: 2rem;
-}
- 
-.product-detail__info h1 {
-  margin: 0;
-}
- 
-.product-detail__info section h2 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
 }
  
 .product-detail__pricing {
@@ -1303,7 +1296,6 @@ h2.product-name {
   .product-detail__info {
     padding: 1.5rem;
   }
-  .product-detail.two-col-layout--aside-left.two-col-layout,
   .product-detail.two-col-layout--aside-right.two-col-layout {
     grid-template-columns: 1fr;
     gap: 1.5rem;
