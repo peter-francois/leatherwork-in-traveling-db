@@ -68,14 +68,8 @@ p {
 }
 
 .intro-outro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 80%;
-  margin: auto;
+  padding: 1rem 2rem;
   color: var(--color2);
-  line-height: 2;
 }
 
 .intro-outro--intro {

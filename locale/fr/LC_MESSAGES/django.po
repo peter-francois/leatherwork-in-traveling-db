@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 10:18+0200\n"
+"POT-Creation-Date: 2026-07-07 07:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -300,12 +300,12 @@ msgstr "Premier"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:5
 #: .\catalog\templates\catalog\components\_pagination_link.html:10
-#: .\catalog\templates\catalog\product_detail.html:46
+#: .\catalog\templates\catalog\product_detail.html:50
 msgid "Précédent"
 msgstr "Précédent"
 
 #: .\catalog\templates\catalog\components\_pagination_link.html:15
-#: .\catalog\templates\catalog\product_detail.html:47
+#: .\catalog\templates\catalog\product_detail.html:51
 msgid "Suivant"
 msgstr "Suivant"
 
@@ -331,22 +331,22 @@ msgid "Prix: "
 msgstr "Prix: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\product_detail.html:74
+#: .\catalog\templates\catalog\product_detail.html:78
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Voulez-vous ajouter ce produit au panier ?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\product_detail.html:77
+#: .\catalog\templates\catalog\product_detail.html:81
 msgid "Ajouter au panier"
 msgstr "Ajouter au panier"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\product_detail.html:80
+#: .\catalog\templates\catalog\product_detail.html:84
 msgid "Produit indisponible pour le moment"
 msgstr "Produit indisponible pour le moment"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\product_detail.html:83
+#: .\catalog\templates\catalog\product_detail.html:87
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Contactez-nous, disponible sur commande"
 
@@ -388,7 +388,7 @@ msgstr ""
 #: .\catalog\templates\catalog\hybrid.html:16
 #: .\catalog\templates\catalog\leatherwork.html:16
 #: .\catalog\templates\catalog\macrame.html:16
-#: .\catalog\templates\catalog\product_list.html:16
+#: .\catalog\templates\catalog\product_list.html:22
 msgid "Voir les créations ↓"
 msgstr "Voir les créations ↓"
 
@@ -404,7 +404,7 @@ msgstr ""
 #: .\catalog\templates\catalog\hybrid.html:22
 #: .\catalog\templates\catalog\leatherwork.html:22
 #: .\catalog\templates\catalog\macrame.html:22
-#: .\catalog\templates\catalog\product_list.html:22
+#: .\catalog\templates\catalog\product_list.html:28
 msgid "Créations sur mesure"
 msgstr "Création sur Mesure"
 
@@ -482,11 +482,11 @@ msgstr ""
 "chaînes de corps, des boucles d’oreilles bohèmes… laissez libre cours à vos "
 "envies de style fait main et de pièces uniques."
 
-#: .\catalog\templates\catalog\product_detail.html:34
+#: .\catalog\templates\catalog\product_detail.html:38
 msgid "Images du produit"
 msgstr "Images du produit"
 
-#: .\catalog\templates\catalog\product_detail.html:52
+#: .\catalog\templates\catalog\product_detail.html:56
 #, fuzzy
 #| msgid "Meta description index"
 msgid "Description"
@@ -494,22 +494,22 @@ msgstr ""
 "Découvrez des sacs et portefeuilles fait main, ainsi que des bijoux bohèmes "
 "en cuir et macramé. Chaque pièce est conçue avec passion et originalité."
 
-#: .\catalog\templates\catalog\product_detail.html:57
+#: .\catalog\templates\catalog\product_detail.html:61
 #, fuzzy
 #| msgid "Aucun produit disponible"
 msgid "Aucune description disponible"
 msgstr "Aucun produit disponible"
 
-#: .\catalog\templates\catalog\product_detail.html:63
+#: .\catalog\templates\catalog\product_detail.html:67
 msgid "Promo"
 msgstr "Promo"
 
-#: .\catalog\templates\catalog\product_detail.html:64
+#: .\catalog\templates\catalog\product_detail.html:68
 msgid "Nouveau prix:"
 msgstr "Nouveau prix:"
 
-#: .\catalog\templates\catalog\product_detail.html:65
-#: .\catalog\templates\catalog\product_detail.html:67
+#: .\catalog\templates\catalog\product_detail.html:69
+#: .\catalog\templates\catalog\product_detail.html:71
 #, fuzzy
 #| msgid "Prix: "
 msgid "Prix:"
@@ -522,28 +522,49 @@ msgid ""
 "Trouvez des produits inédits pour sublimer votre style. Livraison rapide et "
 "qualité garantie."
 msgstr ""
-"Découvrez nos sacs personnalisés, portefeuilles cuir fait main et créations "
-"en macramé. Une boutique unique au style authentique."
+"Sacs, ceintures et accessoires en cuir repoussé, bijoux et bracelets macramé "
+"faits main par un artisan nomade. Livraison en point relais."
 
 #: .\catalog\templates\catalog\product_list.html:8
 msgid "Accessoires, maroquinerie & macramé faits main | Créations originales"
-msgstr "Sacs personnalisés & bijoux macramé – Fait main"
+msgstr "Maroquinerie & Macramé Artisanaux | Cuir Repoussé Fait Main"
 
-#: .\catalog\templates\catalog\product_list.html:11
+#: .\catalog\templates\catalog\product_list.html:12
 msgid "Explorez Nos Créations - Trouvez votre style unique"
-msgstr ""
-"Sac personnalisé, maroquinerie et bijoux macramé : explorez notre univers"
+msgstr "Créations artisanales en cuir repoussé et macramé"
 
-#: .\catalog\templates\catalog\product_list.html:14
-msgid "Intro produits"
+#: .\catalog\templates\catalog\product_list.html:13
+msgid "Pièces uniques en cuir repoussé et macramé, façonnées"
 msgstr ""
-"Explorez l'univers de nos créations faite à la main : sacs personnalisés, "
-"maroquinerie en cuir et bijoux macramé s’y rencontrent et forment une "
-"collection de pièces uniques. Chaque modéle reflète notre passion pour le "
-"travail bien fait et le style authentique. Trouvez l’accessoire qui vous "
-"ressemble parmi notre sélection."
+"Pièces uniques en cuir repoussé et macramé, façonnées à la main quelque part "
+"en Europe."
+
+#: .\catalog\templates\catalog\product_list.html:17
+msgid "Maroquinerie ciselée, bijoux macramé,"
+msgstr ""
+"Maroquinerie ciselée, bijoux macramé, accessoires western ou biker — "
+"chaque pièce naît d'un geste artisanal précis."
+
+#: .\catalog\templates\catalog\product_list.html:18
+msgid "Le repoussage cuir est une technique "
+msgstr ""
+"Le repoussage cuir est une technique exigeante : chaque motif est sculpté "
+"à la main dans le cuir pleine fleur, une pièce à la fois."
 
 #: .\catalog\templates\catalog\product_list.html:19
+msgid "Les créations en macramé suivent la même"
+msgstr ""
+"Les créations en macramé suivent la même logique : du fil naturel, des "
+"nœuds maîtrisés, aucune série."
+
+#: .\catalog\templates\catalog\product_list.html:20
+msgid "Que vous cherchiez un cadeau cuir"
+msgstr ""
+"Que vous cherchiez un cadeau cuir original pour homme ou femme, "
+"un collier macramé ou une sacoche moto sur mesure, vous trouverez "
+"ici des objets qui durent."
+
+#: .\catalog\templates\catalog\product_list.html:25
 msgid "outro produits"
 msgstr ""
 "Vous cherchez un sac personnalisé, un bijou macramé tendance ou un cadeau "
@@ -571,7 +592,7 @@ msgstr "produits/"
 msgid "produits/<str:category>/<slug:slug>-<int:product_id>/"
 msgstr "produits/<str:category>/<slug:slug>-<int:product_id>/"
 
-#: .\catalog\views.py:17 .\catalog\views.py:95
+#: .\catalog\views.py:16 .\catalog\views.py:101
 msgid "Produits"
 msgstr "Produits"
 
@@ -993,7 +1014,7 @@ msgstr "➤ Découvrir les créations hybrides"
 msgid "creation-sur-mesure/"
 msgstr "creation-sur-mesure/"
 
-#: .\core\views.py:31
+#: .\core\views.py:32
 msgid "Creation sur mesure"
 msgstr "Création sur Mesure"
 
@@ -1084,6 +1105,17 @@ msgstr "informations-legales"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "politique-de-confidentialite"
+
+#~ msgid "Intro produits"
+#~ msgstr ""
+#~ "Maroquinerie ciselée, bijoux macramé, accessoires western ou biker — "
+#~ "chaque pièce naît d'un geste artisanal précis. Le repoussage cuir est une "
+#~ "technique exigeante : chaque motif est sculpté à la main dans le cuir "
+#~ "pleine fleur, une pièce à la fois. Les créations en macramé suivent la "
+#~ "même logique : du fil naturel, des nœuds maîtrisés, aucune série. Que "
+#~ "vous cherchiez un cadeau cuir original pour homme ou femme, un collier "
+#~ "macramé ou une sacoche moto sur mesure, vous trouverez ici des objets qui "
+#~ "durent."
 
 #~ msgid "Offrez-vous un cadeau artisanal"
 #~ msgstr "Offrez-vous un cadeau artisanal fait main qui vous ressemble."
