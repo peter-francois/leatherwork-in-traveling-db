@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 09:17+0200\n"
+"POT-Creation-Date: 2026-07-07 09:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Empty cart"
 #: .\cart\templates\cart\components\_cart_content.html:9
 #: .\cart\templates\cart\components\_cart_content.html:26
 msgid "Votre panier expirera le"
-msgstr "Your cart will expire on"
+msgstr "Your cart will expire on "
 
 #: .\cart\templates\cart\components\_cart_content.html:11
 #: .\cart\templates\cart\components\_cart_content.html:28
@@ -366,8 +366,7 @@ msgstr "Leather & Macrame Hybrid Jewelry - Original Creations"
 
 #: .\catalog\templates\catalog\hybrid.html:12
 msgid "Accessoires uniques alliant maroquinerie et macramé"
-msgstr ""
-"Hand tooled leather & macrame jewelry"
+msgstr "Hand tooled leather & macrame jewelry"
 
 #: .\catalog\templates\catalog\hybrid.html:13
 msgid "Deux matières, un seul geste artisanal."
@@ -377,22 +376,16 @@ msgstr "Two materials, one craft."
 msgid "Ces créations n'appartiennent à aucune"
 msgstr ""
 "These pieces don't fit neatly into one category — they combine carved "
-"leather and knotted macrame in a single object, worked together rather "
-"than side by side."
+"leather and knotted macrame in a single object, worked together rather than "
+"side by side."
 
 #: .\catalog\templates\catalog\hybrid.html:18
 msgid "Un bracelet bohème dont"
-msgstr "A boho bracelet with a hand tooled leather centrepiece."
+msgstr "A boho bracelet with a hand tooled leather centrepiece. A macrame "
+"necklace with a carved leather clasp. Accessories that carry both "
+"techniques at once."
 
 #: .\catalog\templates\catalog\hybrid.html:19
-msgid "Un collier macramé fermé"
-msgstr "A macrame necklace with a carved leather clasp."
-
-#: .\catalog\templates\catalog\hybrid.html:20
-msgid "Des accessoires qui portent les deux"
-msgstr "Accessories that carry both techniques at once."
-
-#: .\catalog\templates\catalog\hybrid.html:21
 msgid "C'est l'angle le plus personnel du travail"
 msgstr ""
 "This is the most personal corner of the workshop — where leather carving and "
@@ -400,14 +393,14 @@ msgstr ""
 "find anywhere else. If you're looking for a leather gift for women or men "
 "that goes beyond the expected, this is it."
 
-#: .\catalog\templates\catalog\hybrid.html:23
+#: .\catalog\templates\catalog\hybrid.html:21
 #: .\catalog\templates\catalog\leatherwork.html:22
 #: .\catalog\templates\catalog\macrame.html:21
 #: .\catalog\templates\catalog\product_list.html:24
 msgid "Voir les créations ↓"
 msgstr "See the creations ↓"
 
-#: .\catalog\templates\catalog\hybrid.html:26
+#: .\catalog\templates\catalog\hybrid.html:24
 msgid "outro hybride"
 msgstr ""
 "Macrame jewelry combining leather and creativity for a truly authentic look. "
@@ -415,7 +408,7 @@ msgstr ""
 "life. Find the macrame bracelet or piece of jewelry that will perfectly "
 "complete your look and be tempted by our other collections."
 
-#: .\catalog\templates\catalog\hybrid.html:29
+#: .\catalog\templates\catalog\hybrid.html:27
 #: .\catalog\templates\catalog\leatherwork.html:28
 #: .\catalog\templates\catalog\macrame.html:27
 #: .\catalog\templates\catalog\product_list.html:30
@@ -1151,6 +1144,12 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid "Un collier macramé fermé"
+#~ msgstr "A macrame necklace with a carved leather clasp."
+
+#~ msgid "Des accessoires qui portent les deux"
+#~ msgstr "Accessories that carry both techniques at once."
 
 #~ msgid "Intro hybride"
 #~ msgstr ""
