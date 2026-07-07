@@ -8,10 +8,18 @@
   {% trans "Accessoires, maroquinerie & macramé faits main | Créations originales" %}
 {% endblock title %}
 {% block header %}
-  <h1 id="title_all_products">{% trans "Explorez Nos Créations - Trouvez votre style unique" %}</h1>
+  <div>
+    <h1 id="title_all_products">{% trans "Explorez Nos Créations - Trouvez votre style unique" %}</h1>
+    <p class="sub-title">{% trans "Pièces uniques en cuir repoussé et macramé, façonnées" %}</p>
+  </div>
 {% endblock header %}
 {% block catalog-description %}
-  <p class="text-center"><em>{% trans "Intro produits" %}</em></p>
+  <div>
+    <p class="text-center"><em>{% trans "Maroquinerie ciselée, bijoux macramé," %}</em></p>
+    <p class="text-center"><em>{% trans "Le repoussage cuir est une technique " %}</em></p>
+    <p class="text-center"><em>{% trans "Les créations en macramé suivent la même" %}</em></p>
+    <p class="text-center"><em>{% trans "Que vous cherchiez un cadeau cuir" %}</em></p>
+  </div>
   <button class="align-items-center page-button font-size-17"
           id="see_products_button">{% trans "Voir les créations ↓" %}</button>
 {% endblock catalog-description %}
