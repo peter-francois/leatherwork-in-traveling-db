@@ -28,9 +28,9 @@
 {% endblock head %}
 {% load static %}
 {% block meta-description %}{{ product.meta_description|default:product.name }}{% endblock meta-description %}
-{% block title %}{{ product.name }}{% endblock title %}
+{% block title %}{{ product.seo_title }}{% endblock title %}
 {% block header %}
-  <h1 id="nom-article">{{ product.name }}</h1>
+  <h1 id="nom-article">{{ product.seo_h1 }}</h1>
 {% endblock header %}
 {% block content %}
   <article class="product-detail two-col-layout two-col-layout--aside-right">
