@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 08:57+0200\n"
+"POT-Creation-Date: 2026-07-07 09:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -355,44 +355,60 @@ msgid "Supprimer"
 msgstr "Supprimer"
 
 #: .\catalog\templates\catalog\hybrid.html:5
-#, fuzzy
-#| msgid ""
-#| "Découvrez nos créations uniques mêlant maroquinerie et macramé. "
-#| "Accessoires et bijoux alliant l’élégance du cuir à la finesse du tissage."
 msgid ""
 "Découvrez nos créations uniques mêlant maroquinerie et macramé. Accessoires "
 "et bijoux alliant l'élégance du cuir à la finesse du tissage."
 msgstr ""
-"Bijoux macramé uniques mêlant cuir et tressage de fil. Bracelets et colliers "
-"fait main pour un style authentique et original."
+"Bracelets, colliers et accessoires mêlant cuir repoussé et macramé faits "
+"main par un artisan nomade. Pièces uniques. Livraison en Europe."
 
 #: .\catalog\templates\catalog\hybrid.html:8
 msgid "Créations hybrides maroquinerie & macramé - Accessoires uniques"
-msgstr "Bijoux macramé & cuir - Créations originales"
+msgstr "Créations Hybrides Cuir & Macramé"
 
-#: .\catalog\templates\catalog\hybrid.html:11
+#: .\catalog\templates\catalog\hybrid.html:12
 msgid "Accessoires uniques alliant maroquinerie et macramé"
 msgstr ""
-"Explorez nos bijoux macramé originaux mêlant cuir et tressage de fil pour un "
-"style bohème inimitable"
+"Créations hybrides cuir repoussé & macramé"
 
-#: .\catalog\templates\catalog\hybrid.html:14
-msgid "Intro hybride"
+#: .\catalog\templates\catalog\hybrid.html:13
+msgid "Deux matières, un seul geste artisanal."
+msgstr "Deux matières, un seul geste artisanal."
+
+#: .\catalog\templates\catalog\hybrid.html:17
+msgid "Ces créations n'appartiennent à aucune"
 msgstr ""
-"Laissez-vous séduire par notre sélection de bijoux macramé alliant cuir et "
-"tressage pour un style bohème unique. Chaque pièce est faite à la main et "
-"reflète l’équilibre parfait entre authenticité et modernité. Découvrez des "
-"bracelets macramé et colliers originaux qui apportent une touche élégante et "
-"intemporelle à votre look. Idéal pour un style authentique."
+"Ces créations n'appartiennent à aucune catégorie fixe — elles "
+"combinent le cuir ciselé et le macramé noué dans une même pièce, "
+"travaillés ensemble plutôt que juxtaposés."
 
-#: .\catalog\templates\catalog\hybrid.html:16
+#: .\catalog\templates\catalog\hybrid.html:18
+msgid "Un bracelet bohème dont"
+msgstr "Un bracelet bohème dont la monture est en cuir repoussé."
+
+#: .\catalog\templates\catalog\hybrid.html:19
+msgid "Un collier macramé fermé"
+msgstr "Un collier macramé fermé par une boucle en cuir ciselé."
+
+#: .\catalog\templates\catalog\hybrid.html:20
+msgid "Des accessoires qui portent les deux"
+msgstr "Des accessoires qui portent les deux techniques à la fois."
+
+#: .\catalog\templates\catalog\hybrid.html:21
+msgid "C'est l'angle le plus personnel du travail"
+msgstr ""
+"C'est l'angle le plus personnel du travail de cet artisan maroquinier nomade "
+": là où les deux savoir-faire se croisent, chaque cadeau artisanal devient "
+"vraiment unique et introuvable ailleurs."
+
+#: .\catalog\templates\catalog\hybrid.html:23
 #: .\catalog\templates\catalog\leatherwork.html:22
 #: .\catalog\templates\catalog\macrame.html:21
 #: .\catalog\templates\catalog\product_list.html:24
 msgid "Voir les créations ↓"
 msgstr "Voir les créations ↓"
 
-#: .\catalog\templates\catalog\hybrid.html:19
+#: .\catalog\templates\catalog\hybrid.html:26
 msgid "outro hybride"
 msgstr ""
 "Des bijoux macramé combinant cuir et créativité pour un look résolument "
@@ -401,7 +417,7 @@ msgstr ""
 "complétera parfaitement votre look et laissez-vous séduire par nos autres "
 "collections."
 
-#: .\catalog\templates\catalog\hybrid.html:22
+#: .\catalog\templates\catalog\hybrid.html:29
 #: .\catalog\templates\catalog\leatherwork.html:28
 #: .\catalog\templates\catalog\macrame.html:27
 #: .\catalog\templates\catalog\product_list.html:30
@@ -486,14 +502,14 @@ msgid "Le macramé artisanal, c'est l'art du nœud maîtrisé"
 msgstr ""
 "Le macramé artisanal, c'est l'art du nœud maîtrisé — chaque bracelet "
 "macramé, collier bohème ou paire de boucles d'oreilles macramé naît d'un "
-"assemblage de fils naturels travaillés à la main, sans machine, sans "
-"patron répété."
+"assemblage de fils naturels travaillés à la main, sans machine, sans patron "
+"répété."
 
 #: .\catalog\templates\catalog\macrame.html:18
 msgid "Le style est bohème mais la démarche"
 msgstr ""
-"Le style est bohème mais la démarche est celle de l'artisan : rien n'est "
-"en série, chaque création macramé est pensée comme une pièce à part entière."
+"Le style est bohème mais la démarche est celle de l'artisan : rien n'est en "
+"série, chaque création macramé est pensée comme une pièce à part entière."
 
 #: .\catalog\templates\catalog\macrame.html:19
 msgid "Que vous cherchiez un bijou macramé"
@@ -1133,6 +1149,14 @@ msgstr "informations-legales"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "politique-de-confidentialite"
+
+#~ msgid "Intro hybride"
+#~ msgstr ""
+#~ "Laissez-vous séduire par notre sélection de bijoux macramé alliant cuir "
+#~ "et tressage pour un style bohème unique. Chaque pièce est faite à la main "
+#~ "et reflète l’équilibre parfait entre authenticité et modernité. Découvrez "
+#~ "des bracelets macramé et colliers originaux qui apportent une touche "
+#~ "élégante et intemporelle à votre look. Idéal pour un style authentique."
 
 #~ msgid ""
 #~ "Bienvenue dans l'espace Macramés. Retrouvez ci-dessous tous les produits "
