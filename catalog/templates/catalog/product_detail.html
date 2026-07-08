@@ -34,7 +34,7 @@
 {% endblock header %}
 {% block content %}
   <article class="product-detail two-col-layout two-col-layout--aside-right">
-    <section class="two-col-layout__main product-detail__images">
+    <div class="two-col-layout__main product-detail__images">
       <h2 class="sr-only">{% trans "Images du produit" %}</h2>
       {{ product.image_urls|json_script:"product-images-data" }}
       <div class="image-container" id="imageContainer">
@@ -50,9 +50,9 @@
         <button class="font-size-17" id="prev-button" type="button">{% trans "Précédent" %}</button>
         <button class="font-size-17" id="next-button" type="button">{% trans "Suivant" %}</button>
       </div>
-    </section>
+    </div>
     <aside class="two-col-layout__aside product-detail__info">
-      <section>
+      <div>
         <h2>{% trans "Description" %}</h2>
         <p id="description-article">
           {% if product.description %}
@@ -61,8 +61,40 @@
             {% trans "Aucune description disponible" %}
           {% endif %}
         </p>
-      </section>
-      <section class="product-detail__pricing">
+      </div>
+      <div>
+        <ul class="product-detail__badges"
+            aria-label="{% trans 'Garanties produit' %}">
+          <li class="product-detail__badge">
+            <span class="product-detail__badge-icon" aria-hidden="true">✋</span>
+            <span class="product-detail__badge-label">{% trans "Fait main" %}</span>
+            <span class="product-detail__badge-sub">{% trans "Chaque pièce est unique" %}</span>
+          </li>
+          <li class="product-detail__badge">
+            <span class="product-detail__badge-icon" aria-hidden="true">🪡</span>
+            <span class="product-detail__badge-label">{% trans "Cuir véritable" %}</span>
+            <span class="product-detail__badge-sub">{% trans "Technique du repoussage" %}</span>
+          </li>
+          <li class="product-detail__badge">
+            <span class="product-detail__badge-icon" aria-hidden="true">🌍</span>
+            <span class="product-detail__badge-label">{% trans "Artisan nomade" %}</span>
+            <span class="product-detail__badge-sub">{% trans "Créé quelque part en Europe" %}</span>
+          </li>
+        </ul>
+      </div>
+      {% if product.characteristics %}
+        <div class="product-detail__characteristics">
+          <h2>{% trans "Caractéristiques" %}</h2>
+          <ul>
+            {% for line in product.characteristics.splitlines %}
+              {% if line.strip %}
+                <li>{{ line.strip }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <div class="product-detail__pricing">
         {% if product.discount != 0.0 %}
           <h2 id="promo-widget" class="promo-widget">{% trans "Promo" %}</h2>
           <p class="new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
@@ -71,7 +103,7 @@
           <h2>{% trans "Prix:" %}</h2>
           <p>{{ product.price|floatformat:2 }}€</p>
         {% endif %}
-      </section>
+      </div>
       {% if not product.pending_in_cart and not product.on_demand %}
         <button hx-post="{% url 'cart_api:add_to_cart' product.id %}"
                 hx-target="#product-detail-actions"
@@ -91,4 +123,39 @@
       {% endif %}
     </aside>
   </article>
+  <div class="product-detail__extra">
+    <div>
+      <ul class="product-detail__badges"
+          aria-label="{% trans 'Informations de commande' %}">
+        <li class="product-detail__badge">
+          <span class="product-detail__badge-icon" aria-hidden="true">🎁</span>
+          <span class="product-detail__badge-label">{% trans "Idée cadeau" %}</span>
+          <span class="product-detail__badge-sub">{% trans "Une création artisanale unique qui fera plaisir à coup sûr." %}</span>
+        </li>
+        <li class="product-detail__badge">
+          <span class="product-detail__badge-icon" aria-hidden="true">🔒</span>
+          <span class="product-detail__badge-label">{% trans "Paiement sécurisé" %}</span>
+          <span class="product-detail__badge-sub">{% trans "Paiement 100 % sécurisé par carte bancaire ou PayPal." %}</span>
+        </li>
+        <li class="product-detail__badge">
+          <span class="product-detail__badge-icon" aria-hidden="true">📦</span>
+          <span class="product-detail__badge-label">{% trans "Livraison en Europe" %}</span>
+          <span class="product-detail__badge-sub">{% trans "Expédition en point relais ou à domicile partout en Europe." %}</span>
+        </li>
+        <li class="product-detail__badge">
+          <span class="product-detail__badge-icon" aria-hidden="true">💛</span>
+          <span class="product-detail__badge-label">{% trans "Satisfaction garantie" %}</span>
+          <span class="product-detail__badge-sub">{% trans "Une question ? Contactez-nous, on trouve une solution." %}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="product-detail__custom text-center">
+      <h2>{% trans "Vous voulez quelque chose d'unique ?" %}</h2>
+      <p>{% trans "Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — motif, couleur, dimensions : tout est possible sur commande." %}</p>
+      <a class="page-button product-detail__custom-link"
+         href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20personnalisation%20-20{{ product.name }}">
+        {% trans "Demander une personnalisation" %}
+      </a>
+    </div>
+  </div>
 {% endblock content %}
