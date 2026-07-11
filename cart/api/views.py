@@ -72,6 +72,14 @@ def add_to_cart(request, product_id):
         )
 
     product.refresh_from_db()  # reload pending_in_cart updated by add_product_to_cart()
+
+    source = request.headers.get("X-Source", "catalog")
+    if source == "product_detail":
+        response = HttpResponse()
+        response["HX-Redirect"] = reverse("catalog:product_list")
+        response["HX-Trigger"] = "cartUpdated"
+        return response
+
     response = render(
         request,
         "catalog/components/_product_card.html",
