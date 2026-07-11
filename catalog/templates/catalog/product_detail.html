@@ -35,7 +35,7 @@
 {% block content %}
   <article class="product-detail two-col-layout two-col-layout--aside-right">
     <div class="two-col-layout__main product-detail__images">
-      <h2 class="sr-only">{% trans "Images du produit" %}</h2>
+      <h2 class="sr-only">{% trans "Images du modèle" %}</h2>
       {{ product.image_urls|json_script:"product-images-data" }}
       <div class="image-container" id="imageContainer">
         {% if product.image1 %}
@@ -85,7 +85,7 @@
       {% if product.characteristics %}
         <div class="product-detail__characteristics">
           <h2>{% trans "Caractéristiques" %}</h2>
-          <ul>
+          <ul id="characteristic-article">
             {% for line in product.characteristics.splitlines %}
               {% if line.strip %}
                 <li>{{ line.strip }}</li>
@@ -124,7 +124,7 @@
   </article>
   <div class="product-detail__extra">
     <div class="text-center">
-      <h2>{% trans "Conseils d'entretien" %}</h2>
+      <h3>{% trans "Conseils d'entretien" %}</h3>
       {% if product.category != "Maroquinerie" %}
         <p>{% trans "Les macramés sont fait avec des fils naturel" %}</p>
       {% else %}
@@ -157,7 +157,7 @@
       </ul>
     </div>
     <div class="product-detail__custom text-center">
-      <h2>{% trans "Vous voulez quelque chose d'unique ?" %}</h2>
+      <h3>{% trans "Vous voulez quelque chose d'unique ?" %}</h3>
       <p>{% trans "Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — motif, couleur, dimensions : tout est possible sur commande." %}</p>
       <a class="page-button product-detail__custom-link"
          href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20personnalisation%20-20{{ product.name }}">
