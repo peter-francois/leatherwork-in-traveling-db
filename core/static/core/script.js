@@ -104,12 +104,10 @@ document.addEventListener("DOMContentLoaded", function () {
       img.addEventListener("click", () => {
         const articleId = produit.getAttribute("data-product-id");
         if (!articleId) return;
-        displayProductImages(articleId);
       });
       clickHint.addEventListener("click", () => {
         const articleId = produit.getAttribute("data-product-id");
         if (!articleId) return;
-        displayProductImages(articleId);
       });
     }
   });
@@ -154,67 +152,6 @@ function cleanFilter() {
 let currentImageIndex = 0; // Index de l'image actuelle
 let images = []; // Tableau pour stocker les images
 
-// Fonction pour afficher les images d'un article avec le nom de l'article
-function displayProductImages(articleId) {
-  fetch(`/api/catalog/get_product_images/${articleId}/`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      document.getElementById("nom-article").textContent = data.nom;
-
-      const descriptionEl = document.getElementById("description-article");
-      if (data.description) {
-        descriptionEl.textContent = data.description;
-      } else {
-        descriptionEl.textContent =
-          currentLanguage === "en"
-            ? "No description available"
-            : "Aucune description disponible";
-      }
-      const price = Number(data.prix);
-      const discount = Number(data.discount || 0);
-      const priceEl = document.getElementById("prix-article");
-      const newPriceEl = document.getElementById("new_price");
-      const newPriceH3El = document.getElementById("new_price_h3");
-
-      priceEl.textContent = price.toFixed(2).replace(".", ",") + " €";
-
-      const promoWidget = document.getElementById("promo-widget");
-
-      if (discount > 0) {
-        promoWidget.style.display = "block";
-        newPriceH3El.style.display = "INLINE";
-        const newPrice = price - discount;
-
-        priceEl.style.textDecoration = "line-through";
-        priceEl.style.textDecorationThickness = "3px";
-        priceEl.style.textDecorationColor = "#da0410";
-        newPriceEl.textContent = newPrice.toFixed(2).replace(".", ",") + " €";
-      } else {
-        priceEl.style.textDecoration = "none";
-        newPriceEl.textContent = "";
-        promoWidget.style.display = "none";
-        newPriceH3El.style.display = "none";
-      }
-
-
-      // --- Images ---
-      images = data.images || [];
-      currentImageIndex = 0;
-
-      if (images.length > 0) {
-        document.getElementById("current-image").src = images[0];
-        document.getElementById("zoomImage").src = images[0];
-      }
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
-}
 
 // Fonction pour changer d'image
 function changeImage(direction) {
