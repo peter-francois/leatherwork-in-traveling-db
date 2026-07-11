@@ -300,9 +300,13 @@ class CheckoutTest(TestCase):
             session_id=session.session_key, uuid=uuid.uuid4()
         )
         CartItem.objects.create(cart=self.cart, product=self.product, quantity=1)
+        self.terms = make_terms_document()
 
-    def test_returns_error_when_no_cart_uuid(self):
-        """Should return 400 when cart UUID is missing"""
+    def test_returns_error_when_no_active_cart(self):
+        """Should return 400 when no unpaid cart exists for the session"""
+        # Nouvelle session sans panier associé
+        self.client.session.flush()
+
         response = self.client.get(
             reverse("cart_api:checkout"),
             {
@@ -330,7 +334,6 @@ class CheckoutTest(TestCase):
 
     def test_returns_error_when_amount_mismatch(self):
         """Should return 400 when front total doesn't match back total"""
-        make_terms_document()
         response = self.client.get(
             reverse("cart_api:checkout"),
             {
@@ -345,7 +348,6 @@ class CheckoutTest(TestCase):
 
     def test_redirects_to_stripe_on_success(self):
         """Should redirect to Stripe URL on success"""
-        make_terms_document()
         with patch(
             "cart.api.views.create_stripe_session",
             return_value="https://stripe.com/pay",
