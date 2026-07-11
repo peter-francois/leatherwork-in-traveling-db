@@ -105,8 +105,7 @@
       </div>
       {% if not product.pending_in_cart and not product.on_demand %}
         <button hx-post="{% url 'cart_api:add_to_cart' product.id %}"
-                hx-target="#product-detail-actions"
-                hx-swap="innerHTML"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}", "X-Source": "product_detail"}'
                 hx-confirm="{% trans 'Voulez-vous ajouter ce produit au panier ?' %}"
                 class="align-items-center page-button add_to_cart_button"
                 id="product-detail-actions"

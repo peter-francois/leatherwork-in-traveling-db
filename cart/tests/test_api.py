@@ -86,6 +86,28 @@ class AddToCartTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "core/components/_error.html")
 
+    def test_redirects_to_catalog_when_source_is_product_detail(self):
+        """Should return HX-Redirect to catalog when request comes from product_detail"""
+        response = self.client.post(
+            reverse("cart_api:add_to_cart", args=[self.product.id]),
+            HTTP_X_SOURCE="product_detail",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers.get("HX-Redirect"),
+            reverse("catalog:product_list"),
+        )
+        self.assertEqual(response.headers.get("HX-Trigger"), "cartUpdated")
+
+    def test_no_redirect_when_source_is_catalog(self):
+        """Should not set HX-Redirect when request comes from catalog"""
+        response = self.client.post(
+            reverse("cart_api:add_to_cart", args=[self.product.id]),
+            HTTP_X_SOURCE="catalog",
+        )
+        self.assertIsNone(response.headers.get("HX-Redirect"))
+        self.assertTemplateUsed(response, "catalog/components/_product_card.html")
+
 
 class EmptyCartTest(TestCase):
     """Tests for empty_cart API view"""
