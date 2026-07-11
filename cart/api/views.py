@@ -203,18 +203,18 @@ def remove_from_cart(request, product_id):
 
 
 def checkout(request):
+    session_id = request.session.session_key
+    if not session_id:
+        return JsonResponse({"error": "Session ID manquant"}, status=400)
+
     front_total_euros = float(request.GET.get("front_total"))
     is_optional_insurance = request.GET.get("insurance") == "1"
     is_home_delivery = request.GET.get("shipping") == "1"
     accept_cgv = request.GET.get("acceptCGV") == "1"
     success_url = request.build_absolute_uri(reverse("cart:success"))
     cancel_url = request.build_absolute_uri(reverse("cart:cancel"))
-    cart_uuid = request.GET.get("cart_uuid")
 
-    if not cart_uuid:
-        return JsonResponse({"error": "Cart UUID manquant"}, status=400)
-
-    cart = Cart.objects.filter(uuid=cart_uuid, paid=False).first()
+    cart = Cart.objects.filter(session_id=session_id, paid=False).first()
     if not cart:
         return JsonResponse({"error": "Panier invalide ou expiré."}, status=400)
 

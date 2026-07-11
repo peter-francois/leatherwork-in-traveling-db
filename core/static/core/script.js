@@ -386,10 +386,12 @@ function handleCheckout() {
   const addInsurance = document.getElementById("add-insurance").checked;
   const addShipping = document.getElementById("add-shipping").checked;
   const errorMessage = document.getElementById("error-message");
+
   let orderTotal = document.getElementById("total-amount").textContent;
-  if (currentLanguage == "fr") {
+  if (currentLanguage === "fr") {
     orderTotal = orderTotal.replace(",", ".");
   }
+
   if (!acceptCGV) {
     errorMessage.classList.remove("hidden");
     return;
@@ -397,15 +399,7 @@ function handleCheckout() {
 
   errorMessage.classList.add("hidden");
 
-  // Récupérer l'UUID du panier depuis le localStorage
-  const cart_uuid = localStorage.getItem("cart_uuid");
-
-  if (!cart_uuid) {
-    console.error("L'UUID du panier est introuvable.");
-    return;
-  }
-  // Redirige vers Stripe avec le montant total
-  window.location.href = `/api/cart/checkout/?front_total=${orderTotal}&cart_uuid=${cart_uuid}&insurance=${addInsurance ? 1 : 0}&shipping=${addShipping ? 1 : 0}&acceptCGV=${acceptCGV ? 1 : 0}`;
+  window.location.href = `/api/cart/checkout/?front_total=${orderTotal}&insurance=${addInsurance ? 1 : 0}&shipping=${addShipping ? 1 : 0}&acceptCGV=1`;
 }
 // débug
 
