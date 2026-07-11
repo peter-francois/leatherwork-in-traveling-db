@@ -30,7 +30,7 @@
 {% block meta-description %}{{ product.meta_description|default:product.name }}{% endblock meta-description %}
 {% block title %}{{ product.seo_title }}{% endblock title %}
 {% block header %}
-  <h1 id="nom-article">{{ product.seo_h1 }}</h1>
+  <h1 id="nom-article">{{ product.seo_h1|default:product.name }}</h1>
 {% endblock header %}
 {% block content %}
   <article class="product-detail two-col-layout two-col-layout--aside-right">
@@ -100,8 +100,7 @@
           <p class="new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
           <p class="old-price">{% trans "Prix:" %} {{ product.price|floatformat:2 }}€</p>
         {% else %}
-          <h2>{% trans "Prix:" %}</h2>
-          <p>{{ product.price|floatformat:2 }}€</p>
+          <h2>{{ product.price|floatformat:2 }}€</h2>
         {% endif %}
       </div>
       {% if not product.pending_in_cart and not product.on_demand %}
@@ -124,6 +123,14 @@
     </aside>
   </article>
   <div class="product-detail__extra">
+    <div class="text-center">
+      <h2>{% trans "Conseils d'entretien" %}</h2>
+      {% if product.category != "Maroquinerie" %}
+        <p>{% trans "Les macramés sont fait avec des fils naturel" %}</p>
+      {% else %}
+        <p>{% trans "Pour préserver la beauté du cuir" %}</p>
+      {% endif %}
+    </div>
     <div>
       <ul class="product-detail__badges"
           aria-label="{% trans 'Informations de commande' %}">
