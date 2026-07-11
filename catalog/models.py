@@ -17,8 +17,11 @@ class Product(models.Model):
     meta_description = models.CharField(
         default="", max_length=135, blank=True, verbose_name="Meta-description"
     )
-    description = models.CharField(
+    description = models.TextField(
         default="", max_length=500, blank=True, verbose_name="Description"
+    )
+    characteristics = models.TextField(
+        blank=True, max_length=500, verbose_name="Caractéristiques"
     )
     price = models.FloatField(default=0.0, verbose_name="Prix")
     discount = models.FloatField(default=0.0, verbose_name="Remise")

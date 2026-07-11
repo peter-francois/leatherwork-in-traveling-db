@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 09:35+0200\n"
+"POT-Creation-Date: 2026-07-11 09:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,6 +85,7 @@ msgid "Votre panier est vide."
 msgstr "Your cart is empty."
 
 #: .\cart\templates\cart\components\_secure_payment.html:3
+#: .\catalog\templates\catalog\product_detail.html:144
 msgid "Paiement sécurisé"
 msgstr "Secure payment"
 
@@ -329,22 +330,22 @@ msgid "Prix: "
 msgstr "Price: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\product_detail.html:78
+#: .\catalog\templates\catalog\product_detail.html:110
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Do you want to add this product to the cart?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\product_detail.html:81
+#: .\catalog\templates\catalog\product_detail.html:113
 msgid "Ajouter au panier"
 msgstr "Add to cart"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\product_detail.html:84
+#: .\catalog\templates\catalog\product_detail.html:116
 msgid "Produit indisponible pour le moment"
 msgstr "Product currently unavailable"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\product_detail.html:87
+#: .\catalog\templates\catalog\product_detail.html:119
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Available on request – Contact us"
 
@@ -381,9 +382,9 @@ msgstr ""
 
 #: .\catalog\templates\catalog\hybrid.html:18
 msgid "Un bracelet bohème dont"
-msgstr "A boho bracelet with a hand tooled leather centrepiece. A macrame "
-"necklace with a carved leather clasp. Accessories that carry both "
-"techniques at once."
+msgstr ""
+"A boho bracelet with a hand tooled leather centrepiece. A macrame necklace "
+"with a carved leather clasp. Accessories that carry both techniques at once."
 
 #: .\catalog\templates\catalog\hybrid.html:19
 msgid "C'est l'angle le plus personnel du travail"
@@ -519,37 +520,126 @@ msgstr ""
 "and unique pieces run free."
 
 #: .\catalog\templates\catalog\product_detail.html:38
-msgid "Images du produit"
-msgstr "Product images"
+msgid "Images du modèle"
+msgstr "Piece images"
 
 #: .\catalog\templates\catalog\product_detail.html:56
-#, fuzzy
-#| msgid "Meta description index"
 msgid "Description"
-msgstr ""
-"DescriptionDiscover handcrafted bags and wallets, along with boho jewelry in "
-"leather and macramé. Each piece is designed with passion and originality."
+msgstr "Description"
 
 #: .\catalog\templates\catalog\product_detail.html:61
-#, fuzzy
-#| msgid "Aucun produit disponible"
 msgid "Aucune description disponible"
-msgstr "No products available"
+msgstr "No description available"
 
 #: .\catalog\templates\catalog\product_detail.html:67
+msgid "Garanties produit"
+msgstr "Product warranty"
+
+#: .\catalog\templates\catalog\product_detail.html:70
+msgid "Fait main"
+msgstr "handcrafted"
+
+#: .\catalog\templates\catalog\product_detail.html:71
+msgid "Chaque pièce est unique"
+msgstr "Each piece is unique"
+
+#: .\catalog\templates\catalog\product_detail.html:75
+msgid "Cuir véritable"
+msgstr "Real leather"
+
+#: .\catalog\templates\catalog\product_detail.html:76
+msgid "Matières de qualité"
+msgstr "Quality materials"
+
+#: .\catalog\templates\catalog\product_detail.html:80
+msgid "Artisan nomade"
+msgstr "Nomadic artisan"
+
+#: .\catalog\templates\catalog\product_detail.html:81
+msgid "Créé quelque part en Europe"
+msgstr "Created somewhere in Europe"
+
+#: .\catalog\templates\catalog\product_detail.html:87
+msgid "Caractéristiques"
+msgstr "Characteristics"
+
+#: .\catalog\templates\catalog\product_detail.html:99
 msgid "Promo"
 msgstr "Discount"
 
-#: .\catalog\templates\catalog\product_detail.html:68
+#: .\catalog\templates\catalog\product_detail.html:100
 msgid "Nouveau prix:"
 msgstr "New price:"
 
-#: .\catalog\templates\catalog\product_detail.html:69
-#: .\catalog\templates\catalog\product_detail.html:71
-#, fuzzy
-#| msgid "Prix: "
+#: .\catalog\templates\catalog\product_detail.html:101
 msgid "Prix:"
 msgstr "Price: "
+
+#: .\catalog\templates\catalog\product_detail.html:127
+msgid "Conseils d'entretien"
+msgstr "Care instructions"
+
+#: .\catalog\templates\catalog\product_detail.html:129
+msgid "Les macramés sont fait avec des fils naturel"
+msgstr ""
+"To preserve the beauty of your macramé jewelry, avoid prolonged contact with "
+"water, perfumes, and harsh chemicals. Gently clean it with a soft cloth and "
+"allow it to air dry naturally if needed."
+
+#: .\catalog\templates\catalog\product_detail.html:131
+msgid "Pour préserver la beauté du cuir"
+msgstr ""
+"To preserve the beauty of the leather, avoid moisture and prolonged exposure "
+"to direct sunlight. Clean it with a soft cloth and condition it occasionally "
+"using a suitable leather balm."
+
+#: .\catalog\templates\catalog\product_detail.html:136
+msgid "Informations de commande"
+msgstr "Order informations"
+
+#: .\catalog\templates\catalog\product_detail.html:139
+msgid "Idée cadeau"
+msgstr "Gift idea"
+
+#: .\catalog\templates\catalog\product_detail.html:140
+msgid "Une création artisanale unique qui fera plaisir à coup sûr."
+msgstr "A unique handcrafted creation that is sure to please."
+
+#: .\catalog\templates\catalog\product_detail.html:145
+msgid "Paiement 100 %% sécurisé avec Stripe."
+msgstr "Secure payment with Stripe."
+
+#: .\catalog\templates\catalog\product_detail.html:149
+msgid "Livraison en Europe"
+msgstr "Careful delivery:"
+
+#: .\catalog\templates\catalog\product_detail.html:150
+msgid "Expédition en point relais ou à domicile partout en Europe."
+msgstr "Shipping to pickup points or home addresses throughout Europe."
+
+#: .\catalog\templates\catalog\product_detail.html:154
+msgid "Satisfaction garantie"
+msgstr "Satisfaction guaranteed"
+
+#: .\catalog\templates\catalog\product_detail.html:155
+msgid "Une question ? Contactez-nous, on trouve une solution."
+msgstr "Have a question? Contact us—we’ll find a solution."
+
+#: .\catalog\templates\catalog\product_detail.html:160
+msgid "Vous voulez quelque chose d'unique ?"
+msgstr "Do you want something unique?"
+
+#: .\catalog\templates\catalog\product_detail.html:161
+msgid ""
+"Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — "
+"motif, couleur, dimensions : tout est possible sur commande."
+msgstr ""
+"Did this product inspire you? Contact us for a custom creation—pattern, "
+"color, dimensions: anything is possible to order."
+
+#: .\catalog\templates\catalog\product_detail.html:164
+msgid "Demander une personnalisation"
+msgstr "Request customization"
 
 #: .\catalog\templates\catalog\product_list.html:5
 msgid ""

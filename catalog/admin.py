@@ -83,6 +83,7 @@ class ProductAdmin(TranslationAdmin):
                 "fields": (
                     "name",
                     "description",
+                    "characteristics",
                     "category",
                     "product_type",
                     "price",

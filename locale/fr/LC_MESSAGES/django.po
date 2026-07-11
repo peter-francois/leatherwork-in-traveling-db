@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 09:35+0200\n"
+"POT-Creation-Date: 2026-07-11 09:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,7 @@ msgid "Votre panier est vide."
 msgstr "Votre panier est vide"
 
 #: .\cart\templates\cart\components\_secure_payment.html:3
+#: .\catalog\templates\catalog\product_detail.html:144
 msgid "Paiement sécurisé"
 msgstr "Paiement sécurisé"
 
@@ -331,22 +332,22 @@ msgid "Prix: "
 msgstr "Prix: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\product_detail.html:78
+#: .\catalog\templates\catalog\product_detail.html:110
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Voulez-vous ajouter ce produit au panier ?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\product_detail.html:81
+#: .\catalog\templates\catalog\product_detail.html:113
 msgid "Ajouter au panier"
 msgstr "Ajouter au panier"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\product_detail.html:84
+#: .\catalog\templates\catalog\product_detail.html:116
 msgid "Produit indisponible pour le moment"
 msgstr "Produit indisponible pour le moment"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\product_detail.html:87
+#: .\catalog\templates\catalog\product_detail.html:119
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Contactez-nous, disponible sur commande"
 
@@ -383,9 +384,10 @@ msgstr ""
 
 #: .\catalog\templates\catalog\hybrid.html:18
 msgid "Un bracelet bohème dont"
-msgstr "Un bracelet bohème dont la monture est en cuir repoussé. Un collier "
-"macramé fermé par une boucle en cuir ciselé. Des accessoires qui portent "
-"les deux techniques à la fois."
+msgstr ""
+"Un bracelet bohème dont la monture est en cuir repoussé. Un collier macramé "
+"fermé par une boucle en cuir ciselé. Des accessoires qui portent les deux "
+"techniques à la fois."
 
 #: .\catalog\templates\catalog\hybrid.html:19
 msgid "C'est l'angle le plus personnel du travail"
@@ -520,37 +522,128 @@ msgstr ""
 "envies de style fait main et de pièces uniques."
 
 #: .\catalog\templates\catalog\product_detail.html:38
-msgid "Images du produit"
-msgstr "Images du produit"
+msgid "Images du modèle"
+msgstr "Images du modèle"
 
 #: .\catalog\templates\catalog\product_detail.html:56
-#, fuzzy
-#| msgid "Meta description index"
 msgid "Description"
-msgstr ""
-"Découvrez des sacs et portefeuilles fait main, ainsi que des bijoux bohèmes "
-"en cuir et macramé. Chaque pièce est conçue avec passion et originalité."
+msgstr "Description"
 
 #: .\catalog\templates\catalog\product_detail.html:61
-#, fuzzy
-#| msgid "Aucun produit disponible"
 msgid "Aucune description disponible"
 msgstr "Aucun produit disponible"
 
 #: .\catalog\templates\catalog\product_detail.html:67
+msgid "Garanties produit"
+msgstr "Garanties produit"
+
+#: .\catalog\templates\catalog\product_detail.html:70
+msgid "Fait main"
+msgstr "Fait main"
+
+#: .\catalog\templates\catalog\product_detail.html:71
+
+msgid "Chaque pièce est unique"
+msgstr "Chaque pièce est unique"
+
+#: .\catalog\templates\catalog\product_detail.html:75
+msgid "Cuir véritable"
+msgstr "Cuir véritable"
+
+#: .\catalog\templates\catalog\product_detail.html:76
+msgid "Matières de qualité"
+msgstr "Matières de qualité"
+
+#: .\catalog\templates\catalog\product_detail.html:80
+msgid "Artisan nomade"
+msgstr "Artisan nomade"
+
+#: .\catalog\templates\catalog\product_detail.html:81
+msgid "Créé quelque part en Europe"
+msgstr "Créé quelque part en Europe"
+
+#: .\catalog\templates\catalog\product_detail.html:87
+msgid "Caractéristiques"
+msgstr "Caractéristiques"
+
+#: .\catalog\templates\catalog\product_detail.html:99
 msgid "Promo"
 msgstr "Promo"
 
-#: .\catalog\templates\catalog\product_detail.html:68
+#: .\catalog\templates\catalog\product_detail.html:100
 msgid "Nouveau prix:"
 msgstr "Nouveau prix:"
 
-#: .\catalog\templates\catalog\product_detail.html:69
-#: .\catalog\templates\catalog\product_detail.html:71
-#, fuzzy
-#| msgid "Prix: "
+#: .\catalog\templates\catalog\product_detail.html:101
 msgid "Prix:"
 msgstr "Prix: "
+
+#: .\catalog\templates\catalog\product_detail.html:127
+msgid "Conseils d'entretien"
+msgstr "Conseils d'entretien"
+
+#: .\catalog\templates\catalog\product_detail.html:129
+msgid "Les macramés sont fait avec des fils naturel"
+msgstr ""
+"Pour préserver la beauté de votre bijou en macramé, évitez tout "
+"contact prolongé avec l'eau, les parfums et les produits chimiques. "
+"Nettoyez-le délicatement avec un chiffon doux et laissez-le sécher "
+"naturellement si nécessaire."
+
+#: .\catalog\templates\catalog\product_detail.html:131
+msgid "Pour préserver la beauté du cuir"
+msgstr ""
+"Pour préserver la beauté du cuir, évitez l'humidité et l'exposition "
+"prolongée au soleil. Nettoyez-le avec un chiffon doux et nourrissez-le "
+"de temps en temps avec un baume adapté."
+
+#: .\catalog\templates\catalog\product_detail.html:136
+msgid "Informations de commande"
+msgstr "Informations de commande"
+
+#: .\catalog\templates\catalog\product_detail.html:139
+msgid "Idée cadeau"
+msgstr "Idée cadeau"
+
+#: .\catalog\templates\catalog\product_detail.html:140
+msgid "Une création artisanale unique qui fera plaisir à coup sûr."
+msgstr "Une création artisanale unique qui fera plaisir à coup sûr."
+
+#: .\catalog\templates\catalog\product_detail.html:145
+msgid "Paiement 100 %% sécurisé avec Stripe."
+msgstr "Paiement 100 %% sécurisé avec Stripe."
+
+#: .\catalog\templates\catalog\product_detail.html:149
+msgid "Livraison en Europe"
+msgstr "Livraison soignée :"
+
+#: .\catalog\templates\catalog\product_detail.html:150
+msgid "Expédition en point relais ou à domicile partout en Europe."
+msgstr "Expédition en point relais ou à domicile partout en Europe."
+
+#: .\catalog\templates\catalog\product_detail.html:154
+msgid "Satisfaction garantie"
+msgstr "Satisfaction garantie"
+
+#: .\catalog\templates\catalog\product_detail.html:155
+msgid "Une question ? Contactez-nous, on trouve une solution."
+msgstr "Une question ? Contactez-nous, on trouve une solution."
+
+#: .\catalog\templates\catalog\product_detail.html:160
+msgid "Vous voulez quelque chose d'unique ?"
+msgstr "Vous voulez quelque chose d'unique ?"
+
+#: .\catalog\templates\catalog\product_detail.html:161
+msgid ""
+"Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — "
+"motif, couleur, dimensions : tout est possible sur commande."
+msgstr ""
+"Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — "
+"motif, couleur, dimensions : tout est possible sur commande."
+
+#: .\catalog\templates\catalog\product_detail.html:164
+msgid "Demander une personnalisation"
+msgstr "Demander une personnalisation"
 
 #: .\catalog\templates\catalog\product_list.html:5
 msgid ""
