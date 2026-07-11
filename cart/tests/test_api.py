@@ -86,6 +86,28 @@ class AddToCartTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "core/components/_error.html")
 
+    def test_redirects_to_catalog_when_source_is_product_detail(self):
+        """Should return HX-Redirect to catalog when request comes from product_detail"""
+        response = self.client.post(
+            reverse("cart_api:add_to_cart", args=[self.product.id]),
+            HTTP_X_SOURCE="product_detail",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers.get("HX-Redirect"),
+            reverse("catalog:product_list"),
+        )
+        self.assertEqual(response.headers.get("HX-Trigger"), "cartUpdated")
+
+    def test_no_redirect_when_source_is_catalog(self):
+        """Should not set HX-Redirect when request comes from catalog"""
+        response = self.client.post(
+            reverse("cart_api:add_to_cart", args=[self.product.id]),
+            HTTP_X_SOURCE="catalog",
+        )
+        self.assertIsNone(response.headers.get("HX-Redirect"))
+        self.assertTemplateUsed(response, "catalog/components/_product_card.html")
+
 
 class EmptyCartTest(TestCase):
     """Tests for empty_cart API view"""
@@ -278,9 +300,13 @@ class CheckoutTest(TestCase):
             session_id=session.session_key, uuid=uuid.uuid4()
         )
         CartItem.objects.create(cart=self.cart, product=self.product, quantity=1)
+        self.terms = make_terms_document()
 
-    def test_returns_error_when_no_cart_uuid(self):
-        """Should return 400 when cart UUID is missing"""
+    def test_returns_error_when_no_active_cart(self):
+        """Should return 400 when no unpaid cart exists for the session"""
+        # Nouvelle session sans panier associé
+        self.client.session.flush()
+
         response = self.client.get(
             reverse("cart_api:checkout"),
             {
@@ -308,7 +334,6 @@ class CheckoutTest(TestCase):
 
     def test_returns_error_when_amount_mismatch(self):
         """Should return 400 when front total doesn't match back total"""
-        make_terms_document()
         response = self.client.get(
             reverse("cart_api:checkout"),
             {
@@ -323,7 +348,6 @@ class CheckoutTest(TestCase):
 
     def test_redirects_to_stripe_on_success(self):
         """Should redirect to Stripe URL on success"""
-        make_terms_document()
         with patch(
             "cart.api.views.create_stripe_session",
             return_value="https://stripe.com/pay",
