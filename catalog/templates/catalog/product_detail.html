@@ -54,13 +54,15 @@
     <aside class="two-col-layout__aside product-detail__info">
       <div>
         <h2>{% trans "Description" %}</h2>
-        <p id="description-article">
-          {% if product.description %}
-            {{ product.description }}
-          {% else %}
-            {% trans "Aucune description disponible" %}
-          {% endif %}
-        </p>
+        {% if product.description %}
+          {% for line in product.description.splitlines %}
+            {% if line.strip %}
+              <p class="description-article">{{ line.strip }}</p>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% trans "Aucune description disponible" %}
+        {% endif %}
       </div>
       <div>
         <ul class="product-detail__badges"
@@ -94,7 +96,7 @@
           </ul>
         </div>
       {% endif %}
-      <div class="product-detail__pricing">
+      <div class="product-detail__pricing text-center">
         {% if product.discount != 0.0 %}
           <h2 id="promo-widget" class="promo-widget">{% trans "Promo" %}</h2>
           <p class="new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
