@@ -3,7 +3,7 @@
     data-product-id="{{ product.id }}"
     id="product-{{ product.id }}">
   <h2 class="product-name">{{ product.name }}</h2>
-  <a href="{% url 'catalog:product_detail' category=product.category slug=product.name|slugify product_id=product.id %}">
+  <a href="{% url 'catalog:product_detail' category=product.category_slug slug=product.name|slugify product_id=product.id %}">
     {% if product.image1 or product.image2 or product.image3 or product.image4 or product.image5 or product.image6 %}
       {% if product.image1 %}
         <img src="{{ product.image1.url }}" alt="{{ product.name }}">
@@ -19,7 +19,7 @@
         <img src="{{ product.image6.url }}" alt="{{ product.name }}">
       {% endif %}
       <a class="click-hint"
-         href="{% url 'catalog:product_detail' category=product.category slug=product.name|slugify product_id=product.id %}">
+         href="{% url 'catalog:product_detail' category=product.category_slug slug=product.name|slugify product_id=product.id %}">
         👆 {% trans 'Cliquez' %}
       </a>
     {% else %}
