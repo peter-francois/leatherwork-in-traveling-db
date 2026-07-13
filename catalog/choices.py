@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
@@ -9,11 +10,44 @@ class Category(models.TextChoices):
 
     @classmethod
     def from_slug(cls, slug):
-        """Resolve a lowercase URL slug to a Category value."""
-        try:
-            return cls(slug.capitalize())
-        except ValueError:
+        """Resolve a URL slug to a Category value for the current language or legacy values."""
+        if not slug:
             return None
+
+        aliases = {
+            cls.HYBRIDE: {
+                "hybride",
+                "hybrid",
+            },
+            cls.MACRAME: {
+                "macrame",
+                "macramé",
+                "macrame",
+            },
+            cls.MAROQUINERIE: {
+                "maroquinerie",
+                "leather-goods",
+                "leather goods",
+            },
+        }
+
+        normalized = slugify(slug).lower()
+        for member, values in aliases.items():
+            if normalized in {slugify(value).lower() for value in values}:
+                return member
+        return None
+
+    @classmethod
+    def get_slug(cls, category):
+        if isinstance(category, cls):
+            member = category
+        else:
+            try:
+                member = cls(category)
+            except ValueError:
+                return None
+
+        return slugify(member.label)
 
     @classmethod
     def get_category_url_name(cls, category):

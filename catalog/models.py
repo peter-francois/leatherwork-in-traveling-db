@@ -49,6 +49,10 @@ class Product(models.Model):
     def __str__(self):
         return f"Product {self.id}"
 
+    @property
+    def category_slug(self):
+        return Category.get_slug(self.category)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)

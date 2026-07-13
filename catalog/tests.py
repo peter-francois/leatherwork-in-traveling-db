@@ -1,5 +1,6 @@
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
+from django.utils.translation import override
 
 from .choices import Category, ProductType
 from .constants import PRODUCTS_PER_PAGE
@@ -163,6 +164,35 @@ class PaginationTestCase(TestCase):
 
 
 # ── Views ─────────────────────────────────────────────────────────────────────
+
+
+class CategorySlugTestCase(TestCase):
+    def test_category_slug_uses_english_for_english_locale(self):
+        with override("en"):
+            self.assertEqual(Category.get_slug(Category.MAROQUINERIE), "leather-goods")
+            self.assertEqual(Category.get_slug(Category.MACRAME), "macrame")
+            self.assertEqual(Category.get_slug(Category.HYBRIDE), "hybrid")
+
+    def test_category_slug_uses_french_for_french_locale(self):
+        with override("fr"):
+            self.assertEqual(Category.get_slug(Category.MAROQUINERIE), "maroquinerie")
+            self.assertEqual(Category.get_slug(Category.MACRAME), "macrame")
+            self.assertEqual(Category.get_slug(Category.HYBRIDE), "hybride")
+
+    def test_product_uses_current_language_for_category_slug(self):
+        product = make_product(category=Category.MAROQUINERIE)
+        with override("en"):
+            self.assertEqual(product.category_slug, "leather-goods")
+        with override("fr"):
+            self.assertEqual(product.category_slug, "maroquinerie")
+
+    def test_from_slug_accepts_english_and_french_variants(self):
+        with override("fr"):
+            self.assertEqual(Category.from_slug("leather-goods"), Category.MAROQUINERIE)
+            self.assertEqual(Category.from_slug("maroquinerie"), Category.MAROQUINERIE)
+        with override("en"):
+            self.assertEqual(Category.from_slug("maroquinerie"), Category.MAROQUINERIE)
+            self.assertEqual(Category.from_slug("leather-goods"), Category.MAROQUINERIE)
 
 
 class CatalogViewsTestCase(TestCase):

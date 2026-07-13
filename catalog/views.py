@@ -85,12 +85,12 @@ def product_detail(request, category, slug, product_id):
     )
 
     expected_slug = slugify(product.name)
-    expected_category_slug = category.lower()
+    expected_category_slug = Category.get_slug(real_category)
 
     if slug != expected_slug or category != expected_category_slug:
         return redirect(
             "catalog:product_detail",
-            category=real_category.name.lower(),
+            category=expected_category_slug,
             slug=expected_slug,
             product_id=product.id,
             permanent=True,
