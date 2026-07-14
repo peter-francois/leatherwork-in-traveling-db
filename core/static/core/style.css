@@ -1157,6 +1157,19 @@ h2.product-name {
   margin-top: 0.25rem;
 }
 
+/* ── HTMX ── */
+
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+.htmx-request .htmx-indicator {
+    opacity: 1;
+}
+.htmx-request.htmx-indicator {
+    opacity: 1;
+}
+
 @media only screen and (max-width: 1182px) {
   /*Common*/
   main {

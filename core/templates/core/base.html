@@ -36,13 +36,15 @@
           content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
     <meta property="og:description"
           content="{% trans 'Découvrez des produits authentiques en maroquinerie et macramé faits main.' %}">
-    <meta property="og:image" content="{% static 'core/images/logo2.png' %}">
+    <meta property="og:image"
+          content="{% static 'core/images/logo_leather_work.webp' %}">
     <meta property="og:url" content="https://leatherworkintravelingdb.com">
     <meta name="twitter:title"
           content="{% trans 'Créations en maroquinerie et macramé - Leather Work In Traveling DB' %}">
     <meta name="twitter:description"
           content="{% trans 'Découvrez des produits authentiques en maroquinerie et macramé faits main.' %}">
-    <meta name="twitter:image" content="{% static 'core/images/logo2.png' %}">
+    <meta name="twitter:image"
+          content="{% static 'core/images/logo_leather_work.webp' %}">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon"
           type="image/png"
@@ -77,7 +79,7 @@
       {% include 'core/components/_navbar.html' %}
       <div class="title_and_logo align-items-center grid-container">
         <img class="logo"
-             src="https://res.cloudinary.com/dalrlwhii/image/upload/f_auto/v1745414122/cwmtpsig7dz8czn6ka6p.png"
+             src="{% static 'core/images/logo_leather_work.webp' %}"
              alt="Logo Leather Work In Traveling DB">
         {% block header %}
         {% endblock header %}
@@ -94,6 +96,7 @@
     </footer>
     <div id="overlay" class="hidden"></div>
     <script src="{% static 'core/js/htmx.min.js' %}"></script>
+    <script src="{% static 'core/js/htmx-config.js' %}"></script>
     <script type="text/javascript" src="{% static 'core/script.js'%}"></script>
     {% block extra_js %}
     {% endblock extra_js %}
