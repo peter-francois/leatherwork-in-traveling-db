@@ -141,8 +141,8 @@ p {
 /*site-header*/
 
 .site-header {
-  background-image: url("../core/images/background.png");
-  background-size: cover;
+  background-image: url("../core/images/background.webp");
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   color: var(--color1);
@@ -1227,14 +1227,6 @@ h2.product-name {
     font-size: 17px;
   }
 
-  /*site-header*/
-
-  .site-header {
-    padding-top: 1px;
-    padding-bottom: 10px;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
   /*Menu*/
 
   .menu-content {
@@ -1428,7 +1420,7 @@ h2.product-name {
 
   /*site-header*/
   .site-header {
-    background-image: url("../core/images/background_small_screen.png");
+    background-image: url("../core/images/background_small_screen.webp");
   }
   /*Menu*/
 
@@ -1830,7 +1822,7 @@ h2.product-name {
 
 @media only screen and (min-width: 1700px) {
   .site-header {
-    background-image: url("../core/images/background_large_screen.png");
+    background-image: url("../core/images/background_large_screen.webp");
   }
   .title_and_logo {
     padding: 40px 100px;
