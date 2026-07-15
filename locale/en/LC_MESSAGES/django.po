@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-15 10:12+0200\n"
+"POT-Creation-Date: 2026-07-15 11:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -330,22 +330,22 @@ msgid "Prix: "
 msgstr "Price: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\components\_product_detail_info.html:57
+#: .\catalog\templates\catalog\components\_product_detail_info.html:56
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Do you want to add this product to the cart?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\components\_product_detail_info.html:60
+#: .\catalog\templates\catalog\components\_product_detail_info.html:59
 msgid "Ajouter au panier"
 msgstr "Add to cart"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\components\_product_detail_info.html:63
+#: .\catalog\templates\catalog\components\_product_detail_info.html:62
 msgid "Produit indisponible pour le moment"
 msgstr "Product currently unavailable"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\components\_product_detail_info.html:66
+#: .\catalog\templates\catalog\components\_product_detail_info.html:65
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Available on request – Contact us"
 
@@ -432,21 +432,21 @@ msgstr "Description"
 msgid "Aucune description disponible"
 msgstr "No description available"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:15
+#: .\catalog\templates\catalog\components\_product_detail_info.html:16
 msgid "Garanties produit"
 msgstr "Product warranty"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:16
+#: .\catalog\templates\catalog\components\_product_detail_info.html:17
 msgid "Fait main"
 msgstr "handcrafted"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:17
+#: .\catalog\templates\catalog\components\_product_detail_info.html:18
 msgid "Chaque pièce est unique"
 msgstr "Each piece is unique"
 
 #: .\catalog\templates\catalog\components\_product_detail_info.html:21
-msgid "Fils naturel"
-msgstr "Natural fiber"
+msgid "Fil polyester tressé"
+msgstr "Braided polyester thread"
 
 #: .\catalog\templates\catalog\components\_product_detail_info.html:23
 msgid "Cuir véritable"
@@ -456,27 +456,27 @@ msgstr "Real leather"
 msgid "Matières de qualité"
 msgstr "Quality materials"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:28
+#: .\catalog\templates\catalog\components\_product_detail_info.html:27
 msgid "Artisan nomade"
 msgstr "Nomadic artisan"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:29
+#: .\catalog\templates\catalog\components\_product_detail_info.html:28
 msgid "Créé quelque part en Europe"
 msgstr "Created somewhere in Europe"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:35
+#: .\catalog\templates\catalog\components\_product_detail_info.html:34
 msgid "Caractéristiques"
 msgstr "Characteristics"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:47
+#: .\catalog\templates\catalog\components\_product_detail_info.html:46
 msgid "Promo"
 msgstr "Discount"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:48
+#: .\catalog\templates\catalog\components\_product_detail_info.html:47
 msgid "Nouveau prix:"
 msgstr "New price:"
 
-#: .\catalog\templates\catalog\components\_product_detail_info.html:49
+#: .\catalog\templates\catalog\components\_product_detail_info.html:48
 msgid "Prix:"
 msgstr "Price: "
 
@@ -1239,6 +1239,9 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#~ msgid "Fils naturel"
+#~ msgstr "Natural fiber"
 
 #~ msgid "Un collier macramé fermé"
 #~ msgstr "A macrame necklace with a carved leather clasp."
