@@ -73,8 +73,19 @@
           type="font/woff2"
           crossorigin="anonymous">
     <link rel="preload"
+          href="{% static 'core/images/background_small_screen.webp' %}"
+          as="image"
+          media="(max-width: 768px)"
+          fetchpriority="high">
+    <link rel="preload"
           href="{% static 'core/images/background.webp' %}"
           as="image"
+          media="(min-width: 769px) and (max-width: 1700px)"
+          fetchpriority="high">
+    <link rel="preload"
+          href="{% static 'core/images/background_large_screen.webp' %}"
+          as="image"
+          media="(min-width: 1701px)"
           fetchpriority="high">
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
   </head>
