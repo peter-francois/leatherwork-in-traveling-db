@@ -14,21 +14,19 @@
 <div>
   <ul class="product-detail__badges"
       aria-label="{% trans 'Garanties produit' %}">
-    <li class="product-detail__badge">
-      <span class="product-detail__badge-icon" aria-hidden="true">✋</span>
-      <span class="product-detail__badge-label">{% trans "Fait main" %}</span>
-      <span class="product-detail__badge-sub">{% trans "Chaque pièce est unique" %}</span>
-    </li>
-    <li class="product-detail__badge">
-      <span class="product-detail__badge-icon" aria-hidden="true">🪡</span>
-      <span class="product-detail__badge-label">{% trans "Cuir véritable" %}</span>
-      <span class="product-detail__badge-sub">{% trans "Matières de qualité" %}</span>
-    </li>
-    <li class="product-detail__badge">
-      <span class="product-detail__badge-icon" aria-hidden="true">🌍</span>
-      <span class="product-detail__badge-label">{% trans "Artisan nomade" %}</span>
-      <span class="product-detail__badge-sub">{% trans "Créé quelque part en Europe" %}</span>
-    </li>
+    {% trans "Fait main" as label_1 %}
+    {% trans "Chaque pièce est unique" as sub_1 %}
+    {% include 'catalog/components/_product_detail_badge.html' with badge_icon="✋" badge_label=label_1 badge_sub=sub_1 %}
+    {% if product.is_macrame %}
+      {% trans "Fils naturel" as label_2 %}
+    {% else %}
+      {% trans "Cuir véritable" as label_2 %}
+    {% endif %}
+    {% trans "Matières de qualité" as sub_2 %}
+    {% include 'catalog/components/_product_detail_badge.html' with badge_icon="🪡" badge_label=label_2 badge_sub=sub_2 %}
+    {% trans "Artisan nomade" as label_3 %}
+    {% trans "Créé quelque part en Europe" as sub_3 %}
+    {% include 'catalog/components/_product_detail_badge.html' with badge_icon="🌍" badge_label=label_3 badge_sub=sub_3 %}
   </ul>
 </div>
 {% if product.characteristics %}

@@ -73,3 +73,7 @@ class Product(models.Model):
             ]
             if img
         ]
+
+    @property
+    def is_macrame(self):
+        return self.category == Category.MACRAME
