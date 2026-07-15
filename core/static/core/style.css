@@ -468,6 +468,7 @@ a.linker {
   font-size: 12px;
   cursor: pointer;
   border: 1px solid var(--color2);
+  text-decoration: none;
 }
 .click-hint:hover {
   background: #8c6b4fea;
