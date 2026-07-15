@@ -1,0 +1,42 @@
+{% load i18n %}
+<div class="text-center">
+  <h3>{% trans "Conseils d'entretien" %}</h3>
+  {% if product.category != "Maroquinerie" %}
+    <p>{% trans "Les macramés sont fait avec des fils naturel" %}</p>
+  {% else %}
+    <p>{% trans "Pour préserver la beauté du cuir" %}</p>
+  {% endif %}
+</div>
+<div>
+  <ul class="product-detail__badges"
+      aria-label="{% trans 'Informations de commande' %}">
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">🎁</span>
+      <span class="product-detail__badge-label">{% trans "Idée cadeau" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Une création artisanale unique qui fera plaisir à coup sûr." %}</span>
+    </li>
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">🔒</span>
+      <span class="product-detail__badge-label">{% trans "Paiement sécurisé" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Paiement 100 % sécurisé avec Stripe." %}</span>
+    </li>
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">📦</span>
+      <span class="product-detail__badge-label">{% trans "Livraison en Europe" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Expédition en point relais ou à domicile partout en Europe." %}</span>
+    </li>
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">💛</span>
+      <span class="product-detail__badge-label">{% trans "Satisfaction garantie" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Une question ? Contactez-nous, on trouve une solution." %}</span>
+    </li>
+  </ul>
+</div>
+<div class="product-detail__custom text-center">
+  <h3>{% trans "Vous voulez quelque chose d'unique ?" %}</h3>
+  <p>{% trans "Ce produit vous a inspiré ? Contactez-nous pour une création personnalisée — motif, couleur, dimensions : tout est possible sur commande." %}</p>
+  <a class="page-button product-detail__custom-link"
+     href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20personnalisation%20-20{{ product.name }}">
+    {% trans "Demander une personnalisation" %}
+  </a>
+</div>
