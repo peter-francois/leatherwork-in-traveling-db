@@ -162,7 +162,6 @@ function changeImage(direction) {
     currentImageIndex = 0; // Revenir à la première image
   }
   document.getElementById("current-image").src = images[currentImageIndex]; // Mettre à jour l'image affichée
-  document.getElementById("zoomImage").src = images[currentImageIndex]; // Mettre à jour l'image affichée dans le zoom
 }
 
 function initProductDetailCarousel() {
