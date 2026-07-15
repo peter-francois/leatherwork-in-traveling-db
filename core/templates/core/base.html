@@ -72,6 +72,10 @@
           as="font"
           type="font/woff2"
           crossorigin="anonymous">
+    <link rel="preload"
+          href="{% static 'core/images/background.png' %}"
+          as="image"
+          fetchpriority="high">
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
   </head>
   <body>
