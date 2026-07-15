@@ -592,6 +592,7 @@ section select {
 
 .two-col-layout {
   display: grid;
+  align-items: start;
   gap: 4rem;
 }
 
@@ -725,9 +726,9 @@ section select {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   align-items: stretch;
   align-content: start;
-  margin: auto 0px;
+  margin: 0;
   gap: 2rem;
-  padding: 0px;
+  padding: 0;
 }
 h2.product-name {
   height: 120px;
