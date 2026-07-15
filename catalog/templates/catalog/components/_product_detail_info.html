@@ -1,0 +1,70 @@
+{% load i18n %}
+<div>
+  <h2>{% trans "Description" %}</h2>
+  {% if product.description %}
+    {% for line in product.description.splitlines %}
+      {% if line.strip %}
+        <p class="description-article">{{ line.strip }}</p>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% trans "Aucune description disponible" %}
+  {% endif %}
+</div>
+<div>
+  <ul class="product-detail__badges"
+      aria-label="{% trans 'Garanties produit' %}">
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">✋</span>
+      <span class="product-detail__badge-label">{% trans "Fait main" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Chaque pièce est unique" %}</span>
+    </li>
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">🪡</span>
+      <span class="product-detail__badge-label">{% trans "Cuir véritable" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Matières de qualité" %}</span>
+    </li>
+    <li class="product-detail__badge">
+      <span class="product-detail__badge-icon" aria-hidden="true">🌍</span>
+      <span class="product-detail__badge-label">{% trans "Artisan nomade" %}</span>
+      <span class="product-detail__badge-sub">{% trans "Créé quelque part en Europe" %}</span>
+    </li>
+  </ul>
+</div>
+{% if product.characteristics %}
+  <div class="product-detail__characteristics">
+    <h2>{% trans "Caractéristiques" %}</h2>
+    <ul id="characteristic-article">
+      {% for line in product.characteristics.splitlines %}
+        {% if line.strip %}
+          <li>{{ line.strip }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+<div class="product-detail__pricing text-center">
+  {% if product.discount != 0.0 %}
+    <h2 id="promo-widget" class="promo-widget">{% trans "Promo" %}</h2>
+    <p class="new-price">{% trans "Nouveau prix:" %} {{ product.final_price|floatformat:2 }}€</p>
+    <p class="old-price">{% trans "Prix:" %} {{ product.price|floatformat:2 }}€</p>
+  {% else %}
+    <h2>{{ product.price|floatformat:2 }}€</h2>
+  {% endif %}
+</div>
+{% if not product.pending_in_cart and not product.on_demand %}
+  <button hx-post="{% url 'cart_api:add_to_cart' product.id %}"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}", "X-Source": "product_detail"}'
+          hx-confirm="{% trans 'Voulez-vous ajouter ce produit au panier ?' %}"
+          class="align-items-center page-button add_to_cart_button"
+          id="product-detail-actions"
+          type="button">{% trans "Ajouter au panier" %}</button>
+{% else %}
+  <div id="product-detail-actions">
+    <p class="text-center">{% trans 'Produit indisponible pour le moment' %}</p>
+    <a class="align-items-center page-button on-order-button text-center"
+       href="mailto:{{ CLIENT_EMAIL }}?subject=Contact%20depuis%20LeatherWorkInTravelingDB.com%20-%20Demande%20de%20fabrication%20de%20l'article%20{{ product.name }}">
+      {% trans 'Contactez-nous, disponible sur commande' %}
+    </a>
+  </div>
+{% endif %}
