@@ -34,23 +34,7 @@
 {% endblock header %}
 {% block content %}
   <article class="product-detail two-col-layout two-col-layout--aside-right">
-    <div class="two-col-layout__main product-detail__images">
-      <h2 class="sr-only">{% trans "Images du modèle" %}</h2>
-      {{ product.image_urls|json_script:"product-images-data" }}
-      <div class="image-container" id="imageContainer">
-        {% if product.image1 %}
-          <img id="current-image"
-               src="{{ product.image1.url }}"
-               alt="{{ product.name }}">
-        {% else %}
-          <img id="current-image" src="" alt="{{ product.name }}">
-        {% endif %}
-      </div>
-      <div class="image-buttons">
-        <button class="font-size-17" id="prev-button" type="button">{% trans "Précédent" %}</button>
-        <button class="font-size-17" id="next-button" type="button">{% trans "Suivant" %}</button>
-      </div>
-    </div>
+    {% include 'catalog/components/_product_detail_images.html' %}
     <aside class="two-col-layout__aside product-detail__info">
       <div>
         <h2>{% trans "Description" %}</h2>

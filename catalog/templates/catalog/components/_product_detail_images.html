@@ -1,0 +1,18 @@
+{% load i18n %}
+<div class="two-col-layout__main product-detail__images">
+  <h2 class="sr-only">{% trans "Images du modèle" %}</h2>
+  {{ product.image_urls|json_script:"product-images-data" }}
+  <div class="image-container" id="imageContainer">
+    {% if product.image1 %}
+      <img id="current-image"
+           src="{{ product.image1.url }}"
+           alt="{{ product.name }}">
+    {% else %}
+      <img id="current-image" src="" alt="{{ product.name }}">
+    {% endif %}
+  </div>
+  <div class="image-buttons">
+    <button class="font-size-17" id="prev-button" type="button">{% trans "Précédent" %}</button>
+    <button class="font-size-17" id="next-button" type="button">{% trans "Suivant" %}</button>
+  </div>
+</div>
