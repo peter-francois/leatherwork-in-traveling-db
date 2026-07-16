@@ -14,14 +14,14 @@ class ProductDetailSitemap(Sitemap):
         self.language = language
 
     def items(self):
-        return Product.objects.filter(seo_ready=True)
+        return Product.objects.filter(seo_ready=True).order_by("id")
 
     def lastmod(self, obj):
         return obj.updated_at
 
     def location(self, obj):
         with translation.override(self.language):
-            category = obj.category.lower()
+            category = obj.category_slug
             slug = slugify(obj.name)
 
             return reverse(

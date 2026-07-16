@@ -186,6 +186,11 @@ class ProductDetailSitemapTest(TestCase):
         self.assertIn("magic-braided-bracket", url)
         self.assertIn(str(self.product.id), url)
 
+    def test_location_en_uses_english_category_slug(self):
+        """Should generate URL with English category slug"""
+        url = self.sitemap_en.location(self.product)
+        self.assertIn("leather-goods", url)
+
     def test_location_uses_lowercase_category(self):
         """Should use lowercase category in URL"""
         url = self.sitemap_fr.location(self.product)
