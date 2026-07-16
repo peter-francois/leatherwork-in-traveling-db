@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
+from django.views.static import serve
 
 from core import views as core_views
 from core.sitemaps import StaticSitemap
@@ -37,6 +38,7 @@ sitemaps = {
     "products_fr": ProductDetailSitemap("fr"),
     "products_en": ProductDetailSitemap("en"),
 }
+
 
 urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
@@ -58,6 +60,14 @@ urlpatterns += [
     path("api/cart/", include("cart.api.urls", "cart_api")),
     path("api/catalog/", include("catalog.api.urls")),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path(
+        "llms.txt",
+        serve,
+        {
+            "document_root": settings.BASE_DIR,
+            "path": "llms.txt",
+        },
+    ),
 ]
 
 if settings.DEBUG:
