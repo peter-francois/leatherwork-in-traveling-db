@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-15 11:28+0200\n"
+"POT-Creation-Date: 2026-07-21 09:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -324,28 +324,42 @@ msgstr "Click"
 msgid "Aucune image disponible"
 msgstr "No picture available"
 
+#: .\catalog\templates\catalog\components\_product_card.html:30
+#: .\catalog\templates\catalog\components\_product_detail_info.html:47
+msgid "Promo"
+msgstr "Discount"
+
+#: .\catalog\templates\catalog\components\_product_card.html:31
+msgid "Prix:"
+msgstr "Price: "
+
 #: .\catalog\templates\catalog\components\_product_card.html:32
+#: .\catalog\templates\catalog\components\_product_detail_info.html:49
+msgid "Ancien prix: "
+msgstr "Old price: "
+
 #: .\catalog\templates\catalog\components\_product_card.html:34
+#: .\catalog\templates\catalog\components\_product_detail_info.html:45
 msgid "Prix: "
 msgstr "Price: "
 
 #: .\catalog\templates\catalog\components\_product_card.html:42
-#: .\catalog\templates\catalog\components\_product_detail_info.html:56
+#: .\catalog\templates\catalog\components\_product_detail_info.html:57
 msgid "Voulez-vous ajouter ce produit au panier ?"
 msgstr "Do you want to add this product to the cart?"
 
 #: .\catalog\templates\catalog\components\_product_card.html:45
-#: .\catalog\templates\catalog\components\_product_detail_info.html:59
+#: .\catalog\templates\catalog\components\_product_detail_info.html:60
 msgid "Ajouter au panier"
 msgstr "Add to cart"
 
 #: .\catalog\templates\catalog\components\_product_card.html:47
-#: .\catalog\templates\catalog\components\_product_detail_info.html:62
+#: .\catalog\templates\catalog\components\_product_detail_info.html:63
 msgid "Produit indisponible pour le moment"
 msgstr "Product currently unavailable"
 
 #: .\catalog\templates\catalog\components\_product_card.html:49
-#: .\catalog\templates\catalog\components\_product_detail_info.html:65
+#: .\catalog\templates\catalog\components\_product_detail_info.html:66
 msgid "Contactez-nous, disponible sur commande"
 msgstr "Available on request – Contact us"
 
@@ -467,18 +481,6 @@ msgstr "Created somewhere in Europe"
 #: .\catalog\templates\catalog\components\_product_detail_info.html:34
 msgid "Caractéristiques"
 msgstr "Characteristics"
-
-#: .\catalog\templates\catalog\components\_product_detail_info.html:46
-msgid "Promo"
-msgstr "Discount"
-
-#: .\catalog\templates\catalog\components\_product_detail_info.html:47
-msgid "Nouveau prix:"
-msgstr "New price:"
-
-#: .\catalog\templates\catalog\components\_product_detail_info.html:48
-msgid "Prix:"
-msgstr "Price: "
 
 #: .\catalog\templates\catalog\hybrid.html:5
 msgid ""
@@ -1239,6 +1241,14 @@ msgstr "legal-mentions/"
 #: .\legal\urls.py:13
 msgid "privacy-policy/"
 msgstr "privacy-policy/"
+
+#, fuzzy
+#~| msgid "Ancien prix: "
+#~ msgid "Ancien prix:"
+#~ msgstr "Old price: "
+
+#~ msgid "Nouveau prix:"
+#~ msgstr "New price:"
 
 #~ msgid "Fils naturel"
 #~ msgstr "Natural fiber"
