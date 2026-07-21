@@ -28,10 +28,10 @@
   </a>
   {% if product.discount != 0.0 %}
     <p class="promo-widget">{% trans "Promo" %}</p>
-    <p class="text-center new-price">Nouveau prix: {{ product.final_price | floatformat:2 }}€</p>
-    <p class="old-price">{% trans "Prix: " %} {{ product.price | floatformat:2 }}€</p>
+    <p class="text-center">{% trans "Prix:" %} {{ product.final_price | floatformat:2 }}€</p>
+    <p class="old-price">{% trans "Ancien prix: " %} {{ product.price | floatformat:2 }}€</p>
   {% else %}
-    <p>{% trans "Prix: " %} {{ product.price | floatformat:2 }}€</p>
+    <p>{% trans "Prix: " %} {{ product.final_price | floatformat:2 }}€</p>
   {% endif %}
   {% if page == 'catalog' %}
     {% if not product.pending_in_cart and not product.on_demand %}

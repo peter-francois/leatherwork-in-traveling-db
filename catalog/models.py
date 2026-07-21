@@ -77,3 +77,7 @@ class Product(models.Model):
     @property
     def is_macrame(self):
         return self.category == Category.MACRAME
+
+    @property
+    def final_price(self):
+        return self.price - self.discount
