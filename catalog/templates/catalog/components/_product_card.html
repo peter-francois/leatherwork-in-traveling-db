@@ -27,7 +27,7 @@
     {% endif %}
   </a>
   {% if product.discount != 0.0 %}
-    <p class="promo-widget">Promo</p>
+    <p class="promo-widget">{% trans "Promo" %}</p>
     <p class="text-center new-price">Nouveau prix: {{ product.final_price | floatformat:2 }}€</p>
     <p class="old-price">{% trans "Prix: " %} {{ product.price | floatformat:2 }}€</p>
   {% else %}

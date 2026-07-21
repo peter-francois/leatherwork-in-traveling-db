@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-15 11:28+0200\n"
+"POT-Creation-Date: 2026-07-21 08:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,6 +326,11 @@ msgstr "Cliquez"
 msgid "Aucune image disponible"
 msgstr "Aucune image disponible"
 
+#: .\catalog\templates\catalog\components\_product_card.html:30
+#: .\catalog\templates\catalog\components\_product_detail_info.html:46
+msgid "Promo"
+msgstr "Promo"
+
 #: .\catalog\templates\catalog\components\_product_card.html:32
 #: .\catalog\templates\catalog\components\_product_card.html:34
 msgid "Prix: "
@@ -470,10 +475,6 @@ msgstr "Créé quelque part en Europe"
 #: .\catalog\templates\catalog\components\_product_detail_info.html:34
 msgid "Caractéristiques"
 msgstr "Caractéristiques"
-
-#: .\catalog\templates\catalog\components\_product_detail_info.html:46
-msgid "Promo"
-msgstr "Promo"
 
 #: .\catalog\templates\catalog\components\_product_detail_info.html:47
 msgid "Nouveau prix:"

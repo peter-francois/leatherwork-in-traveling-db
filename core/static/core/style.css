@@ -542,8 +542,7 @@ aside {
   text-decoration-color: #da0410;
 }
 .promo-widget {
-  margin-top: 12px;
-  margin-bottom: 6px;
+  margin: 2rem auto;
   border-radius: 8px;
   color: white;
   background-color: #da0410;
