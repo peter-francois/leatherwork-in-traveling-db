@@ -532,8 +532,11 @@ aside {
   margin: 10px 0;
 }
 /*Tous les produits*/
-.new-price {
+.final-price {
   margin: 0px;
+  font-weight: bold;
+  font-size: 2rem;
+
 }
 .old-price {
   margin-top: 0px;
@@ -542,12 +545,11 @@ aside {
   text-decoration-color: #da0410;
 }
 .promo-widget {
-  margin-top: 12px;
-  margin-bottom: 6px;
   border-radius: 8px;
   color: white;
   background-color: #da0410;
-  padding: 1px 8px 4px 8px;
+  margin:  1 rem auto;
+  padding: 0.5rem 1rem;
   height: min-content;
   width: fit-content;
 }
@@ -761,9 +763,7 @@ h2.product-name {
 .on-order-button {
   margin-top: 10px;
 }
-.new-price-div {
-  margin: 16px 0px;
-}
+
 .price-div {
   margin-bottom: 12px;
 }
@@ -1170,6 +1170,10 @@ h2.product-name {
 }
 .htmx-request.htmx-indicator {
     opacity: 1;
+}
+
+.product-detail__pricing p{
+  margin-left: 1rem;
 }
 
 @media only screen and (max-width: 1182px) {
